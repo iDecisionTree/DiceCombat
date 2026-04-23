@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://brv1ikvs1rk4d"]
+
+[ext_resource type="Texture2D" uid="uid://bdvo0l5yhb2ku" path="res://textures/card/AvatarCardFigure_0003.png" id="1_idt5t"]
+[ext_resource type="Texture2D" uid="uid://lwpyunaxab7c" path="res://textures/card/AvatarCardFigure_1415_Bg.png" id="2_e175l"]
+[ext_resource type="Script" uid="uid://b5wrle1aql1vh" path="res://scripts/dice/DiceSet.cs" id="3_7uxox"]
+[ext_resource type="Texture2D" uid="uid://bkwq7s6ixfdm4" path="res://textures/card/AvatarCardFigureInfo_0003.png" id="4_idt5t"]
+[ext_resource type="Script" uid="uid://bpx3004eh178x" path="res://scripts/card/CardData.cs" id="5_2sfxy"]
+
+[sub_resource type="Resource" id="Resource_2qpin"]
+script = ExtResource("3_7uxox")
+Count = 4
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_11luf"]
+script = ExtResource("3_7uxox")
+DiceType = 1
+Count = 0
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_qnqce"]
+script = ExtResource("3_7uxox")
+DiceType = 2
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_qn4bu"]
+script = ExtResource("3_7uxox")
+DiceType = 3
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[resource]
+script = ExtResource("5_2sfxy")
+CardId = "0003"
+CardName = "卡牌0003"
+Description = "攻击回合时，固定增加 [color=ff8800]5[/color] 点伤害"
+CardBackground = ExtResource("2_e175l")
+CardAvatar = ExtResource("1_idt5t")
+InfoAvatar = ExtResource("4_idt5t")
+Attack = 3
+Defense = 2
+MaxHealth = 36
+DiceGroups = [SubResource("Resource_2qpin"), SubResource("Resource_11luf"), SubResource("Resource_qnqce"), SubResource("Resource_qn4bu")]
+metadata/_custom_type_script = "uid://bpx3004eh178x"

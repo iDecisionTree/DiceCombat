@@ -1,0 +1,59 @@
+[gd_resource type="Theme" format=3 uid="uid://5d0855e6v5ns"]
+
+[ext_resource type="Texture2D" uid="uid://bwr2dc443020y" path="res://textures/env/CardColorOutline.png" id="1_kgv31"]
+[ext_resource type="FontFile" uid="uid://b4a4qyt8k60ju" path="res://fonts/SourceHanSansCN-Bold.woff2" id="1_oryc4"]
+[ext_resource type="FontFile" uid="uid://dmvylt1memova" path="res://fonts/SourceHanSansCN-Medium.woff2" id="2_kgv31"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6c42i"]
+texture = ExtResource("1_kgv31")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgv31"]
+bg_color = Color(0.16470589, 0.23137255, 0.29803923, 1)
+skew = Vector2(-0.5, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(1, 0.59607846, 0, 1)
+shadow_size = 1
+shadow_offset = Vector2(-5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oryc4"]
+bg_color = Color(0.16470589, 0.23137255, 0.29803923, 1)
+skew = Vector2(0.5, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.25882354, 0.52156866, 0.95686275, 1)
+shadow_size = 1
+shadow_offset = Vector2(5, 5)
+
+[resource]
+AttackDefenceLabel/base_type = &"RichTextLabel"
+AttackDefenceLabel/font_sizes/bold_font_size = 48
+AttackDefenceLabel/font_sizes/bold_italics_font_size = 48
+AttackDefenceLabel/font_sizes/italics_font_size = 48
+AttackDefenceLabel/font_sizes/mono_font_size = 48
+AttackDefenceLabel/font_sizes/normal_font_size = 48
+AvatarOutline/base_type = &"Panel"
+AvatarOutline/styles/panel = SubResource("StyleBoxTexture_6c42i")
+EnemyPanelContainer/base_type = &"PanelContainer"
+EnemyPanelContainer/styles/panel = SubResource("StyleBoxFlat_kgv31")
+HealthTextLabel/base_type = &"RichTextLabel"
+HealthTextLabel/font_sizes/bold_font_size = 28
+HealthTextLabel/font_sizes/bold_italics_font_size = 28
+HealthTextLabel/font_sizes/italics_font_size = 28
+HealthTextLabel/font_sizes/mono_font_size = 28
+HealthTextLabel/font_sizes/normal_font_size = 28
+HealthTextLabel/fonts/bold_font = ExtResource("1_oryc4")
+HealthTextLabel/fonts/normal_font = ExtResource("2_kgv31")
+PlayerPanelContainer/base_type = &"PanelContainer"
+PlayerPanelContainer/styles/panel = SubResource("StyleBoxFlat_oryc4")
+RichTextLabel/font_sizes/bold_font_size = 20
+RichTextLabel/font_sizes/bold_italics_font_size = 20
+RichTextLabel/font_sizes/italics_font_size = 20
+RichTextLabel/font_sizes/mono_font_size = 20
+RichTextLabel/font_sizes/normal_font_size = 20
+RichTextLabel/fonts/bold_font = ExtResource("1_oryc4")
+RichTextLabel/fonts/normal_font = ExtResource("2_kgv31")

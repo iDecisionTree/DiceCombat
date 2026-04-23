@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cdk6m1cpkkio6"]
+
+[ext_resource type="Script" uid="uid://b22p3qcew6pv1" path="res://scripts/dice/Dice.cs" id="1_51een"]
+[ext_resource type="Material" uid="uid://bwdwwoabacldp" path="res://materials/m_dice6.tres" id="1_nuybx"]
+[ext_resource type="ArrayMesh" uid="uid://n1222gdhno33" path="res://models/dice/dice6.obj" id="2_51een"]
+[ext_resource type="Material" uid="uid://cj831d5wyxxsb" path="res://materials/m_outline.tres" id="4_heval"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nuybx"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[node name="Dice6" type="RigidBody3D" unique_id=117250456 node_paths=PackedStringArray("Face1", "Face2", "Face3", "Face4", "Face5", "Face6", "Outline")]
+script = ExtResource("1_51een")
+DiceType = 1
+Face1 = NodePath("Node3D_Face1")
+Face2 = NodePath("Node3D_Face2")
+Face3 = NodePath("Node3D_Face3")
+Face4 = NodePath("Node3D_Face4")
+Face5 = NodePath("Node3D_Face5")
+Face6 = NodePath("Node3D_Face6")
+Outline = NodePath("MeshInstance3D_Outline")
+OutlineWidth = 0.2
+OutlineColor = Color(1, 1, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=710412282]
+material_override = ExtResource("1_nuybx")
+cast_shadow = 0
+mesh = ExtResource("2_51een")
+
+[node name="MeshInstance3D_Outline" type="MeshInstance3D" parent="." unique_id=303642537]
+material_override = ExtResource("4_heval")
+cast_shadow = 0
+mesh = ExtResource("2_51een")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1039268592]
+shape = SubResource("ConvexPolygonShape3D_nuybx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=104409204]
+root_node = NodePath("../MeshInstance3D")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=450956386]
+
+[node name="Node3D_Face1" type="Node3D" parent="." unique_id=152431824]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Node3D_Face2" type="Node3D" parent="." unique_id=66321904]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+
+[node name="Node3D_Face3" type="Node3D" parent="." unique_id=1331151188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+
+[node name="Node3D_Face4" type="Node3D" parent="." unique_id=241595110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="Node3D_Face5" type="Node3D" parent="." unique_id=1711413993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+
+[node name="Node3D_Face6" type="Node3D" parent="." unique_id=560121544]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

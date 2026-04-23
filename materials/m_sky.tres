@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://jkamce0ejdwh"]
+
+[ext_resource type="Shader" uid="uid://ca84m20lpdlvm" path="res://shaders/s_sky.gdshader" id="1_vxhf2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vxhf2")
+shader_parameter/base_color = Color(1, 0.53333336, 0, 1)
+shader_parameter/glow_color = Color(0, 0.90588236, 1, 1)
+shader_parameter/scan_speed = 0.2
+shader_parameter/fresnel_strength = 1.5

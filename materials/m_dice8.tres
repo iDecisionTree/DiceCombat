@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://sdtycitf45eu"]
+
+[ext_resource type="Shader" uid="uid://dyfdbb5btbd4i" path="res://shaders/s_dice8.gdshader" id="1_wdbp0"]
+[ext_resource type="Texture2D" uid="uid://c2nf5lqllbsjr" path="res://textures/dice/Noise.png" id="2_jdfjb"]
+[ext_resource type="Texture2D" uid="uid://cgrxqee1nv3qn" path="res://textures/dice/DiceNum1.png" id="3_wdbp0"]
+[ext_resource type="Texture2D" uid="uid://x2m11im230bb" path="res://textures/dice/DiceNum2.png" id="4_ct163"]
+[ext_resource type="Texture2D" uid="uid://dolegvi4t1qpp" path="res://textures/dice/DiceNum3.png" id="5_sk75f"]
+[ext_resource type="Texture2D" uid="uid://ce5tjur6u4gvg" path="res://textures/dice/DiceNum4.png" id="6_33oha"]
+[ext_resource type="Texture2D" uid="uid://ck1vu3mxpna64" path="res://textures/dice/DiceNum5.png" id="7_ion1t"]
+[ext_resource type="Texture2D" uid="uid://q7dge4mdwvra" path="res://textures/dice/DiceNum6.png" id="8_b1n62"]
+[ext_resource type="Texture2D" uid="uid://bij1jrid1wft5" path="res://textures/dice/DiceNum7.png" id="9_ct163"]
+[ext_resource type="Texture2D" uid="uid://d0de1ssmxq1yn" path="res://textures/dice/DiceNum8.png" id="10_sk75f"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wdbp0")
+shader_parameter/dice_noise = ExtResource("2_jdfjb")
+shader_parameter/dice_num1 = ExtResource("3_wdbp0")
+shader_parameter/dice_num2 = ExtResource("4_ct163")
+shader_parameter/dice_num3 = ExtResource("5_sk75f")
+shader_parameter/dice_num4 = ExtResource("6_33oha")
+shader_parameter/dice_num5 = ExtResource("7_ion1t")
+shader_parameter/dice_num6 = ExtResource("8_b1n62")
+shader_parameter/dice_num7 = ExtResource("9_ct163")
+shader_parameter/dice_num8 = ExtResource("10_sk75f")
+shader_parameter/noise_strength = 0.8
+shader_parameter/num_scale = Vector2(1.5, 1.5)
+shader_parameter/num_offset = Vector2(0, -0.15)
+shader_parameter/num_flip_x = false
+shader_parameter/albedo_color = Color(1, 0.79607844, 0.1882353, 1)

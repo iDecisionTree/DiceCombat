@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bwdwwoabacldp"]
+
+[ext_resource type="Shader" uid="uid://bswg2t4ymbv5f" path="res://shaders/s_dice6.gdshader" id="1_neyui"]
+[ext_resource type="Texture2D" uid="uid://c2nf5lqllbsjr" path="res://textures/dice/Noise.png" id="2_sf881"]
+[ext_resource type="Texture2D" uid="uid://cgrxqee1nv3qn" path="res://textures/dice/DiceNum1.png" id="3_neyui"]
+[ext_resource type="Texture2D" uid="uid://x2m11im230bb" path="res://textures/dice/DiceNum2.png" id="4_7e0bj"]
+[ext_resource type="Texture2D" uid="uid://dolegvi4t1qpp" path="res://textures/dice/DiceNum3.png" id="5_7ffnp"]
+[ext_resource type="Texture2D" uid="uid://ce5tjur6u4gvg" path="res://textures/dice/DiceNum4.png" id="6_mf4cb"]
+[ext_resource type="Texture2D" uid="uid://ck1vu3mxpna64" path="res://textures/dice/DiceNum5.png" id="7_7e0bj"]
+[ext_resource type="Texture2D" uid="uid://q7dge4mdwvra" path="res://textures/dice/DiceNum6.png" id="8_7ffnp"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_neyui")
+shader_parameter/dice_noise = ExtResource("2_sf881")
+shader_parameter/dice_num1 = ExtResource("3_neyui")
+shader_parameter/dice_num2 = ExtResource("4_7e0bj")
+shader_parameter/dice_num3 = ExtResource("5_7ffnp")
+shader_parameter/dice_num4 = ExtResource("6_mf4cb")
+shader_parameter/dice_num5 = ExtResource("7_7e0bj")
+shader_parameter/dice_num6 = ExtResource("8_7ffnp")
+shader_parameter/noise_strength = 0.75
+shader_parameter/albedo_color = Color(0.15294118, 0.8, 1, 1)
+shader_parameter/num_scale = Vector2(1, 1)
+shader_parameter/num_offset = Vector2(0, 0)
+shader_parameter/num_flip_x = false
+shader_parameter/num_flip_y = false

@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bqx58svm4rcge"]
+
+[ext_resource type="Texture2D" uid="uid://dukdrqc4ifr3c" path="res://textures/card/AvatarCardFigure_1310.png" id="1_i8ymb"]
+[ext_resource type="Texture2D" uid="uid://d3jkxibb6ukqj" path="res://textures/card/AvatarCardFigure_1310_Bg.png" id="2_eqc8y"]
+[ext_resource type="Script" uid="uid://bpx3004eh178x" path="res://scripts/card/CardData.cs" id="3_dtyhk"]
+[ext_resource type="Script" uid="uid://b5wrle1aql1vh" path="res://scripts/dice/DiceSet.cs" id="3_eqc8y"]
+[ext_resource type="Texture2D" uid="uid://bqr4ru5jt3f0i" path="res://textures/card/AvatarCardFigureInfo_1310.png" id="4_dtyhk"]
+
+[sub_resource type="Resource" id="Resource_dtyhk"]
+script = ExtResource("3_eqc8y")
+Count = 2
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_eqc8y"]
+script = ExtResource("3_eqc8y")
+DiceType = 1
+Count = 2
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_ll6dk"]
+script = ExtResource("3_eqc8y")
+DiceType = 2
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_dlj35"]
+script = ExtResource("3_eqc8y")
+DiceType = 3
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[resource]
+script = ExtResource("3_dtyhk")
+CardId = "0001"
+CardName = "卡牌0001"
+Description = "这是一张普通卡牌，没有任何作用"
+CardBackground = ExtResource("2_eqc8y")
+CardAvatar = ExtResource("1_i8ymb")
+InfoAvatar = ExtResource("4_dtyhk")
+Attack = 4
+Defense = 2
+MaxHealth = 24
+DiceGroups = [SubResource("Resource_dtyhk"), SubResource("Resource_eqc8y"), SubResource("Resource_ll6dk"), SubResource("Resource_dlj35")]

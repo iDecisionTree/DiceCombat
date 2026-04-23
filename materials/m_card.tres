@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bo0d3jho04304"]
+
+[ext_resource type="Shader" uid="uid://bcop5v8omitev" path="res://shaders/s_card.gdshader" id="1_no8t1"]
+[ext_resource type="Texture2D" uid="uid://dukdrqc4ifr3c" path="res://textures/card/AvatarCardFigure_1310.png" id="2_fvqm1"]
+[ext_resource type="Texture2D" uid="uid://byekxbdhnor6p" path="res://textures/card/CardItemBig_Color_Dice4.png" id="4_t5ww4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_no8t1")
+shader_parameter/card_avatar = ExtResource("2_fvqm1")
+shader_parameter/card_background = ExtResource("4_t5ww4")
+shader_parameter/card_border = ExtResource("4_t5ww4")
+shader_parameter/avatar_scale = Vector2(0.6, 0.6)
+shader_parameter/avatar_offset = Vector2(0, -0.05)
+shader_parameter/background_scale = Vector2(0.6, 0.6)
+shader_parameter/background_offset = Vector2(0, -0.05)
+shader_parameter/avatar_parallex = -0.1
+shader_parameter/background_parallex = 0.05
+shader_parameter/background_strength = 0.65
+shader_parameter/mask_start = 0.3
+shader_parameter/mask_end = 1.15
+shader_parameter/aniso = 0.8
+shader_parameter/pixel_size = Vector2(0.04, 0.028)
+shader_parameter/pixel_density = 0.15
+shader_parameter/hue_speed = 2.5
+shader_parameter/saturation_boost = 1.5
+shader_parameter/value_boost = 1.2
+shader_parameter/highlight_strength = 0.2
+shader_parameter/highlight_size = 1000.0
+shader_parameter/highlight_color = Vector3(1, 1, 1)

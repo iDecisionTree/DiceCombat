@@ -1,0 +1,599 @@
+[gd_scene format=3 uid="uid://bnekk23tuhuot"]
+
+[ext_resource type="Script" uid="uid://jm11c2cej80j" path="res://scripts/dice/DiceManager.cs" id="2_mlphb"]
+[ext_resource type="Script" uid="uid://cs6yi4x0uqpma" path="res://scripts/state_machine/CombatStateMachine.cs" id="2_v1wow"]
+[ext_resource type="Material" uid="uid://ca42jrkiibhuh" path="res://materials/m_board.tres" id="7_3d2pr"]
+[ext_resource type="Script" uid="uid://dmepolb6gyae0" path="res://scripts/ui/TurnIconSwapAnimator.cs" id="7_glbr4"]
+[ext_resource type="Material" uid="uid://jkamce0ejdwh" path="res://materials/m_sky.tres" id="8_bpcsf"]
+[ext_resource type="PackedScene" uid="uid://c837y1pwe7sbt" path="res://resourses/card/card_0003.tscn" id="10_magc2"]
+[ext_resource type="PackedScene" uid="uid://2dt7oqc5i6x5" path="res://resourses/dice/dice4.tscn" id="10_miq82"]
+[ext_resource type="Script" uid="uid://cofw7sywoopgu" path="res://addons/rich_text_3d/rich_text_3d.gd" id="10_nuflt"]
+[ext_resource type="PackedScene" uid="uid://bugted0bdiylh" path="res://resourses/card/card_0005.tscn" id="11_magc2"]
+[ext_resource type="FontFile" uid="uid://vc6sfglbougm" path="res://fonts/ark-pixel-12px-monospaced-zh_cn.ttf.woff2" id="11_nuflt"]
+[ext_resource type="PackedScene" uid="uid://cdk6m1cpkkio6" path="res://resourses/dice/dice6.tscn" id="11_ueiaa"]
+[ext_resource type="Texture2D" uid="uid://bedu770a7thuv" path="res://textures/env/AttackIcon2.png" id="12_f54l4"]
+[ext_resource type="Texture2D" uid="uid://bmicbh3yfxxeb" path="res://textures/env/EditBg.png" id="12_if5p2"]
+[ext_resource type="PackedScene" uid="uid://cxq6jw5mcrybt" path="res://resourses/dice/dice8.tscn" id="12_mlphb"]
+[ext_resource type="Texture2D" uid="uid://clknnyhg26kt4" path="res://textures/env/DefendIcon2.png" id="13_5smy7"]
+[ext_resource type="PackedScene" uid="uid://6dk7kaxoe7h7" path="res://resourses/dice/dice12.tscn" id="13_daj04"]
+[ext_resource type="ArrayMesh" uid="uid://3sp4xq2cs1l8" path="res://models/env/board.obj" id="15_opqoc"]
+[ext_resource type="Script" uid="uid://dgkrav2l1iqtg" path="res://scripts/dice/DiceSelectUI.cs" id="18_na8jj"]
+[ext_resource type="FontFile" uid="uid://dmvylt1memova" path="res://fonts/SourceHanSansCN-Medium.woff2" id="18_snaye"]
+[ext_resource type="FontFile" uid="uid://b4a4qyt8k60ju" path="res://fonts/SourceHanSansCN-Bold.woff2" id="19_1wc4g"]
+[ext_resource type="Script" uid="uid://ct27g7opg0u2x" path="res://scripts/ui/ScaledThemeButton.cs" id="19_na8jj"]
+[ext_resource type="Script" uid="uid://l2beon4tjmpf" path="res://scripts/ui/ScaledThemeRichTextLabel.cs" id="22_jv0we"]
+[ext_resource type="Script" uid="uid://v6a218tnoudg" path="res://scripts/state_machine/CombatCameraDirector3D.cs" id="23_mqcam"]
+[ext_resource type="Script" uid="uid://dc4u6po3rr6lb" path="res://scripts/state_machine/CombatEffectDirector3D.cs" id="24_mqeff"]
+[ext_resource type="Texture2D" uid="uid://bkwq7s6ixfdm4" path="res://textures/card/AvatarCardFigureInfo_0003.png" id="29_magc2"]
+[ext_resource type="Theme" uid="uid://5d0855e6v5ns" path="res://themes/theme.tres" id="31_magc2"]
+[ext_resource type="Texture2D" uid="uid://3jhnwi4srilt" path="res://textures/ui/BattleHpUnder.png" id="32_7nf4l"]
+[ext_resource type="Texture2D" uid="uid://doknfxpgghmmv" path="res://textures/card/AvatarCardFigureInfo_0005.png" id="32_dtvpm"]
+[ext_resource type="Texture2D" uid="uid://b8wexi4qntw55" path="res://textures/ui/BattleHpProgress.png" id="33_cxwtw"]
+[ext_resource type="Texture2D" uid="uid://bncb24aqn32d8" path="res://textures/card/CardValueAttackIconBg.png" id="35_cxwtw"]
+[ext_resource type="Texture2D" uid="uid://mgrnucobvuke" path="res://textures/card/CardValueDefenceIconBg.png" id="36_1hpar"]
+[ext_resource type="Script" uid="uid://tbdr1sahdor6" path="res://scripts/ui/CombatInfoPanel.cs" id="37_uiip"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_05hpe"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_mlf6e"]
+sky_material = SubResource("ProceduralSkyMaterial_05hpe")
+
+[sub_resource type="Environment" id="Environment_po0ka"]
+background_mode = 2
+sky = SubResource("Sky_mlf6e")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bpcsf"]
+points = PackedVector3Array(-13.367048, -0.25115395, -9.040756, 11.9824095, 1.6622, 8.179616, 11.527457, 1.6622, 9.543361, 13.250061, -0.25115395, 9.040756, 10.235575, -0.25115395, -14.063049, -6.6446886, 1.6622, -14.087275, -9.372043, 1.6622, 12.723532, -7.338075, -0.25115395, 15.570366, 11.527457, 1.6622, -9.543361, 5.2122984, -0.25115395, 16.073854, -12.099397, 1.6622, -8.179616, -13.367048, -0.25115395, 9.040756, -5.3292856, -0.25115395, -16.073854, 4.710251, 1.6622, 14.542806, 4.710251, 1.6622, -14.542806, 13.250061, -0.25115395, -9.040756, -12.099397, 1.6622, 8.179616, 10.235575, -0.25115395, 14.063049, -10.352562, -0.25115395, -14.063049, -4.827238, 1.6622, 14.542806, 5.2122984, -0.25115395, -16.073854, -10.855411, -0.25115395, 13.559561, 9.255055, 1.6622, -12.723532, 9.255055, 1.6622, 12.723532, -9.826995, 1.6622, -12.268001, 11.9824095, 1.6622, -8.179616, -5.3292856, -0.25115395, 16.073854, -4.827238, 1.6622, -14.542806, -12.361351, -0.25115395, -11.551903, -11.189493, 1.6622, 10.451573, 12.244364, -0.25115395, -11.551903, 12.244364, -0.25115395, 11.551903)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_magc2"]
+resource_local_to_scene = true
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dtvpm"]
+size = Vector2(2, 1)
+orientation = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_opqoc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nf4l"]
+bg_color = Color(0.25882354, 0.52156866, 0.95686275, 1)
+border_width_bottom = 19
+border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
+corner_radius_top_left = 96
+corner_radius_top_right = 96
+corner_radius_bottom_right = 96
+corner_radius_bottom_left = 96
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxwtw"]
+bg_color = Color(0.25882354, 0.52156866, 0.95686275, 1)
+border_width_bottom = 19
+border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
+corner_radius_top_left = 96
+corner_radius_top_right = 96
+corner_radius_bottom_right = 96
+corner_radius_bottom_left = 96
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hpar"]
+bg_color = Color(0.3254902, 0.5764706, 0.9607843, 1)
+border_width_bottom = 19
+border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
+corner_radius_top_left = 96
+corner_radius_top_right = 96
+corner_radius_bottom_right = 96
+corner_radius_bottom_left = 96
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qokk"]
+bg_color = Color(0.15686275, 0.32941177, 0.56078434, 1)
+border_width_bottom = 19
+border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
+corner_radius_top_left = 96
+corner_radius_top_right = 96
+corner_radius_bottom_right = 96
+corner_radius_bottom_left = 96
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1t5pe"]
+bg_color = Color(0.19554523, 0.19554508, 0.19554508, 1)
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.101960786, 0.23921569, 0.47843137, 0.5019608)
+corner_radius_top_left = 57
+corner_radius_top_right = 14
+corner_radius_bottom_right = 57
+corner_radius_bottom_left = 14
+corner_detail = 2
+
+[node name="GameScene" type="Node3D" unique_id=945681804]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1320537754]
+environment = SubResource("Environment_po0ka")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1159694899]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1866068346]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.17364867, 0.98480755, 0, -0.98480755, 0.17364867, 0, 18, 3)
+
+[node name="CombatCameraDirector3D" type="Node3D" parent="." unique_id=1416068347 node_paths=PackedStringArray("Camera", "PlayerFocusTarget", "EnemyFocusTarget")]
+script = ExtResource("23_mqcam")
+Camera = NodePath("../Camera3D")
+PlayerFocusTarget = NodePath("../PlayerCard")
+EnemyFocusTarget = NodePath("../EnemyCard")
+
+[node name="CombatEffectDirector3D" type="Node3D" parent="." unique_id=1416068348 node_paths=PackedStringArray("DimOverlay")]
+script = ExtResource("24_mqeff")
+DimOverlay = NodePath("../CanvasLayer/CombatDimOverlay")
+OverlayAlpha = 0.5
+RevealAnimationName = &"card/reveal"
+PlayerRevealAnimationName = &"card/player_reveal"
+EnemyRevealAnimationName = &"card/enemy_reveal"
+DamageAnimationName = &""
+
+[node name="CombatManager" type="Node3D" parent="." unique_id=1210621923 node_paths=PackedStringArray("PlayerCard", "EnemyCard", "DiceManager", "DiceSelectUI", "TurnIconSwapAnimator", "CameraDirector", "EffectDirector", "PlayerInfoPanel", "EnemyInfoPanel")]
+script = ExtResource("2_v1wow")
+PlayerCard = NodePath("../PlayerCard")
+EnemyCard = NodePath("../EnemyCard")
+DiceManager = NodePath("../DiceManager")
+DiceSelectUI = NodePath("../CanvasLayer/DiceSelect")
+TurnIconSwapAnimator = NodePath("../TurnIconSwapAnimator")
+CameraDirector = NodePath("../CombatCameraDirector3D")
+EffectDirector = NodePath("../CombatEffectDirector3D")
+PlayerInfoPanel = NodePath("../CanvasLayer/PlayerInfo")
+EnemyInfoPanel = NodePath("../CanvasLayer/EnemyInfo")
+
+[node name="DiceManager" type="Node3D" parent="." unique_id=1091329772]
+script = ExtResource("2_mlphb")
+Dice4 = ExtResource("10_miq82")
+Dice6 = ExtResource("11_ueiaa")
+Dice8 = ExtResource("12_mlphb")
+Dice12 = ExtResource("13_daj04")
+PresentationForwardOffset = 5.0
+
+[node name="TurnIconSwapAnimator" type="Node3D" parent="." unique_id=370150117 node_paths=PackedStringArray("AttackIcon", "DefenceIcon")]
+script = ExtResource("7_glbr4")
+AttackIcon = NodePath("../Env/Board/Sprite3D_Attack")
+DefenceIcon = NodePath("../Env/Board/Sprite3D_Defence")
+
+[node name="PlayerCard" parent="." unique_id=2030214544 instance=ExtResource("10_magc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 4)
+visible = false
+CurrentHealth = 36
+
+[node name="EnemyCard" parent="." unique_id=216828120 instance=ExtResource("11_magc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -4)
+visible = false
+
+[node name="Env" type="Node3D" parent="." unique_id=1669588455]
+
+[node name="Board" type="StaticBody3D" parent="Env" unique_id=999002941]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Env/Board" unique_id=1608429309]
+material_override = ExtResource("7_3d2pr")
+mesh = ExtResource("15_opqoc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/Board" unique_id=170911577]
+shape = SubResource("ConvexPolygonShape3D_bpcsf")
+
+[node name="RichText3D_DiceSelect" type="MeshInstance3D" parent="Env/Board" unique_id=1116248189]
+transform = Transform3D(10, 0, 0, 0, -4.371139e-07, 10, 0, -10, -4.371139e-07, 0, 1.21, -4.3711387e-10)
+material_override = SubResource("StandardMaterial3D_magc2")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_dtvpm")
+script = ExtResource("10_nuflt")
+text = "0"
+font = ExtResource("11_nuflt")
+font_size = 120
+size = Vector2(2, 1)
+metadata/_custom_type_script = "uid://cofw7sywoopgu"
+
+[node name="Sprite3D_Attack" type="Sprite3D" parent="Env/Board" unique_id=1041200001]
+transform = Transform3D(-1, 1.8199258e-06, 7.9551484e-14, 0, -4.371139e-08, 1, 1.8199258e-06, 1, 4.371139e-08, 0, 1.2100003, 5)
+texture = ExtResource("12_f54l4")
+
+[node name="Sprite3D_Defence" type="Sprite3D" parent="Env/Board" unique_id=1085229363]
+transform = Transform3D(-1, 1.8199258e-06, 7.9551484e-14, 0, -4.371139e-08, 1, 1.8199258e-06, 1, 4.371139e-08, 0, 1.2099998, -5)
+texture = ExtResource("13_5smy7")
+
+[node name="Sprite3D_Split" type="Sprite3D" parent="Env/Board" unique_id=186129604]
+transform = Transform3D(-6.010316e-08, -3, 0, -6.010316e-08, 5.732056e-15, 1, -1.375, 1.3113416e-07, -4.371139e-08, 0, 1.2, 0)
+render_priority = -1
+texture = ExtResource("12_if5p2")
+
+[node name="Sky" type="MeshInstance3D" parent="Env" unique_id=671240397]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 2.011448, -0.008369446, 0.37282753)
+material_override = ExtResource("8_bpcsf")
+cast_shadow = 0
+mesh = SubResource("SphereMesh_opqoc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1927304497]
+
+[node name="CombatDimOverlay" type="ColorRect" parent="CanvasLayer" unique_id=2009347731]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DiceSelect" type="Control" parent="CanvasLayer" unique_id=1457799445 node_paths=PackedStringArray("ContainerDiceSelect", "ButtonConfirm", "RichTextInfo", "RichTextDiceSelect")]
+layout_mode = 3
+anchor_left = 0.85
+anchor_top = 0.75
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("18_na8jj")
+ContainerDiceSelect = NodePath(".")
+ButtonConfirm = NodePath("Container_DiceSelect/Button_Confirm")
+RichTextInfo = NodePath("Container_DiceSelect/Button_Confirm/RichTextLabel_Info")
+RichTextDiceSelect = NodePath("../../Env/Board/RichText3D_DiceSelect")
+
+[node name="Container_DiceSelect" type="AspectRatioContainer" parent="CanvasLayer/DiceSelect" unique_id=39477361]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 0.06399536
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment_vertical = 2
+
+[node name="Button_Confirm" type="Button" parent="CanvasLayer/DiceSelect/Container_DiceSelect" unique_id=668537785]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7nf4l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cxwtw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1hpar")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1qokk")
+disabled = true
+script = ExtResource("19_na8jj")
+AdjustCornerRadius = true
+CornerRadiusFactor = Vector4(0.5, 0.5, 0.5, 0.5)
+AdjustBorder = true
+BorderFactor = Vector4(0, 0, 0, 0.1)
+StyleBoxNames = PackedStringArray("normal", "pressed", "hover", "disabled")
+
+[node name="RichTextLabel_Info" type="RichTextLabel" parent="CanvasLayer/DiceSelect/Container_DiceSelect/Button_Confirm" unique_id=309582240]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("18_snaye")
+theme_override_fonts/bold_font = ExtResource("19_1wc4g")
+theme_override_font_sizes/normal_font_size = 69
+theme_override_font_sizes/bold_font_size = 69
+bbcode_enabled = true
+text = "[b]0/3[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("22_jv0we")
+AdjustFontSize = true
+FontSizeFactor = 0.36
+FontSizeNames = PackedStringArray("normal_font_size", "bold_font_size")
+
+[node name="RichTextLabel_Confirm" type="RichTextLabel" parent="CanvasLayer/DiceSelect" unique_id=462766672]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.785
+anchor_right = 1.0
+anchor_bottom = 1.05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("18_snaye")
+theme_override_fonts/bold_font = ExtResource("19_1wc4g")
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_1t5pe")
+bbcode_enabled = true
+text = "[b]确认选择[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("22_jv0we")
+AdjustCornerRadius = true
+CornerRadiusFactor = Vector4(1, 0.25, 0.25, 1)
+AdjustBorder = true
+BorderFactor = Vector4(0, 0, 0.1, 0.1)
+StyleBoxNames = PackedStringArray("normal")
+AdjustFontSize = true
+FontSizeFactor = 0.4
+FontSizeNames = PackedStringArray("normal_font_size", "bold_font_size")
+
+[node name="PlayerInfo" type="PanelContainer" parent="CanvasLayer" unique_id=860895600 node_paths=PackedStringArray("BoundCard")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 335.0
+offset_right = 440.0
+offset_bottom = 455.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("31_magc2")
+theme_type_variation = &"PlayerPanelContainer"
+script = ExtResource("37_uiip")
+BoundCard = NodePath("../../PlayerCard")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerInfo" unique_id=1955674188]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Spacer1" type="Control" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=2087577420]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="RichTextLabel_Description" type="RichTextLabel" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=1814764310]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "攻击回合时，固定增加 [color=ff8800]5[/color] 点伤害"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=235357322]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="Control_Health" type="Control" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=2069967882]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Health" unique_id=579055048]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 108.0
+scale = Vector2(0.667, 0.667)
+max_value = 36.0
+value = 36.0
+fill_mode = 3
+texture_under = ExtResource("32_7nf4l")
+texture_progress = ExtResource("33_cxwtw")
+texture_progress_offset = Vector2(6, 6)
+tint_under = Color(0, 0.045333292, 0.34, 1)
+tint_progress = Color(0.25882354, 0.52156866, 0.95686275, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Health" unique_id=1243619604]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 72.0
+offset_bottom = 77.0
+theme_type_variation = &"HealthTextLabel"
+bbcode_enabled = true
+text = "[b]36[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer3" type="Control" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=976787850]
+layout_mode = 2
+
+[node name="Control_Avatar" type="Control" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=1140218217]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="TextureRect_Avatar" type="TextureRect" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Avatar" unique_id=260617089]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 132.0
+offset_bottom = 132.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("29_magc2")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Avatar/TextureRect_Avatar" unique_id=314401899]
+layout_mode = 0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 125.0
+offset_bottom = 125.0
+theme_type_variation = &"AvatarOutline"
+
+[node name="TextureRect_Attack" type="TextureRect" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Avatar" unique_id=264875821]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 80.0
+offset_right = 93.0
+offset_bottom = 188.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("35_cxwtw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Avatar/TextureRect_Attack" unique_id=711554922]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 96.0
+offset_bottom = 100.0
+theme_type_variation = &"AttackDefenceLabel"
+bbcode_enabled = true
+text = "[b]3[/b]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect_Defence" type="TextureRect" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Avatar" unique_id=1977194316]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 188.0
+offset_bottom = 188.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("36_1hpar")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/PlayerInfo/HBoxContainer/Control_Avatar/TextureRect_Defence" unique_id=2020540493]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 96.0
+offset_bottom = 100.0
+theme_type_variation = &"AttackDefenceLabel"
+bbcode_enabled = true
+text = "[b]2[/b]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer4" type="Control" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=271151918]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="EnemyInfo" type="PanelContainer" parent="CanvasLayer" unique_id=1362414603 node_paths=PackedStringArray("BoundCard")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -455.0
+offset_right = 160.0
+offset_bottom = -335.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("31_magc2")
+theme_type_variation = &"EnemyPanelContainer"
+script = ExtResource("37_uiip")
+BoundCard = NodePath("../../EnemyCard")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/EnemyInfo" unique_id=1970961595]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Spacer4" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=632274367]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="Control_Avatar" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=261084463]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="TextureRect_Avatar" type="TextureRect" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Avatar" unique_id=1707477649]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 132.0
+offset_bottom = 132.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("32_dtvpm")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Panel" type="Panel" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Avatar/TextureRect_Avatar" unique_id=658850766]
+layout_mode = 0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 125.0
+offset_bottom = 125.0
+theme_type_variation = &"AvatarOutline"
+
+[node name="TextureRect_Attack" type="TextureRect" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Avatar" unique_id=863623630]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 80.0
+offset_right = 93.0
+offset_bottom = 188.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("35_cxwtw")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Avatar/TextureRect_Attack" unique_id=489460655]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 96.0
+offset_bottom = 100.0
+theme_type_variation = &"AttackDefenceLabel"
+bbcode_enabled = true
+text = "[b]5[/b]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect_Defence" type="TextureRect" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Avatar" unique_id=1955666964]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 188.0
+offset_bottom = 188.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("36_1hpar")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Avatar/TextureRect_Defence" unique_id=2121590533]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 96.0
+offset_bottom = 100.0
+theme_type_variation = &"AttackDefenceLabel"
+bbcode_enabled = true
+text = "[b]1[/b]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer3" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=1621389016]
+layout_mode = 2
+
+[node name="Control_Health" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=114390752]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Health" unique_id=988238697]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 108.0
+scale = Vector2(0.667, 0.667)
+max_value = 18.0
+value = 18.0
+fill_mode = 3
+texture_under = ExtResource("32_7nf4l")
+texture_progress = ExtResource("33_cxwtw")
+texture_progress_offset = Vector2(6, 6)
+tint_under = Color(0, 0.047058824, 0.34117648, 1)
+tint_progress = Color(1, 0.54901963, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/EnemyInfo/HBoxContainer/Control_Health" unique_id=1678664168]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 72.0
+offset_bottom = 77.0
+theme_type_variation = &"HealthTextLabel"
+bbcode_enabled = true
+text = "[b]18[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=2049235640]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
+[node name="RichTextLabel_Description" type="RichTextLabel" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=1049369917]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "这里填写[color=#FFB6C1]技能描述[/color]"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=935526079]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2

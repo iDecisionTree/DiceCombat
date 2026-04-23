@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cyrw1fevgyo01"]
+
+[ext_resource type="Shader" uid="uid://bfsi4v6r0ccq3" path="res://shaders/s_dice4.gdshader" id="1_a2t8y"]
+[ext_resource type="Texture2D" uid="uid://c2nf5lqllbsjr" path="res://textures/dice/Noise.png" id="2_a2t8y"]
+[ext_resource type="Texture2D" uid="uid://cgrxqee1nv3qn" path="res://textures/dice/DiceNum1.png" id="3_dbra0"]
+[ext_resource type="Texture2D" uid="uid://x2m11im230bb" path="res://textures/dice/DiceNum2.png" id="4_38xa8"]
+[ext_resource type="Texture2D" uid="uid://dolegvi4t1qpp" path="res://textures/dice/DiceNum3.png" id="5_yjoej"]
+[ext_resource type="Texture2D" uid="uid://ce5tjur6u4gvg" path="res://textures/dice/DiceNum4.png" id="6_pryrh"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_a2t8y")
+shader_parameter/dice_noise = ExtResource("2_a2t8y")
+shader_parameter/dice_num1 = ExtResource("3_dbra0")
+shader_parameter/dice_num2 = ExtResource("4_38xa8")
+shader_parameter/dice_num3 = ExtResource("5_yjoej")
+shader_parameter/dice_num4 = ExtResource("6_pryrh")
+shader_parameter/noise_strength = 0.75
+shader_parameter/num_scale = Vector2(1.5, 1.5)
+shader_parameter/num_offset = Vector2(0, -0.15)
+shader_parameter/num_flip_x = true
+shader_parameter/albedo_color = Color(0.61353743, 0.5417477, 0.988635, 1)

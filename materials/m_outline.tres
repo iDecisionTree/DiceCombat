@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cj831d5wyxxsb"]
+
+[ext_resource type="Shader" uid="uid://dsml64mt84nlf" path="res://shaders/s_outline.gdshader" id="1_lhc53"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lhc53")
+shader_parameter/color = Color(1, 1, 1, 1)

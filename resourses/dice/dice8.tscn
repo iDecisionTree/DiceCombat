@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://cxq6jw5mcrybt"]
+
+[ext_resource type="Script" uid="uid://b22p3qcew6pv1" path="res://scripts/dice/Dice.cs" id="1_qdnwx"]
+[ext_resource type="Material" uid="uid://sdtycitf45eu" path="res://materials/m_dice8.tres" id="1_srmgy"]
+[ext_resource type="ArrayMesh" uid="uid://cdaglemp1si2p" path="res://models/dice/dice8.obj" id="2_qdnwx"]
+[ext_resource type="Material" uid="uid://cj831d5wyxxsb" path="res://materials/m_outline.tres" id="4_p72j5"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_srmgy"]
+points = PackedVector3Array(-0.35304958, -0.6176525, -0.029297953, 0.029303351, 0.9413933, 0.029303351, 0.058780175, 0.70591486, 0.23530497, 0.9413933, -0.029303351, -0.029303351, -0.029303351, 0.029303351, -0.9413933, -0.029303351, -0.029303351, 0.9413933, -0.9413933, 0.029303351, 0.029303351, 0.029303351, -0.9413933, -0.029303351, 0.9413933, -0.029303351, 0.029303351, 0.029303351, 0.029303351, -0.9413933, -0.029303351, 0.9413933, -0.029303351, -0.029303351, 0.029303351, 0.9413933, -0.9413933, 0.029303351, -0.029303351, -0.029303351, -0.9413933, 0.029303351, 0.9413933, 0.029303351, -0.029303351, -0.029303351, -0.029303351, -0.9413933, 0.029303351, -0.029303351, 0.9413933, -0.9413933, -0.029303351, 0.029303351, -0.029303351, 0.9413933, 0.029303351, 0.029303351, -0.029303351, -0.9413933, 0.029303351, -0.9413933, 0.029303351, 0.029303351, 0.9413933, -0.029303351, 0.9413933, 0.029303351, 0.029303351, 0.029303351, 0.029303351, 0.9413933, -0.9413933, -0.029303351, -0.029303351, -0.029303351, -0.9413933, -0.029303351)
+
+[node name="Dice8" type="RigidBody3D" unique_id=1057962293 node_paths=PackedStringArray("Face1", "Face2", "Face3", "Face4", "Face5", "Face6", "Face7", "Face8", "Outline")]
+script = ExtResource("1_qdnwx")
+DiceType = 2
+Face1 = NodePath("Node3D_Face1")
+Face2 = NodePath("Node3D_Face2")
+Face3 = NodePath("Node3D_Face3")
+Face4 = NodePath("Node3D_Face4")
+Face5 = NodePath("Node3D_Face5")
+Face6 = NodePath("Node3D_Face6")
+Face7 = NodePath("Node3D_Face7")
+Face8 = NodePath("Node3D_Face8")
+Outline = NodePath("MeshInstance3D_Outline")
+OutlineWidth = 0.2
+OutlineColor = Color(1, 1, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1096003485]
+material_override = ExtResource("1_srmgy")
+cast_shadow = 0
+mesh = ExtResource("2_qdnwx")
+
+[node name="MeshInstance3D_Outline" type="MeshInstance3D" parent="." unique_id=1230118383]
+material_override = ExtResource("4_p72j5")
+cast_shadow = 0
+mesh = ExtResource("2_qdnwx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1334890656]
+shape = SubResource("ConvexPolygonShape3D_srmgy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=962757005]
+root_node = NodePath("../MeshInstance3D")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=900686051]
+
+[node name="Node3D_Face1" type="Node3D" parent="." unique_id=548895965]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.333, -0.333, 0.333)
+
+[node name="Node3D_Face2" type="Node3D" parent="." unique_id=266602352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.333, 0.333, 0.333)
+
+[node name="Node3D_Face3" type="Node3D" parent="." unique_id=1116087431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.333, -0.333, -0.333)
+
+[node name="Node3D_Face4" type="Node3D" parent="." unique_id=1413591019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.333, 0.333, -0.333)
+
+[node name="Node3D_Face5" type="Node3D" parent="." unique_id=52419967]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, -0.333, 0.333)
+
+[node name="Node3D_Face6" type="Node3D" parent="." unique_id=1998658620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.333, 0.333)
+
+[node name="Node3D_Face7" type="Node3D" parent="." unique_id=283204899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, -0.333, -0.333)
+
+[node name="Node3D_Face8" type="Node3D" parent="." unique_id=1461094941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333, 0.333, -0.333)

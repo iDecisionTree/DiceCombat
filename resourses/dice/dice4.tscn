@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://2dt7oqc5i6x5"]
+
+[ext_resource type="Script" uid="uid://b22p3qcew6pv1" path="res://scripts/dice/Dice.cs" id="1_lrtto"]
+[ext_resource type="Material" uid="uid://cyrw1fevgyo01" path="res://materials/m_dice4.tres" id="1_y4xxr"]
+[ext_resource type="ArrayMesh" uid="uid://cwxi1ryyrbj18" path="res://models/dice/dice4.obj" id="2_lrtto"]
+[ext_resource type="Material" uid="uid://cj831d5wyxxsb" path="res://materials/m_outline.tres" id="4_ifrff"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lrtto"]
+points = PackedVector3Array(0.01950012, 0.703173, 0.025829613, -0.61493945, -0.30589998, -0.3556464, -0.62699676, -0.31569678, -0.32699418, 0.6269641, -0.31569678, -0.32688677, -0.01965547, -0.31569678, 0.7310476, -0.03917189, 0.6835256, -0.013373017, 0.6269641, -0.27640212, -0.3661968, 0.01950012, -0.25685447, 0.7112851, -0.62699676, -0.27650183, -0.3661968, -0.01965547, 0.6835256, 0.045269832, -0.62699676, -0.27650183, -0.32699418, 0.6269641, -0.27640212, -0.32688677, -0.01965547, -0.25685447, 0.7112851, 0.05865571, 0.6443307, 0.006174594, 0.01950012, -0.31569678, 0.7310476, 0.039139286, 0.6835256, -0.013373017, 0.6149068, -0.30589998, -0.3556464, -0.058688313, 0.6443307, 0.006174594, 0.01950012, 0.5463931, 0.14333014, 0.01950012, -0.29604948, 0.7310476, -0.01965547, -0.29604948, 0.7310476, 0.07829487, 0.62478304, -0.03302805, -0.07832748, 0.62478304, -0.03302805, -0.01965547, 0.5463931, 0.14333014, 0.52901375, -0.29604948, -0.15052858, -0.52892363, -0.31569678, -0.15063599, 0.45057982, 0.017410576, -0.24858889, -0.4504897, 0.017410576, -0.24858889, 0.60732496, -0.31569678, -0.2876841, 0.13708964, 0.52674574, -0.05268307, -0.13712224, 0.52674574, -0.05268307, -0.52892363, -0.29604948, -0.15063599)
+
+[node name="Dice4" type="RigidBody3D" unique_id=83198919 node_paths=PackedStringArray("Face1", "Face2", "Face3", "Face4", "Outline")]
+script = ExtResource("1_lrtto")
+Face1 = NodePath("Node3D_Face1")
+Face2 = NodePath("Node3D_Face2")
+Face3 = NodePath("Node3D_Face3")
+Face4 = NodePath("Node3D_Face4")
+Outline = NodePath("MeshInstance3D_Outline")
+OutlineWidth = 0.2
+OutlineColor = Color(1, 1, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1750012235]
+material_override = ExtResource("1_y4xxr")
+cast_shadow = 0
+mesh = ExtResource("2_lrtto")
+
+[node name="MeshInstance3D_Outline" type="MeshInstance3D" parent="." unique_id=643407450]
+material_override = ExtResource("4_ifrff")
+cast_shadow = 0
+mesh = ExtResource("2_lrtto")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=608951122]
+shape = SubResource("ConvexPolygonShape3D_lrtto")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1954031131]
+root_node = NodePath("../MeshInstance3D")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=616500322]
+
+[node name="Node3D_Face1" type="Node3D" parent="." unique_id=286577414]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.306, 0)
+
+[node name="Node3D_Face2" type="Node3D" parent="." unique_id=1319950780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.206, 0.03, 0.119)
+
+[node name="Node3D_Face3" type="Node3D" parent="." unique_id=1428774604]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.206, 0.03, 0.119)
+
+[node name="Node3D_Face4" type="Node3D" parent="." unique_id=385962336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -0.238)

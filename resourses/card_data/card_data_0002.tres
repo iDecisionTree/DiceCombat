@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://7gp3e1icqxy0"]
+
+[ext_resource type="Texture2D" uid="uid://cqaif06h7i4i" path="res://textures/card/AvatarCardFigure_1415.png" id="1_dea3n"]
+[ext_resource type="Script" uid="uid://bpx3004eh178x" path="res://scripts/card/CardData.cs" id="1_w3mji"]
+[ext_resource type="Texture2D" uid="uid://lwpyunaxab7c" path="res://textures/card/AvatarCardFigure_1415_Bg.png" id="2_c7y3b"]
+[ext_resource type="Script" uid="uid://b5wrle1aql1vh" path="res://scripts/dice/DiceSet.cs" id="3_rwfbv"]
+[ext_resource type="Texture2D" uid="uid://cohqkh5w5c51g" path="res://textures/card/AvatarCardFigureInfo_1415.png" id="4_c7y3b"]
+
+[sub_resource type="Resource" id="Resource_2qpin"]
+script = ExtResource("3_rwfbv")
+Count = 3
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_11luf"]
+script = ExtResource("3_rwfbv")
+DiceType = 1
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_qnqce"]
+script = ExtResource("3_rwfbv")
+DiceType = 2
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[sub_resource type="Resource" id="Resource_qn4bu"]
+script = ExtResource("3_rwfbv")
+DiceType = 3
+Count = 2
+metadata/_custom_type_script = "uid://b5wrle1aql1vh"
+
+[resource]
+script = ExtResource("1_w3mji")
+CardId = "0002"
+CardName = "卡牌0002"
+Description = "这是[color=#FFB6C1]富文本[/color]测试"
+CardBackground = ExtResource("2_c7y3b")
+CardAvatar = ExtResource("1_dea3n")
+InfoAvatar = ExtResource("4_c7y3b")
+Attack = 3
+Defense = 2
+MaxHealth = 40
+DiceGroups = [SubResource("Resource_2qpin"), SubResource("Resource_11luf"), SubResource("Resource_qnqce"), SubResource("Resource_qn4bu")]
+metadata/_custom_type_script = "uid://bpx3004eh178x"
