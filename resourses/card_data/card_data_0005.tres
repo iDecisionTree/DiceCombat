@@ -38,5 +38,6 @@ InfoAvatar = ExtResource("4_j83od")
 Attack = 5
 Defense = 1
 MaxHealth = 18
+MaxReroll = 5
 DiceGroups = [SubResource("Resource_2qpin"), SubResource("Resource_11luf"), SubResource("Resource_qnqce"), SubResource("Resource_qn4bu")]
 metadata/_custom_type_script = "uid://bpx3004eh178x"

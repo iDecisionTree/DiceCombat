@@ -19,6 +19,7 @@ public partial class CardData : Resource
 	[Export] public int Attack { get; set; }
 	[Export] public int Defense { get; set; }
 	[Export] public int MaxHealth { get; set; }
+	[Export] public int MaxReroll { get; set; }
 	
 	// 骰子池
 	[Export] public DiceSet[] DiceGroups { get; set; }

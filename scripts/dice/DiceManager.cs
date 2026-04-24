@@ -39,6 +39,7 @@ public partial class DiceManager : Node3D
 	private int _selectedCount;
 	private bool _presentationIsEnemyTurn;
 	private Action _onFinished;
+	private readonly Dictionary<Dice, Dice.RollFinishedEventHandler> _rollFinishedHandlers = new Dictionary<Dice, Dice.RollFinishedEventHandler>();
 
 	public int CurrentSelectedCount => _selectedCount;
 
@@ -51,6 +52,7 @@ public partial class DiceManager : Node3D
 		_selectedCount = 0;
 		_presentationIsEnemyTurn = false;
 		_onFinished = null;
+		_rollFinishedHandlers.Clear();
 	}
 
 	public void PlaySelectionAnimation(List<DiceData> selectedDiceData, Action<int> onDiceRevealed, Action onFinished)
@@ -182,12 +184,130 @@ public partial class DiceManager : Node3D
 				(float)GD.RandRange(-1f, 1f)
 			) * (TorqueImpulseStrength * torqueScale);
 
-			dice.RollFinished += result => OnSingleDiceRollFinished(data, result);
+			AttachRollFinishedHandler(dice, result => OnSingleDiceRollFinished(data, result));
 			dice.Selected += OnDiceSelected;
 			
 			dice.ApplyCentralImpulse(launchImpulse);
 			dice.ApplyTorqueImpulse(spinImpulse);
 		}
+	}
+
+	public bool PlayRerollAnim(List<DiceData> selectedDiceData, Action onFinished)
+	{
+		List<Dice> currentDice = GetCurrentDice();
+		if (currentDice.Count == 0 || selectedDiceData == null || selectedDiceData.Count == 0)
+		{
+			return false;
+		}
+
+		Dictionary<DiceData, Dice> diceByData = currentDice
+			.Where(dice => dice.DiceData != null && selectedDiceData.Contains(dice.DiceData))
+			.ToDictionary(dice => dice.DiceData, dice => dice);
+		List<(Dice dice, Transform3D originalTransform)> targetDice = new List<(Dice dice, Transform3D originalTransform)>();
+
+		foreach (DiceData data in selectedDiceData)
+		{
+			if (data != null && diceByData.TryGetValue(data, out Dice dice))
+			{
+				targetDice.Add((dice, dice.Transform));
+			}
+		}
+
+		if (targetDice.Count == 0)
+		{
+			return false;
+		}
+
+		SetCurrentDiceSelectable(false);
+		int[] finishedCount = { 0 };
+		bool returnTweenStarted = false;
+		float centerStartX = -((targetDice.Count - 1) * DiceSpacing) * 0.5f;
+
+		void FinishRerollPresentation()
+		{
+			if (returnTweenStarted)
+			{
+				return;
+			}
+
+			returnTweenStarted = true;
+			Tween tween = CreateTween();
+
+			for (int i = 0; i < targetDice.Count; i++)
+			{
+				(Dice dice, Transform3D originalTransform) = targetDice[i];
+				Transform3D targetTransform = dice.GetPresentationTransform(originalTransform.Origin);
+
+				tween.Parallel().TweenProperty(dice, "transform", targetTransform, PresentationDuration)
+					.SetTrans(Tween.TransitionType.Sine)
+					.SetEase(Tween.EaseType.Out);
+			}
+
+			tween.Finished += () =>
+			{
+				SetCurrentDiceSelectable(true);
+				onFinished?.Invoke();
+			};
+		}
+
+		for (int i = 0; i < targetDice.Count; i++)
+		{
+			Dice dice = targetDice[i].dice;
+			void HandleRollFinished(int result)
+			{
+				dice.RollFinished -= HandleRollFinished;
+				if (dice.DiceData != null)
+				{
+					dice.DiceData.Num = result;
+				}
+
+				finishedCount[0]++;
+				GD.Print($"DiceManager: 重投结束, face={result}, progress={finishedCount[0]}/{targetDice.Count}");
+
+				if (finishedCount[0] >= targetDice.Count)
+				{
+					FinishRerollPresentation();
+				}
+			}
+
+			AttachRollFinishedHandler(dice, HandleRollFinished);
+			dice.CanBeSelected = false;
+			dice.ConfigureRollTiming(StableTimeRequired, MaxRollTime, LinearSleepThreshold, AngularSleepThreshold);
+			float centerX = centerStartX + i * DiceSpacing;
+			dice.Position = new Vector3(
+				centerX + (float)GD.RandRange(-SpawnAreaHalfExtents.X, SpawnAreaHalfExtents.X),
+				SpawnHeight,
+				(float)GD.RandRange(-SpawnAreaHalfExtents.Y, SpawnAreaHalfExtents.Y)
+			);
+			dice.Freeze = true;
+			dice.Sleeping = false;
+			dice.LinearVelocity = Vector3.Zero;
+			dice.AngularVelocity = Vector3.Zero;
+			dice.RotationDegrees = new Vector3(
+				GD.Randf() * 360f,
+				GD.Randf() * 360f,
+				GD.Randf() * 360f
+			);
+			dice.Freeze = false;
+			dice.BeginRollTracking();
+
+			(float horizontalScale, float torqueScale) = GetImpulseScale(dice.DiceType);
+			Vector3 launchImpulse = new Vector3(
+				(float)GD.RandRange(-RollHorizontalImpulse, RollHorizontalImpulse),
+				RollUpImpulse,
+				(float)GD.RandRange(-RollHorizontalImpulse, RollHorizontalImpulse)
+			) * new Vector3(horizontalScale, 1f, horizontalScale);
+			Vector3 spinImpulse = new Vector3(
+				(float)GD.RandRange(-1f, 1f),
+				(float)GD.RandRange(-1f, 1f),
+				(float)GD.RandRange(-1f, 1f)
+			) * (TorqueImpulseStrength * torqueScale);
+
+			dice.ApplyCentralImpulse(launchImpulse);
+			dice.ApplyTorqueImpulse(spinImpulse);
+		}
+
+		return true;
 	}
 
 	private Dice CreateDiceNode(DiceType diceType)
@@ -247,6 +367,8 @@ public partial class DiceManager : Node3D
 				child.QueueFree();
 			}
 		}
+
+		_rollFinishedHandlers.Clear();
 	}
 
 	private void ResetSelectionCount()
@@ -405,5 +527,31 @@ public partial class DiceManager : Node3D
 		}
 
 		ResetSelectionCount();
+	}
+
+	private void DetachRollFinishedHandler(Dice dice)
+	{
+		if (dice == null)
+		{
+			return;
+		}
+
+		if (_rollFinishedHandlers.TryGetValue(dice, out Dice.RollFinishedEventHandler handler))
+		{
+			dice.RollFinished -= handler;
+			_rollFinishedHandlers.Remove(dice);
+		}
+	}
+
+	private void AttachRollFinishedHandler(Dice dice, Dice.RollFinishedEventHandler handler)
+	{
+		if (dice == null || handler == null)
+		{
+			return;
+		}
+
+		DetachRollFinishedHandler(dice);
+		_rollFinishedHandlers[dice] = handler;
+		dice.RollFinished += handler;
 	}
 }

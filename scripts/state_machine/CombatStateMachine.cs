@@ -17,6 +17,7 @@ public partial class CombatStateMachine : Node
 
   [Export] public DiceManager DiceManager { get; set; }
   [Export] public DiceSelectUI DiceSelectUI { get; set; }
+  [Export] public DiceRerollUI DiceRerollUI { get; set; }
   [Export] public TurnIconSwapAnimator TurnIconSwapAnimator { get; set; }
 
   [ExportGroup("Presentation Hooks")]
@@ -38,7 +39,9 @@ public partial class CombatStateMachine : Node
   private int _roundCount;
   private bool _combatStarted;
   private bool _waitingForPlayerConfirm;
+  private bool _isPlayerRerolling;
   private int _currentRequiredSelectionCount;
+  private int _playerRerollRemaining;
   private int _resolutionSequenceToken;
 
   public override void _Ready()
@@ -55,6 +58,11 @@ public partial class CombatStateMachine : Node
       DiceSelectUI.ConfirmClicked += OnDiceSelectUIConfirmClicked;
     }
 
+    if (DiceRerollUI != null)
+    {
+      DiceRerollUI.RerollClicked += OnDiceRerollClicked;
+    }
+
     StartBattle();
   }
 
@@ -69,6 +77,11 @@ public partial class CombatStateMachine : Node
     {
       DiceSelectUI.ConfirmClicked -= OnDiceSelectUIConfirmClicked;
     }
+
+    if (DiceRerollUI != null)
+    {
+      DiceRerollUI.RerollClicked -= OnDiceRerollClicked;
+    }
   }
 
   public void StartBattle()
@@ -79,7 +92,9 @@ public partial class CombatStateMachine : Node
     _currentTurn = CombatTurn.Player;
     _currentState = CombatState.PlayerRollAllDice;
     _waitingForPlayerConfirm = false;
+    _isPlayerRerolling = false;
     _currentRequiredSelectionCount = 0;
+    _playerRerollRemaining = GetPlayerMaxReroll();
 
     ResetBattlePresentation();
     _cameraDirector.OnBattleStarted();
@@ -110,6 +125,7 @@ public partial class CombatStateMachine : Node
 
     DiceManager?.ResetBattlefield();
     DiceSelectUI?.Close();
+    DiceRerollUI?.Close();
     TurnIconSwapAnimator?.ResetToHome();
     _cameraDirector.ResetCamera();
     _effectDirector.ResetEffects();
@@ -204,15 +220,16 @@ public partial class CombatStateMachine : Node
   private void ExecutePlayerConfirm()
   {
     _waitingForPlayerConfirm = true;
+    _isPlayerRerolling = false;
     _currentRequiredSelectionCount = GetRequiredSelectionCount(PlayerCard, _currentTurn);
 
     if (DiceSelectUI != null)
     {
-      int selectedCount = DiceManager != null ? DiceManager.CurrentSelectedCount : 0;
-      int selectedTotalPoints = DiceManager != null ? DiceManager.GetSelectedDiceTotalPoints() : 0;
-      DiceSelectUI.SetSelectionProgress(selectedCount, _currentRequiredSelectionCount, selectedTotalPoints);
       DiceSelectUI.Open();
     }
+
+    DiceRerollUI?.Open();
+    RefreshPlayerChoiceUI();
 
     GD.Print("等待玩家点击确认按钮");
   }
@@ -224,22 +241,21 @@ public partial class CombatStateMachine : Node
       return;
     }
 
-    int selectedTotalPoints = DiceManager != null ? DiceManager.GetSelectedDiceTotalPoints() : 0;
-    DiceSelectUI.SetSelectionProgress(selectedCount, _currentRequiredSelectionCount, selectedTotalPoints);
+    RefreshPlayerChoiceUI();
   }
 
   private void OnDiceSelectUIConfirmClicked()
   {
-    if (!_waitingForPlayerConfirm || _currentState != CombatState.PlayerConfirm)
+    if (!_waitingForPlayerConfirm || _currentState != CombatState.PlayerConfirm || _isPlayerRerolling)
     {
       GD.Print("确认按钮点击被忽略, 当前不在等待确认状态");
       return;
     }
 
     int selectedCount = DiceManager != null ? DiceManager.CurrentSelectedCount : 0;
-    if (selectedCount < _currentRequiredSelectionCount)
+    if (selectedCount != _currentRequiredSelectionCount)
     {
-      GD.Print($"确认按钮点击被忽略, 选择骰子数量不足, 当前={selectedCount}, 需要={_currentRequiredSelectionCount}");
+      GD.Print($"确认按钮点击被忽略, 选择骰子数量不匹配, 当前={selectedCount}, 需要={_currentRequiredSelectionCount}");
       if (DiceSelectUI != null)
       {
         int selectedTotalPoints = DiceManager != null ? DiceManager.GetSelectedDiceTotalPoints() : 0;
@@ -252,9 +268,47 @@ public partial class CombatStateMachine : Node
     ContinueAfterPlayerConfirm();
   }
 
+  private void OnDiceRerollClicked()
+  {
+    if (!_waitingForPlayerConfirm || _currentState != CombatState.PlayerConfirm || _currentTurn != CombatTurn.Player || _isPlayerRerolling)
+    {
+      return;
+    }
+
+    if (_playerRerollRemaining <= 0 || DiceManager == null)
+    {
+      RefreshPlayerChoiceUI();
+      return;
+    }
+
+    List<DiceData> selectedDice = DiceManager.GetSelectedDiceData();
+    if (selectedDice.Count == 0)
+    {
+      RefreshPlayerChoiceUI();
+      return;
+    }
+
+    _isPlayerRerolling = true;
+    RefreshPlayerChoiceUI();
+
+    if (!DiceManager.PlayRerollAnim(selectedDice, OnPlayerRerollFinished))
+    {
+      _isPlayerRerolling = false;
+      RefreshPlayerChoiceUI();
+    }
+  }
+
+  private void OnPlayerRerollFinished()
+  {
+    _isPlayerRerolling = false;
+    _playerRerollRemaining = Math.Max(_playerRerollRemaining - 1, 0);
+    RefreshPlayerChoiceUI();
+  }
+
   private void ContinueAfterPlayerConfirm()
   {
     _waitingForPlayerConfirm = false;
+    _isPlayerRerolling = false;
     _playerChooseDices.Clear();
 
     if (DiceManager != null)
@@ -263,6 +317,7 @@ public partial class CombatStateMachine : Node
     }
 
     DiceSelectUI?.Close();
+    DiceRerollUI?.Close();
     TransitionTo(_currentTurn == CombatTurn.Player ? CombatState.EnemyRollAllDice : CombatState.ResolveDamage);
   }
 
@@ -321,6 +376,8 @@ public partial class CombatStateMachine : Node
       DiceSelectUI.SetSelection3DText("0");
       DiceSelectUI.SetSelection3DVisible(true);
     }
+
+    DiceRerollUI?.Close();
 
     int revealTotalPoints = 0;
     DiceManager.PlaySelectionAnimation(_enemyChooseDices, revealedPoints =>
@@ -452,7 +509,9 @@ public partial class CombatStateMachine : Node
   private void ExecuteVictory()
   {
     _waitingForPlayerConfirm = false;
+    _isPlayerRerolling = false;
     DiceSelectUI?.Close();
+    DiceRerollUI?.Close();
     SetBattleCardsVisible(false);
     _cameraDirector.OnBattleEnded(CombatState.Victory);
     GD.Print("游戏结束, 玩家胜利");
@@ -461,7 +520,9 @@ public partial class CombatStateMachine : Node
   private void ExecuteDefeat()
   {
     _waitingForPlayerConfirm = false;
+    _isPlayerRerolling = false;
     DiceSelectUI?.Close();
+    DiceRerollUI?.Close();
     SetBattleCardsVisible(false);
     _cameraDirector.OnBattleEnded(CombatState.Defeat);
     GD.Print("游戏结束, 玩家失败");
@@ -514,6 +575,34 @@ public partial class CombatStateMachine : Node
   {
     PlayerInfoPanel?.RefreshFromCard();
     EnemyInfoPanel?.RefreshFromCard();
+  }
+
+  private void RefreshPlayerChoiceUI()
+  {
+    int selectedCount = DiceManager != null ? DiceManager.CurrentSelectedCount : 0;
+    int selectedTotalPoints = DiceManager != null ? DiceManager.GetSelectedDiceTotalPoints() : 0;
+
+    if (DiceSelectUI != null)
+    {
+      DiceSelectUI.SetSelectionProgress(selectedCount, _currentRequiredSelectionCount, selectedTotalPoints);
+      DiceSelectUI.SetConfirmEnabled(_waitingForPlayerConfirm && !_isPlayerRerolling && _currentState == CombatState.PlayerConfirm && selectedCount == _currentRequiredSelectionCount);
+    }
+
+    if (DiceRerollUI != null)
+    {
+      DiceRerollUI.SetRerollCount(_playerRerollRemaining);
+      DiceRerollUI.SetEnabled(_waitingForPlayerConfirm && !_isPlayerRerolling && _currentState == CombatState.PlayerConfirm && _currentTurn == CombatTurn.Player && _playerRerollRemaining > 0 && selectedCount > 0);
+    }
+  }
+
+  private int GetPlayerMaxReroll()
+  {
+    if (PlayerCard?.CardData == null)
+    {
+      return 0;
+    }
+
+    return Math.Max(PlayerCard.CardData.MaxReroll, 0);
   }
 
   private static string FormatDiceValues(IEnumerable<DiceData> dices)

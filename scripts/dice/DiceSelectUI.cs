@@ -23,12 +23,14 @@ public partial class DiceSelectUI : Control
 
 	public override void _Ready()
 	{
+		CacheNodes();
+
 		if (ButtonConfirm != null)
 		{
 			ButtonConfirm.Pressed += OnConfirmPressed;
 		}
 
-		if (RichTextDiceSelect != null)
+		if (_richTextDiceSelect == null && RichTextDiceSelect != null)
 		{
 			_richTextDiceSelect = new RichText3DWrapper(RichTextDiceSelect);
 		}
@@ -36,6 +38,14 @@ public partial class DiceSelectUI : Control
 		ResetConfirmState();
 		RefreshSelectionText();
 		SetSelectionDisplayVisible(false);
+	}
+
+	public override void _ExitTree()
+	{
+		if (ButtonConfirm != null)
+		{
+			ButtonConfirm.Pressed -= OnConfirmPressed;
+		}
 	}
 
 	private void OnConfirmPressed()
@@ -51,22 +61,22 @@ public partial class DiceSelectUI : Control
 
 	public void Open()
 	{
-		Visible = true;
-		SetSelectionDisplayVisible(true);
+		SetConfirmVisible(true);
 		ResetConfirmState();
 		RefreshConfirmState();
 	}
 
 	public void Close()
 	{
+		SetConfirmVisible(false);
 		ResetConfirmState();
 		SetConfirmEnabled(false);
-		SetSelectionDisplayVisible(false);
-		Visible = false;
 	}
 
 	public void SetConfirmVisible(bool visible)
 	{
+		CacheNodes();
+
 		if (ContainerDiceSelect != null)
 		{
 			ContainerDiceSelect.Visible = visible;
@@ -87,6 +97,8 @@ public partial class DiceSelectUI : Control
 
 	public void SetConfirmEnabled(bool enabled)
 	{
+		CacheNodes();
+
 		if (ButtonConfirm != null)
 		{
 			ButtonConfirm.Disabled = !enabled;
@@ -95,6 +107,8 @@ public partial class DiceSelectUI : Control
 
 	public void SetInfoText(string text)
 	{
+		CacheNodes();
+
 		if (RichTextInfo != null)
 		{
 			RichTextInfo.Text = $"[b]{text}[/b]";
@@ -103,6 +117,7 @@ public partial class DiceSelectUI : Control
 
 	public void SetSelection3DText(string text)
 	{
+		CacheNodes();
 
 		if (_richTextDiceSelect != null)
 		{
@@ -112,6 +127,7 @@ public partial class DiceSelectUI : Control
 
 	public void SetSelection3DVisible(bool visible)
 	{
+		CacheNodes();
 		SetSelectionDisplayVisible(visible);
 	}
 
@@ -138,6 +154,19 @@ public partial class DiceSelectUI : Control
 		_confirmPressed = false;
 	}
 
+	private void CacheNodes()
+	{
+		ContainerDiceSelect ??= GetNodeOrNull<Control>("VBoxContainer") ?? FindDescendantByName<Control>(this, "VBoxContainer");
+		ButtonConfirm ??= GetNodeOrNull<Button>("VBoxContainer/Button_Confirm") ?? FindDescendantByName<Button>(this, "Button_Confirm") ?? FindFirstDescendant<Button>(this);
+		RichTextInfo ??= GetNodeOrNull<RichTextLabel>("VBoxContainer/Button_Confirm/RichTextLabel") ?? FindFirstDescendant<RichTextLabel>(ButtonConfirm);
+		RichTextDiceSelect ??= FindSelectionMesh();
+
+		if (_richTextDiceSelect == null && RichTextDiceSelect != null)
+		{
+			_richTextDiceSelect = new RichText3DWrapper(RichTextDiceSelect);
+		}
+	}
+
 	private void RefreshConfirmState()
 	{
 		SetConfirmEnabled(_selectedCount == _requiredCount);
@@ -159,6 +188,66 @@ public partial class DiceSelectUI : Control
 		{
 			RichTextDiceSelect.Visible = visible;
 		}
+	}
+
+	private MeshInstance3D FindSelectionMesh()
+	{
+		Node sceneRoot = GetTree()?.CurrentScene;
+		if (sceneRoot == null)
+		{
+			return null;
+		}
+
+		return sceneRoot.FindChild("RichText3D_DiceSelect", true, false) as MeshInstance3D
+			?? sceneRoot.FindChild("RichTextDiceSelect", true, false) as MeshInstance3D;
+	}
+
+	private static T FindDescendantByName<T>(Node root, string nodeName) where T : Node
+	{
+		if (root == null)
+		{
+			return null;
+		}
+
+		foreach (Node child in root.GetChildren())
+		{
+			if (child is T typed && child.Name == nodeName)
+			{
+				return typed;
+			}
+
+			T found = FindDescendantByName<T>(child, nodeName);
+			if (found != null)
+			{
+				return found;
+			}
+		}
+
+		return null;
+	}
+
+	private static T FindFirstDescendant<T>(Node root) where T : Node
+	{
+		if (root == null)
+		{
+			return null;
+		}
+
+		foreach (Node child in root.GetChildren())
+		{
+			if (child is T typed)
+			{
+				return typed;
+			}
+
+			T found = FindFirstDescendant<T>(child);
+			if (found != null)
+			{
+				return found;
+			}
+		}
+
+		return null;
 	}
 }
 #pragma warning restore IDE1006

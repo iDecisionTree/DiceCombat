@@ -111,5 +111,3 @@ public partial class CombatInfoPanel : PanelContainer
 	}
 }
 
-
-

@@ -1,28 +1,28 @@
-[gd_scene format=3 uid="uid://cwthsnb6so2tc"]
+[gd_scene format=3 uid="uid://ctrm3liw43tvs"]
 
-[ext_resource type="Shader" uid="uid://bcop5v8omitev" path="res://shaders/s_card.gdshader" id="1_bnhkn"]
-[ext_resource type="Texture2D" uid="uid://dukdrqc4ifr3c" path="res://textures/card/AvatarCardFigure_1310.png" id="2_5bjgt"]
-[ext_resource type="Script" uid="uid://dy6ctulww0tpd" path="res://scripts/card/Card.cs" id="2_u4fhr"]
-[ext_resource type="Resource" uid="uid://bqx58svm4rcge" path="res://resourses/card_data/card_data_0001.tres" id="3_5gn4e"]
-[ext_resource type="Texture2D" uid="uid://d3jkxibb6ukqj" path="res://textures/card/AvatarCardFigure_1310_Bg.png" id="3_u0cwr"]
-[ext_resource type="Script" uid="uid://cofw7sywoopgu" path="res://addons/rich_text_3d/rich_text_3d.gd" id="4_bnhkn"]
-[ext_resource type="Texture2D" uid="uid://byekxbdhnor6p" path="res://textures/card/CardItemBig_Color_Dice4.png" id="4_natfa"]
-[ext_resource type="FontFile" uid="uid://dmvylt1memova" path="res://fonts/SourceHanSansCN-Medium.woff2" id="5_5bjgt"]
-[ext_resource type="Texture2D" uid="uid://cxmvw5ccccc70" path="res://textures/card/CardValueHpBg.png" id="6_u0cwr"]
-[ext_resource type="Texture2D" uid="uid://bncb24aqn32d8" path="res://textures/card/CardValueAttackIconBg.png" id="7_natfa"]
-[ext_resource type="Texture2D" uid="uid://mgrnucobvuke" path="res://textures/card/CardValueDefenceIconBg.png" id="8_walk4"]
-[ext_resource type="Texture2D" uid="uid://da88f1n6dquwh" path="res://textures/card/DiceItemFace4Level1.png" id="9_868ue"]
-[ext_resource type="Texture2D" uid="uid://n0357d2camqn" path="res://textures/card/DiceItemFace6Level2.png" id="10_joj6g"]
-[ext_resource type="Texture2D" uid="uid://be77ap5uu0my0" path="res://textures/card/DiceItemFace8Level3.png" id="11_sgp3e"]
-[ext_resource type="Texture2D" uid="uid://c84u6j30w58sl" path="res://textures/card/DiceItemFace6Level4.png" id="12_dy5ah"]
-[ext_resource type="AnimationLibrary" uid="uid://bwcb2sxkeh02a" path="res://animations/card.res" id="16_flr6n"]
+[ext_resource type="Script" uid="uid://dy6ctulww0tpd" path="res://scripts/card/Card.cs" id="1_us1va"]
+[ext_resource type="Resource" uid="uid://dirs67e1sx5d1" path="res://resourses/card_data/card_data_0000.tres" id="2_us1va"]
+[ext_resource type="Shader" uid="uid://bcop5v8omitev" path="res://shaders/s_card.gdshader" id="3_rkd53"]
+[ext_resource type="Texture2D" uid="uid://cmtqji13kbrcc" path="res://textures/card/AvatarCardFigure_0000.png" id="4_us1va"]
+[ext_resource type="Texture2D" uid="uid://d3jkxibb6ukqj" path="res://textures/card/AvatarCardFigure_1310_Bg.png" id="5_14hoe"]
+[ext_resource type="Texture2D" uid="uid://byekxbdhnor6p" path="res://textures/card/CardItemBig_Color_Dice4.png" id="6_mq5xf"]
+[ext_resource type="Script" uid="uid://cofw7sywoopgu" path="res://addons/rich_text_3d/rich_text_3d.gd" id="7_w6sdn"]
+[ext_resource type="FontFile" uid="uid://dmvylt1memova" path="res://fonts/SourceHanSansCN-Medium.woff2" id="8_5bvx2"]
+[ext_resource type="Texture2D" uid="uid://cxmvw5ccccc70" path="res://textures/card/CardValueHpBg.png" id="9_m6f8i"]
+[ext_resource type="Texture2D" uid="uid://bncb24aqn32d8" path="res://textures/card/CardValueAttackIconBg.png" id="10_y6o7y"]
+[ext_resource type="Texture2D" uid="uid://mgrnucobvuke" path="res://textures/card/CardValueDefenceIconBg.png" id="11_hrfbq"]
+[ext_resource type="Texture2D" uid="uid://da88f1n6dquwh" path="res://textures/card/DiceItemFace4Level1.png" id="12_kf30f"]
+[ext_resource type="Texture2D" uid="uid://n0357d2camqn" path="res://textures/card/DiceItemFace6Level2.png" id="13_ib62j"]
+[ext_resource type="Texture2D" uid="uid://be77ap5uu0my0" path="res://textures/card/DiceItemFace8Level3.png" id="14_ir6b4"]
+[ext_resource type="Texture2D" uid="uid://c84u6j30w58sl" path="res://textures/card/DiceItemFace6Level4.png" id="15_edpfv"]
+[ext_resource type="AnimationLibrary" uid="uid://bwcb2sxkeh02a" path="res://animations/card.res" id="16_su6t6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_flr6n"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hmom"]
 render_priority = 0
-shader = ExtResource("1_bnhkn")
-shader_parameter/card_avatar = ExtResource("2_5bjgt")
-shader_parameter/card_background = ExtResource("3_u0cwr")
-shader_parameter/card_border = ExtResource("4_natfa")
+shader = ExtResource("3_rkd53")
+shader_parameter/card_avatar = ExtResource("4_us1va")
+shader_parameter/card_background = ExtResource("5_14hoe")
+shader_parameter/card_border = ExtResource("6_mq5xf")
 shader_parameter/avatar_scale = Vector2(0.6, 0.6)
 shader_parameter/avatar_offset = Vector2(0, -0.05)
 shader_parameter/background_scale = Vector2(0.6, 0.6)
@@ -44,102 +44,102 @@ shader_parameter/highlight_color = Vector3(1, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_05hpe"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1o7dq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkd53"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_bgicv"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_iaj34"]
 size = Vector2(1.2, 0.4)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kd832"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14hoe"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_6vt16"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_mq5xf"]
 size = Vector2(0.4, 0.185)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7e4on"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w6sdn"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_d2y0j"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_5bvx2"]
 size = Vector2(0.2, 0.2)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gnkma"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6f8i"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_j0m56"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_y6o7y"]
 size = Vector2(0.2, 0.2)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fy4ef"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hrfbq"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_vnmqt"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_kf30f"]
 size = Vector2(0.2, 0.2)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shysf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ib62j"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_rhnf2"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_ir6b4"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7w31s"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edpfv"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_555aa"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_su6t6"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0i878"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_611mx"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_35qqw"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_373mf"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6vfe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0lf3"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ruhqt"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_krdih"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
@@ -175,9 +175,9 @@ _data = {
 &"RESET": SubResource("Animation_flr6n")
 }
 
-[node name="Card_0001" type="Node3D" unique_id=162877562 node_paths=PackedStringArray("CardMesh", "RichTextName", "RichTextDescription", "RichTextHealth", "RichTextAttack", "RichTextDefense", "RichTextDice4", "RichTextDice6", "RichTextDice8", "RichTextDice12")]
-script = ExtResource("2_u4fhr")
-CardData = ExtResource("3_5gn4e")
+[node name="Card_0000" type="Node3D" unique_id=162877562 node_paths=PackedStringArray("CardMesh", "RichTextName", "RichTextDescription", "RichTextHealth", "RichTextAttack", "RichTextDefense", "RichTextDice4", "RichTextDice6", "RichTextDice8", "RichTextDice12")]
+script = ExtResource("1_us1va")
+CardData = ExtResource("2_us1va")
 CurrentHealth = 24
 CardMesh = NodePath("MeshInstance3D_PlayerCard")
 RichTextName = NodePath("MeshInstance3D_PlayerCard/RichText3D_Name")
@@ -192,147 +192,147 @@ RichTextDice12 = NodePath("MeshInstance3D_PlayerCard/RichText3D_Dice12")
 
 [node name="MeshInstance3D_PlayerCard" type="MeshInstance3D" parent="." unique_id=1382621987]
 transform = Transform3D(3.031089, -0.5, 0, 1.7500001, 0.8660254, 0, 0, 0, 5, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_flr6n")
+material_override = SubResource("ShaderMaterial_7hmom")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_05hpe")
 
 [node name="RichText3D_Description" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=1181769385]
 transform = Transform3D(1.35, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0, 0.010000229, 0.44999993)
-material_override = SubResource("StandardMaterial3D_1o7dq")
+material_override = SubResource("StandardMaterial3D_rkd53")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_bgicv")
-script = ExtResource("4_bnhkn")
-text = "这是一张普通卡牌，没有任何作用"
+mesh = SubResource("PlaneMesh_iaj34")
+script = ExtResource("7_w6sdn")
+text = "测试卡牌"
 vertical_alignment = 0
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 24
 size = Vector2(1.2, 0.4)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Name" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=930130589]
 transform = Transform3D(1.3, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0, 0.010000229, 0.8251947)
-material_override = SubResource("StandardMaterial3D_kd832")
+material_override = SubResource("StandardMaterial3D_14hoe")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_6vt16")
-script = ExtResource("4_bnhkn")
-text = "卡牌0001"
-font = ExtResource("5_5bjgt")
+mesh = SubResource("PlaneMesh_mq5xf")
+script = ExtResource("7_w6sdn")
+text = "卡牌0000"
+font = ExtResource("8_5bvx2")
 font_size = 80
 size = Vector2(0.4, 0.185)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Health" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=290197059]
 transform = Transform3D(1.5000001, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, -0.73500013, 0.01999998, -0.8)
-material_override = SubResource("StandardMaterial3D_7e4on")
+material_override = SubResource("StandardMaterial3D_w6sdn")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_d2y0j")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_5bvx2")
+script = ExtResource("7_w6sdn")
 text = "24"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 200
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Attack" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=331154496]
 transform = Transform3D(1.5000001, 0, 0, 0, 0.0017452986, 0.99999845, 0, -0.9999985, 0.0017452987, -0.73500013, 0.01999998, 0.8400003)
-material_override = SubResource("StandardMaterial3D_gnkma")
+material_override = SubResource("StandardMaterial3D_m6f8i")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_j0m56")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_y6o7y")
+script = ExtResource("7_w6sdn")
 text = "4"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 240
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Defense" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=350953217]
 transform = Transform3D(1.5000001, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.73500013, 0.01999998, 0.84000003)
-material_override = SubResource("StandardMaterial3D_fy4ef")
+material_override = SubResource("StandardMaterial3D_hrfbq")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_vnmqt")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_kf30f")
+script = ExtResource("7_w6sdn")
 text = "2"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 240
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Dice4" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=742673829]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.86499995)
-material_override = SubResource("StandardMaterial3D_shysf")
+material_override = SubResource("StandardMaterial3D_ib62j")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_rhnf2")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_ir6b4")
+script = ExtResource("7_w6sdn")
 text = "2"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Dice6" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=1623057727]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.7049999)
-material_override = SubResource("StandardMaterial3D_7w31s")
+material_override = SubResource("StandardMaterial3D_edpfv")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_555aa")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_su6t6")
+script = ExtResource("7_w6sdn")
 text = "2"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Dice8" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=908221589]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.5450001)
-material_override = SubResource("StandardMaterial3D_0i878")
+material_override = SubResource("StandardMaterial3D_611mx")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_35qqw")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_373mf")
+script = ExtResource("7_w6sdn")
 text = "1"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="RichText3D_Dice12" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=1720122385]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.385)
-material_override = SubResource("StandardMaterial3D_u6vfe")
+material_override = SubResource("StandardMaterial3D_l0lf3")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ruhqt")
-script = ExtResource("4_bnhkn")
+mesh = SubResource("PlaneMesh_krdih")
+script = ExtResource("7_w6sdn")
 text = "1"
-font = ExtResource("5_5bjgt")
+font = ExtResource("8_5bvx2")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="Sprite3D_Health" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=1561509776]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 0.3, 0, -0.28, -1.3113417e-08, -0.73500013, 0.010000229, -0.835)
-texture = ExtResource("6_u0cwr")
+texture = ExtResource("9_m6f8i")
 
 [node name="Sprite3D_Attack" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=692935911]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, -0.73500013, 0.010000229, 0.82000005)
-texture = ExtResource("7_natfa")
+texture = ExtResource("10_y6o7y")
 
 [node name="Sprite3D_Defense" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=934486813]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.73500013, 0.010000229, 0.82000005)
-texture = ExtResource("8_walk4")
+texture = ExtResource("11_hrfbq")
 
 [node name="Sprite3D_Dice1" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=372421702]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.875)
-texture = ExtResource("9_868ue")
+texture = ExtResource("12_kf30f")
 
 [node name="Sprite3D_Dice2" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=259039542]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.715)
-texture = ExtResource("10_joj6g")
+texture = ExtResource("13_ib62j")
 
 [node name="Sprite3D_Dice3" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=1779265508]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.55500007)
-texture = ExtResource("11_sgp3e")
+texture = ExtResource("14_ir6b4")
 
 [node name="Sprite3D_Dice4" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=1980721137]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.39499998)
-texture = ExtResource("12_dy5ah")
+texture = ExtResource("15_edpfv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D_PlayerCard" unique_id=816004808]
 libraries/ = SubResource("AnimationLibrary_1o7dq")
-libraries/card = ExtResource("16_flr6n")
+libraries/card = ExtResource("16_su6t6")

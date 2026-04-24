@@ -17,21 +17,19 @@
 [ext_resource type="Texture2D" uid="uid://clknnyhg26kt4" path="res://textures/env/DefendIcon2.png" id="13_5smy7"]
 [ext_resource type="PackedScene" uid="uid://6dk7kaxoe7h7" path="res://resourses/dice/dice12.tscn" id="13_daj04"]
 [ext_resource type="ArrayMesh" uid="uid://3sp4xq2cs1l8" path="res://models/env/board.obj" id="15_opqoc"]
-[ext_resource type="Script" uid="uid://dgkrav2l1iqtg" path="res://scripts/dice/DiceSelectUI.cs" id="18_na8jj"]
-[ext_resource type="FontFile" uid="uid://dmvylt1memova" path="res://fonts/SourceHanSansCN-Medium.woff2" id="18_snaye"]
-[ext_resource type="FontFile" uid="uid://b4a4qyt8k60ju" path="res://fonts/SourceHanSansCN-Bold.woff2" id="19_1wc4g"]
-[ext_resource type="Script" uid="uid://ct27g7opg0u2x" path="res://scripts/ui/ScaledThemeButton.cs" id="19_na8jj"]
-[ext_resource type="Script" uid="uid://l2beon4tjmpf" path="res://scripts/ui/ScaledThemeRichTextLabel.cs" id="22_jv0we"]
 [ext_resource type="Script" uid="uid://v6a218tnoudg" path="res://scripts/state_machine/CombatCameraDirector3D.cs" id="23_mqcam"]
 [ext_resource type="Script" uid="uid://dc4u6po3rr6lb" path="res://scripts/state_machine/CombatEffectDirector3D.cs" id="24_mqeff"]
 [ext_resource type="Texture2D" uid="uid://bkwq7s6ixfdm4" path="res://textures/card/AvatarCardFigureInfo_0003.png" id="29_magc2"]
+[ext_resource type="Texture2D" uid="uid://brnx4yunfyinb" path="res://textures/ui/ButtonRerollIcon.png" id="29_t06ws"]
 [ext_resource type="Theme" uid="uid://5d0855e6v5ns" path="res://themes/theme.tres" id="31_magc2"]
 [ext_resource type="Texture2D" uid="uid://3jhnwi4srilt" path="res://textures/ui/BattleHpUnder.png" id="32_7nf4l"]
 [ext_resource type="Texture2D" uid="uid://doknfxpgghmmv" path="res://textures/card/AvatarCardFigureInfo_0005.png" id="32_dtvpm"]
 [ext_resource type="Texture2D" uid="uid://b8wexi4qntw55" path="res://textures/ui/BattleHpProgress.png" id="33_cxwtw"]
 [ext_resource type="Texture2D" uid="uid://bncb24aqn32d8" path="res://textures/card/CardValueAttackIconBg.png" id="35_cxwtw"]
 [ext_resource type="Texture2D" uid="uid://mgrnucobvuke" path="res://textures/card/CardValueDefenceIconBg.png" id="36_1hpar"]
-[ext_resource type="Script" uid="uid://tbdr1sahdor6" path="res://scripts/ui/CombatInfoPanel.cs" id="37_uiip"]
+[ext_resource type="Script" uid="uid://dgkrav2l1iqtg" path="res://scripts/dice/DiceSelectUI.cs" id="37_dcsui"]
+[ext_resource type="Script" uid="uid://d18jgvp7pm0p4" path="res://scripts/dice/DiceRerollUI.cs" id="37_drrui"]
+[ext_resource type="Script" uid="uid://o73p13dl42h3" path="res://scripts/ui/CombatInfoPanel.cs" id="37_uiip"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_05hpe"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -49,65 +47,18 @@ glow_enabled = true
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bpcsf"]
 points = PackedVector3Array(-13.367048, -0.25115395, -9.040756, 11.9824095, 1.6622, 8.179616, 11.527457, 1.6622, 9.543361, 13.250061, -0.25115395, 9.040756, 10.235575, -0.25115395, -14.063049, -6.6446886, 1.6622, -14.087275, -9.372043, 1.6622, 12.723532, -7.338075, -0.25115395, 15.570366, 11.527457, 1.6622, -9.543361, 5.2122984, -0.25115395, 16.073854, -12.099397, 1.6622, -8.179616, -13.367048, -0.25115395, 9.040756, -5.3292856, -0.25115395, -16.073854, 4.710251, 1.6622, 14.542806, 4.710251, 1.6622, -14.542806, 13.250061, -0.25115395, -9.040756, -12.099397, 1.6622, 8.179616, 10.235575, -0.25115395, 14.063049, -10.352562, -0.25115395, -14.063049, -4.827238, 1.6622, 14.542806, 5.2122984, -0.25115395, -16.073854, -10.855411, -0.25115395, 13.559561, 9.255055, 1.6622, -12.723532, 9.255055, 1.6622, 12.723532, -9.826995, 1.6622, -12.268001, 11.9824095, 1.6622, -8.179616, -5.3292856, -0.25115395, 16.073854, -4.827238, 1.6622, -14.542806, -12.361351, -0.25115395, -11.551903, -11.189493, 1.6622, 10.451573, 12.244364, -0.25115395, -11.551903, 12.244364, -0.25115395, 11.551903)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_magc2"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0pvt5"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_dtvpm"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_kyyqo"]
 size = Vector2(2, 1)
 orientation = 2
 
 [sub_resource type="SphereMesh" id="SphereMesh_opqoc"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nf4l"]
-bg_color = Color(0.25882354, 0.52156866, 0.95686275, 1)
-border_width_bottom = 19
-border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
-corner_radius_top_left = 96
-corner_radius_top_right = 96
-corner_radius_bottom_right = 96
-corner_radius_bottom_left = 96
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxwtw"]
-bg_color = Color(0.25882354, 0.52156866, 0.95686275, 1)
-border_width_bottom = 19
-border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
-corner_radius_top_left = 96
-corner_radius_top_right = 96
-corner_radius_bottom_right = 96
-corner_radius_bottom_left = 96
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hpar"]
-bg_color = Color(0.3254902, 0.5764706, 0.9607843, 1)
-border_width_bottom = 19
-border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
-corner_radius_top_left = 96
-corner_radius_top_right = 96
-corner_radius_bottom_right = 96
-corner_radius_bottom_left = 96
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qokk"]
-bg_color = Color(0.15686275, 0.32941177, 0.56078434, 1)
-border_width_bottom = 19
-border_color = Color(0.100799985, 0.23984003, 0.48, 0.5019608)
-corner_radius_top_left = 96
-corner_radius_top_right = 96
-corner_radius_bottom_right = 96
-corner_radius_bottom_left = 96
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1t5pe"]
-bg_color = Color(0.19554523, 0.19554508, 0.19554508, 1)
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.101960786, 0.23921569, 0.47843137, 0.5019608)
-corner_radius_top_left = 57
-corner_radius_top_right = 14
-corner_radius_bottom_right = 57
-corner_radius_bottom_left = 14
-corner_detail = 2
 
 [node name="GameScene" type="Node3D" unique_id=945681804]
 
@@ -131,17 +82,19 @@ EnemyFocusTarget = NodePath("../EnemyCard")
 script = ExtResource("24_mqeff")
 DimOverlay = NodePath("../CanvasLayer/CombatDimOverlay")
 OverlayAlpha = 0.5
+RevealAnimationDuration = 1.0
 RevealAnimationName = &"card/reveal"
 PlayerRevealAnimationName = &"card/player_reveal"
 EnemyRevealAnimationName = &"card/enemy_reveal"
 DamageAnimationName = &""
 
-[node name="CombatManager" type="Node3D" parent="." unique_id=1210621923 node_paths=PackedStringArray("PlayerCard", "EnemyCard", "DiceManager", "DiceSelectUI", "TurnIconSwapAnimator", "CameraDirector", "EffectDirector", "PlayerInfoPanel", "EnemyInfoPanel")]
+[node name="CombatManager" type="Node3D" parent="." unique_id=1210621923 node_paths=PackedStringArray("PlayerCard", "EnemyCard", "DiceManager", "DiceSelectUI", "DiceRerollUI", "TurnIconSwapAnimator", "CameraDirector", "EffectDirector", "PlayerInfoPanel", "EnemyInfoPanel")]
 script = ExtResource("2_v1wow")
 PlayerCard = NodePath("../PlayerCard")
 EnemyCard = NodePath("../EnemyCard")
 DiceManager = NodePath("../DiceManager")
 DiceSelectUI = NodePath("../CanvasLayer/DiceSelect")
+DiceRerollUI = NodePath("../CanvasLayer/DiceReroll")
 TurnIconSwapAnimator = NodePath("../TurnIconSwapAnimator")
 CameraDirector = NodePath("../CombatCameraDirector3D")
 EffectDirector = NodePath("../CombatEffectDirector3D")
@@ -183,9 +136,9 @@ shape = SubResource("ConvexPolygonShape3D_bpcsf")
 
 [node name="RichText3D_DiceSelect" type="MeshInstance3D" parent="Env/Board" unique_id=1116248189]
 transform = Transform3D(10, 0, 0, 0, -4.371139e-07, 10, 0, -10, -4.371139e-07, 0, 1.21, -4.3711387e-10)
-material_override = SubResource("StandardMaterial3D_magc2")
+material_override = SubResource("StandardMaterial3D_0pvt5")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_dtvpm")
+mesh = SubResource("PlaneMesh_kyyqo")
 script = ExtResource("10_nuflt")
 text = "0"
 font = ExtResource("11_nuflt")
@@ -225,93 +178,6 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="DiceSelect" type="Control" parent="CanvasLayer" unique_id=1457799445 node_paths=PackedStringArray("ContainerDiceSelect", "ButtonConfirm", "RichTextInfo", "RichTextDiceSelect")]
-layout_mode = 3
-anchor_left = 0.85
-anchor_top = 0.75
-anchor_right = 0.95
-anchor_bottom = 0.95
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("18_na8jj")
-ContainerDiceSelect = NodePath(".")
-ButtonConfirm = NodePath("Container_DiceSelect/Button_Confirm")
-RichTextInfo = NodePath("Container_DiceSelect/Button_Confirm/RichTextLabel_Info")
-RichTextDiceSelect = NodePath("../../Env/Board/RichText3D_DiceSelect")
-
-[node name="Container_DiceSelect" type="AspectRatioContainer" parent="CanvasLayer/DiceSelect" unique_id=39477361]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.06399536
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-alignment_vertical = 2
-
-[node name="Button_Confirm" type="Button" parent="CanvasLayer/DiceSelect/Container_DiceSelect" unique_id=668537785]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_7nf4l")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_cxwtw")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1hpar")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_1qokk")
-disabled = true
-script = ExtResource("19_na8jj")
-AdjustCornerRadius = true
-CornerRadiusFactor = Vector4(0.5, 0.5, 0.5, 0.5)
-AdjustBorder = true
-BorderFactor = Vector4(0, 0, 0, 0.1)
-StyleBoxNames = PackedStringArray("normal", "pressed", "hover", "disabled")
-
-[node name="RichTextLabel_Info" type="RichTextLabel" parent="CanvasLayer/DiceSelect/Container_DiceSelect/Button_Confirm" unique_id=309582240]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("18_snaye")
-theme_override_fonts/bold_font = ExtResource("19_1wc4g")
-theme_override_font_sizes/normal_font_size = 69
-theme_override_font_sizes/bold_font_size = 69
-bbcode_enabled = true
-text = "[b]0/3[/b]"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("22_jv0we")
-AdjustFontSize = true
-FontSizeFactor = 0.36
-FontSizeNames = PackedStringArray("normal_font_size", "bold_font_size")
-
-[node name="RichTextLabel_Confirm" type="RichTextLabel" parent="CanvasLayer/DiceSelect" unique_id=462766672]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.785
-anchor_right = 1.0
-anchor_bottom = 1.05
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/normal_font = ExtResource("18_snaye")
-theme_override_fonts/bold_font = ExtResource("19_1wc4g")
-theme_override_font_sizes/normal_font_size = 22
-theme_override_font_sizes/bold_font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_1t5pe")
-bbcode_enabled = true
-text = "[b]确认选择[/b]"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("22_jv0we")
-AdjustCornerRadius = true
-CornerRadiusFactor = Vector4(1, 0.25, 0.25, 1)
-AdjustBorder = true
-BorderFactor = Vector4(0, 0, 0.1, 0.1)
-StyleBoxNames = PackedStringArray("normal")
-AdjustFontSize = true
-FontSizeFactor = 0.4
-FontSizeNames = PackedStringArray("normal_font_size", "bold_font_size")
-
 [node name="PlayerInfo" type="PanelContainer" parent="CanvasLayer" unique_id=860895600 node_paths=PackedStringArray("BoundCard")]
 anchors_preset = 8
 anchor_left = 0.5
@@ -340,6 +206,7 @@ layout_mode = 2
 [node name="RichTextLabel_Description" type="RichTextLabel" parent="CanvasLayer/PlayerInfo/HBoxContainer" unique_id=1814764310]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_type_variation = &"CardInfoDescriptionLabel"
 bbcode_enabled = true
 text = "攻击回合时，固定增加 [color=ff8800]5[/color] 点伤害"
 scroll_active = false
@@ -588,6 +455,7 @@ layout_mode = 2
 [node name="RichTextLabel_Description" type="RichTextLabel" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=1049369917]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_type_variation = &"CardInfoDescriptionLabel"
 bbcode_enabled = true
 text = "这里填写[color=#FFB6C1]技能描述[/color]"
 scroll_active = false
@@ -597,3 +465,125 @@ vertical_alignment = 1
 [node name="Spacer1" type="Control" parent="CanvasLayer/EnemyInfo/HBoxContainer" unique_id=935526079]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+
+[node name="DiceSelect" type="Control" parent="CanvasLayer" unique_id=1339328740 node_paths=PackedStringArray("ContainerDiceSelect", "ButtonConfirm", "RichTextInfo", "RichTextDiceSelect")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 690.0
+offset_top = 330.0
+offset_right = 810.0
+offset_bottom = 465.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("31_magc2")
+script = ExtResource("37_dcsui")
+ContainerDiceSelect = NodePath("VBoxContainer")
+ButtonConfirm = NodePath("VBoxContainer/Button_Confirm")
+RichTextInfo = NodePath("VBoxContainer/Button_Confirm/RichTextLabel")
+RichTextDiceSelect = NodePath("../../Env/Board/RichText3D_DiceSelect")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DiceSelect" unique_id=1413953285]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 125.0
+theme_override_constants/separation = -20
+
+[node name="Button_Confirm" type="Button" parent="CanvasLayer/DiceSelect/VBoxContainer" unique_id=950269635]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_type_variation = &"DiceButton"
+disabled = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/DiceSelect/VBoxContainer/Button_Confirm" unique_id=1583598849]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 0
+offset_right = 103.0
+offset_bottom = 99.0
+mouse_filter = 2
+theme_type_variation = &"DiceSelectInfoLabel"
+bbcode_enabled = true
+text = "[b]0/3[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel_Confirm" type="RichTextLabel" parent="CanvasLayer/DiceSelect/VBoxContainer" unique_id=1108257905]
+custom_minimum_size = Vector2(120, 35)
+layout_mode = 2
+theme_type_variation = &"DiceSelectLabel"
+bbcode_enabled = true
+text = "确认选择"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DiceReroll" type="Control" parent="CanvasLayer" unique_id=1576329762 node_paths=PackedStringArray("ContainerDiceReroll", "ButtonReroll", "RichTextRerollCount")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 690.0
+offset_top = 160.0
+offset_right = 810.0
+offset_bottom = 295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("31_magc2")
+script = ExtResource("37_drrui")
+ContainerDiceReroll = NodePath("VBoxContainer")
+ButtonReroll = NodePath("VBoxContainer/Button_Reroll")
+RichTextRerollCount = NodePath("Panel_Reroll/RichTextLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DiceReroll" unique_id=1923876506]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 125.0
+theme_override_constants/separation = -20
+
+[node name="Button_Reroll" type="Button" parent="CanvasLayer/DiceReroll/VBoxContainer" unique_id=1776615476]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_type_variation = &"DiceButton"
+disabled = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/DiceReroll/VBoxContainer/Button_Reroll" unique_id=1875353104]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 110.0
+texture = ExtResource("29_t06ws")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="RichTextLabel_Reroll" type="RichTextLabel" parent="CanvasLayer/DiceReroll/VBoxContainer" unique_id=1252848963]
+custom_minimum_size = Vector2(120, 35)
+layout_mode = 2
+theme_type_variation = &"DiceSelectLabel"
+bbcode_enabled = true
+text = "重新投掷"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel_Reroll" type="Panel" parent="CanvasLayer/DiceReroll" unique_id=1902874696]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 10.0
+offset_right = 25.0
+offset_bottom = 40.0
+theme_type_variation = &"DiceRerollPanel"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/DiceReroll/Panel_Reroll" unique_id=2067103461]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 30.0
+theme_type_variation = &"DiceRerollLabel"
+bbcode_enabled = true
+text = "[b]5[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1

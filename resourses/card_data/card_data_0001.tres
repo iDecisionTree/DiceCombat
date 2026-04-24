@@ -38,4 +38,5 @@ InfoAvatar = ExtResource("4_dtyhk")
 Attack = 4
 Defense = 2
 MaxHealth = 24
+MaxReroll = 5
 DiceGroups = [SubResource("Resource_dtyhk"), SubResource("Resource_eqc8y"), SubResource("Resource_ll6dk"), SubResource("Resource_dlj35")]
