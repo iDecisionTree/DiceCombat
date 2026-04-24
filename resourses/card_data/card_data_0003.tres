@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b5wrle1aql1vh" path="res://scripts/dice/DiceSet.cs" id="3_7uxox"]
 [ext_resource type="Texture2D" uid="uid://bkwq7s6ixfdm4" path="res://textures/card/AvatarCardFigureInfo_0003.png" id="4_idt5t"]
 [ext_resource type="Script" uid="uid://bpx3004eh178x" path="res://scripts/card/CardData.cs" id="5_2sfxy"]
+[ext_resource type="Resource" uid="uid://bkexn2k05fi32" path="res://resourses/card_skill/card_skill_0003.tres" id="5_e175l"]
 
 [sub_resource type="Resource" id="Resource_2qpin"]
 script = ExtResource("3_7uxox")
@@ -40,4 +41,5 @@ Defense = 2
 MaxHealth = 36
 MaxReroll = 5
 DiceGroups = [SubResource("Resource_2qpin"), SubResource("Resource_11luf"), SubResource("Resource_qnqce"), SubResource("Resource_qn4bu")]
+Skills = [ExtResource("5_e175l")]
 metadata/_custom_type_script = "uid://bpx3004eh178x"

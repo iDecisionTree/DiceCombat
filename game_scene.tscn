@@ -82,6 +82,7 @@ EnemyFocusTarget = NodePath("../EnemyCard")
 script = ExtResource("24_mqeff")
 DimOverlay = NodePath("../CanvasLayer/CombatDimOverlay")
 OverlayAlpha = 0.5
+OverlayFadeInDuration = 0.0
 RevealAnimationDuration = 1.0
 RevealAnimationName = &"card/reveal"
 PlayerRevealAnimationName = &"card/player_reveal"
@@ -109,19 +110,20 @@ Dice8 = ExtResource("12_mlphb")
 Dice12 = ExtResource("13_daj04")
 PresentationForwardOffset = 5.0
 
-[node name="TurnIconSwapAnimator" type="Node3D" parent="." unique_id=370150117 node_paths=PackedStringArray("AttackIcon", "DefenceIcon")]
+[node name="TurnIconSwapAnimator" type="Node3D" parent="." unique_id=370150117 node_paths=PackedStringArray("AttackIcon", "DefenseIcon")]
 script = ExtResource("7_glbr4")
 AttackIcon = NodePath("../Env/Board/UI/Sprite3D_Attack")
-DefenceIcon = NodePath("../Env/Board/UI/Sprite3D_Defence")
+DefenseIcon = NodePath("../Env/Board/UI/Sprite3D_Defence")
 
 [node name="PlayerCard" parent="." unique_id=2030214544 instance=ExtResource("10_magc2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 4)
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 4, 2, 10)
 visible = false
 CurrentHealth = 36
 
 [node name="EnemyCard" parent="." unique_id=216828120 instance=ExtResource("11_magc2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -10)
 visible = false
+CurrentHealth = 18
 
 [node name="Env" type="Node3D" parent="." unique_id=1669588455]
 
@@ -144,7 +146,7 @@ mesh = SubResource("PlaneMesh_kyyqo")
 script = ExtResource("10_nuflt")
 text = "0"
 font = ExtResource("11_nuflt")
-font_size = 120
+font_size = 112
 size = Vector2(2, 1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
@@ -468,7 +470,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 
-[node name="DiceSelect" type="Control" parent="CanvasLayer" unique_id=1339328740 node_paths=PackedStringArray("ContainerDiceSelect", "ButtonConfirm", "RichTextInfo", "RichTextDiceSelect")]
+[node name="DiceSelect" type="Control" parent="CanvasLayer" unique_id=1339328740 node_paths=PackedStringArray("ButtonConfirm", "RichTextInfo", "RichTextDiceSelect")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -483,7 +485,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("31_magc2")
 script = ExtResource("37_dcsui")
-ContainerDiceSelect = NodePath("VBoxContainer")
 ButtonConfirm = NodePath("VBoxContainer/Button_Confirm")
 RichTextInfo = NodePath("VBoxContainer/Button_Confirm/RichTextLabel")
 RichTextDiceSelect = NodePath("../../Env/Board/UI/RichText3D_DiceSelect")
@@ -521,7 +522,7 @@ text = "确认选择"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DiceReroll" type="Control" parent="CanvasLayer" unique_id=1576329762 node_paths=PackedStringArray("ContainerDiceReroll", "ButtonReroll", "RichTextRerollCount")]
+[node name="DiceReroll" type="Control" parent="CanvasLayer" unique_id=1576329762 node_paths=PackedStringArray("ButtonReroll", "RichTextRerollCount")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -536,7 +537,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("31_magc2")
 script = ExtResource("37_drrui")
-ContainerDiceReroll = NodePath("VBoxContainer")
 ButtonReroll = NodePath("VBoxContainer/Button_Reroll")
 RichTextRerollCount = NodePath("Panel_Reroll/RichTextLabel")
 

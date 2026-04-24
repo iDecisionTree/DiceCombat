@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AddDamageWhenSelectState" format=3 uid="uid://bkexn2k05fi32"]
+
+[ext_resource type="Script" uid="uid://foogxjiooewo" path="res://scripts/card_skill/skill/AddDamageAfterSelectState.cs" id="1_d1adp"]
+
+[resource]
+script = ExtResource("1_d1adp")
+metadata/_custom_type_script = "uid://foogxjiooewo"

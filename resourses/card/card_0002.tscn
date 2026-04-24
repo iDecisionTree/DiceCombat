@@ -144,160 +144,162 @@ size = Vector2(0.1, 0.1)
 orientation = 2
 
 [node name="Card_0002" type="Node3D" unique_id=2030214544 node_paths=PackedStringArray("CardMesh", "RichTextName", "RichTextDescription", "RichTextHealth", "RichTextAttack", "RichTextDefense", "RichTextDice4", "RichTextDice6", "RichTextDice8", "RichTextDice12")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 script = ExtResource("2_4fv3p")
 CardData = ExtResource("3_p88uo")
-CardMesh = NodePath("MeshInstance3D_EnemyCard")
-RichTextName = NodePath("MeshInstance3D_EnemyCard/RichText3D_Name")
-RichTextDescription = NodePath("MeshInstance3D_EnemyCard/RichText3D_Description")
-RichTextHealth = NodePath("MeshInstance3D_EnemyCard/RichText3D_Health")
-RichTextAttack = NodePath("MeshInstance3D_EnemyCard/RichText3D_Attack")
-RichTextDefense = NodePath("MeshInstance3D_EnemyCard/RichText3D_Defense")
-RichTextDice4 = NodePath("MeshInstance3D_EnemyCard/RichText3D_Dice4")
-RichTextDice6 = NodePath("MeshInstance3D_EnemyCard/RichText3D_Dice6")
-RichTextDice8 = NodePath("MeshInstance3D_EnemyCard/RichText3D_Dice8")
-RichTextDice12 = NodePath("MeshInstance3D_EnemyCard/RichText3D_Dice12")
+CardMesh = NodePath("MeshInstance3D")
+RichTextName = NodePath("MeshInstance3D/RichText3D_Name")
+RichTextDescription = NodePath("MeshInstance3D/RichText3D_Description")
+RichTextHealth = NodePath("MeshInstance3D/RichText3D_Health")
+RichTextAttack = NodePath("MeshInstance3D/RichText3D_Attack")
+RichTextDefense = NodePath("MeshInstance3D/RichText3D_Defense")
+RichTextDice4 = NodePath("MeshInstance3D/RichText3D_Dice4")
+RichTextDice6 = NodePath("MeshInstance3D/RichText3D_Dice6")
+RichTextDice8 = NodePath("MeshInstance3D/RichText3D_Dice8")
+RichTextDice12 = NodePath("MeshInstance3D/RichText3D_Dice12")
 
-[node name="MeshInstance3D_EnemyCard" type="MeshInstance3D" parent="." unique_id=1834701775]
-transform = Transform3D(3.5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1834701775]
+transform = Transform3D(-3.5, 8.742278e-08, 0, -3.059797e-07, -1, 0, 0, 0, 5, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_j7if6")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_05hpe")
 
-[node name="RichText3D_Description" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=1660766306]
+[node name="RichText3D_Description" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1660766306]
 transform = Transform3D(1.35, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.01, 0.45)
 material_override = SubResource("StandardMaterial3D_sffnb")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_n7kw3")
 script = ExtResource("4_ma2vu")
+text = "这是[color=#FFB6C1]富文本[/color]测试"
 vertical_alignment = 0
 font = ExtResource("5_ixijk")
 font_size = 24
 size = Vector2(1.2, 0.4)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Name" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=1221791297]
+[node name="RichText3D_Name" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1221791297]
 transform = Transform3D(1.3, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0, 0.01, 0.8251947)
 material_override = SubResource("StandardMaterial3D_pb6f4")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_vjxse")
 script = ExtResource("4_ma2vu")
-text = "Card_0002"
+text = "卡牌0002"
 font = ExtResource("5_ixijk")
 font_size = 80
 size = Vector2(0.4, 0.185)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Health" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=630981080]
+[node name="RichText3D_Health" type="MeshInstance3D" parent="MeshInstance3D" unique_id=630981080]
 transform = Transform3D(1.5, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.735, 0.02, -0.8)
 material_override = SubResource("StandardMaterial3D_dlscw")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_sewfy")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "40"
 font = ExtResource("5_ixijk")
 font_size = 200
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Attack" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=1813073990]
+[node name="RichText3D_Attack" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1813073990]
 transform = Transform3D(1.5, 0, 0, 0, 0.0017452986, 0.99999845, 0, -0.99999845, 0.0017452986, -0.735, 0.02, 0.84000003)
 material_override = SubResource("StandardMaterial3D_1k5t5")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_mner8")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "3"
 font = ExtResource("5_ixijk")
 font_size = 240
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Defense" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=2121182243]
+[node name="RichText3D_Defense" type="MeshInstance3D" parent="MeshInstance3D" unique_id=2121182243]
 transform = Transform3D(1.5, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.735, 0.02, 0.84)
 material_override = SubResource("StandardMaterial3D_ua2he")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_0pdtj")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "2"
 font = ExtResource("5_ixijk")
 font_size = 240
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice4" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=480111851]
+[node name="RichText3D_Dice4" type="MeshInstance3D" parent="MeshInstance3D" unique_id=480111851]
 transform = Transform3D(1.5000005, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.82, 0.02, -0.86499995)
 material_override = SubResource("StandardMaterial3D_m8xo8")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_1rswo")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "3"
 font = ExtResource("5_ixijk")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice6" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=876193774]
+[node name="RichText3D_Dice6" type="MeshInstance3D" parent="MeshInstance3D" unique_id=876193774]
 transform = Transform3D(1.5000005, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.82, 0.02, -0.705)
 material_override = SubResource("StandardMaterial3D_nh5re")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ou7h8")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "1"
 font = ExtResource("5_ixijk")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice8" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=1866911745]
+[node name="RichText3D_Dice8" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1866911745]
 transform = Transform3D(1.5000005, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.82, 0.02, -0.545)
 material_override = SubResource("StandardMaterial3D_uniio")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_ijf6r")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "1"
 font = ExtResource("5_ixijk")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice12" type="MeshInstance3D" parent="MeshInstance3D_EnemyCard" unique_id=1630752975]
+[node name="RichText3D_Dice12" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1630752975]
 transform = Transform3D(1.5000005, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.82, 0.02, -0.385)
 material_override = SubResource("StandardMaterial3D_4d0b6")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_m15o7")
 script = ExtResource("4_ma2vu")
-text = "0"
+text = "2"
 font = ExtResource("5_ixijk")
 font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="Sprite3D_Health" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=1362699427]
+[node name="Sprite3D_Health" type="Sprite3D" parent="MeshInstance3D" unique_id=1362699427]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 0.3, 0, -0.28, -1.3113417e-08, -0.735, 0.01, -0.835)
 texture = ExtResource("6_v1ec5")
 
-[node name="Sprite3D_Attack" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=1819740688]
+[node name="Sprite3D_Attack" type="Sprite3D" parent="MeshInstance3D" unique_id=1819740688]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, -0.735, 0.01, 0.82)
 texture = ExtResource("7_ak6ln")
 
-[node name="Sprite3D_Defense" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=219263921]
+[node name="Sprite3D_Defense" type="Sprite3D" parent="MeshInstance3D" unique_id=219263921]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.371139e-08, 0.735, 0.01, 0.82)
 texture = ExtResource("8_6mcfu")
 
-[node name="Sprite3D_Dice1" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=170904909]
+[node name="Sprite3D_Dice1" type="Sprite3D" parent="MeshInstance3D" unique_id=170904909]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.371139e-08, 0.82, 0.01, -0.875)
 texture = ExtResource("9_du5cu")
 
-[node name="Sprite3D_Dice2" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=1959659899]
+[node name="Sprite3D_Dice2" type="Sprite3D" parent="MeshInstance3D" unique_id=1959659899]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.371139e-08, 0.82, 0.01, -0.715)
 texture = ExtResource("10_ck6b1")
 
-[node name="Sprite3D_Dice3" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=408327642]
+[node name="Sprite3D_Dice3" type="Sprite3D" parent="MeshInstance3D" unique_id=408327642]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.371139e-08, 0.82, 0.01, -0.555)
 texture = ExtResource("11_87nkm")
 
-[node name="Sprite3D_Dice4" type="Sprite3D" parent="MeshInstance3D_EnemyCard" unique_id=330411792]
+[node name="Sprite3D_Dice4" type="Sprite3D" parent="MeshInstance3D" unique_id=330411792]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.371139e-08, 0.82, 0.01, -0.395)
 texture = ExtResource("12_emuxe")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D_EnemyCard" unique_id=832368934]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D" unique_id=832368934]
 libraries/card = ExtResource("16_j7if6")

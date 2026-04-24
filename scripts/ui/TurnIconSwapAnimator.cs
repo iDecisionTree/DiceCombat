@@ -8,24 +8,28 @@ namespace DiceCombat.scripts.ui;
 public partial class TurnIconSwapAnimator : Node3D
 {
 	[Export] public Sprite3D AttackIcon { get; set; }
-	[Export] public Sprite3D DefenceIcon { get; set; }
-	public Sprite3D DefenseIcon
+	[Export] public Sprite3D DefenseIcon { get; set; }
+	public Sprite3D DefenceIcon
 	{
-		get => DefenceIcon;
-		set => DefenceIcon = value;
+		get => DefenseIcon;
+		set => DefenseIcon = value;
 	}
 	[Export] public float SwapDuration { get; set; } = 0.35f;
 	[Export] public Vector3 SwapRotationDeltaDegrees { get; set; } = new Vector3(0f, 0f, 180f);
 
-	private Vector3 _attackHomePosition;
-	private Vector3 _attackHomeRotationDegrees;
-	private Vector3 _attackHomeScale;
-	private Vector3 _defenceHomePosition;
-	private Vector3 _defenceHomeRotationDegrees;
-	private Vector3 _defenceHomeScale;
+	private struct IconTransformState
+	{
+		public Vector3 Position;
+		public Vector3 RotationDegrees;
+		public Vector3 Scale;
+	}
+
+	private IconTransformState _attackHomeState;
+	private IconTransformState _defenseHomeState;
 	private bool _isHomeState = true;
 	private bool _hasCachedHomeTransforms;
 	private bool _isAnimating;
+	private Tween _swapTween;
 
 	public override void _Ready()
 	{
@@ -36,6 +40,7 @@ public partial class TurnIconSwapAnimator : Node3D
 	public void ResetToHome()
 	{
 		CacheHomeTransforms();
+		StopSwapTween();
 		_isHomeState = true;
 		_isAnimating = false;
 		ApplyHomeTransforms();
@@ -58,20 +63,11 @@ public partial class TurnIconSwapAnimator : Node3D
 
 		_isAnimating = true;
 
-		Vector3 attackTargetPosition = _isHomeState ? _defenceHomePosition : _attackHomePosition;
-		Vector3 defenceTargetPosition = _isHomeState ? _attackHomePosition : _defenceHomePosition;
-		Vector3 attackTargetRotation = (_isHomeState ? _defenceHomeRotationDegrees : _attackHomeRotationDegrees) + SwapRotationDeltaDegrees;
-		Vector3 defenceTargetRotation = (_isHomeState ? _attackHomeRotationDegrees : _defenceHomeRotationDegrees) + SwapRotationDeltaDegrees;
-
-		Tween tween = CreateTween();
-		tween.SetTrans(Tween.TransitionType.Sine);
-		tween.SetEase(Tween.EaseType.InOut);
-		tween.TweenProperty(AttackIcon, "position", attackTargetPosition, SwapDuration);
-		tween.Parallel().TweenProperty(AttackIcon, "rotation_degrees", attackTargetRotation, SwapDuration);
-		tween.Parallel().TweenProperty(DefenceIcon, "position", defenceTargetPosition, SwapDuration);
-		tween.Parallel().TweenProperty(DefenceIcon, "rotation_degrees", defenceTargetRotation, SwapDuration);
+		(IconTransformState attackTargetState, IconTransformState defenseTargetState) = GetSwapTargetStates();
+		Tween tween = CreateSwapTween(attackTargetState, defenseTargetState);
 		tween.Finished += () =>
 		{
+			_swapTween = null;
 			_isHomeState = !_isHomeState;
 			_isAnimating = false;
 			onFinished?.Invoke();
@@ -85,18 +81,14 @@ public partial class TurnIconSwapAnimator : Node3D
 			return;
 		}
 
-		_attackHomePosition = AttackIcon.Position;
-		_attackHomeRotationDegrees = AttackIcon.RotationDegrees;
-		_attackHomeScale = AttackIcon.Scale;
-		_defenceHomePosition = DefenceIcon.Position;
-		_defenceHomeRotationDegrees = DefenceIcon.RotationDegrees;
-		_defenceHomeScale = DefenceIcon.Scale;
+		_attackHomeState = ReadTransformState(AttackIcon);
+		_defenseHomeState = ReadTransformState(DefenseIcon);
 		_hasCachedHomeTransforms = true;
 	}
 
 	private bool HasValidIcons()
 	{
-		return AttackIcon != null && DefenceIcon != null;
+		return AttackIcon != null && DefenseIcon != null;
 	}
 
 	private void ApplyHomeTransforms()
@@ -106,12 +98,60 @@ public partial class TurnIconSwapAnimator : Node3D
 			return;
 		}
 
-		AttackIcon.Position = _attackHomePosition;
-		AttackIcon.RotationDegrees = _attackHomeRotationDegrees;
-		AttackIcon.Scale = _attackHomeScale;
-		DefenceIcon.Position = _defenceHomePosition;
-		DefenceIcon.RotationDegrees = _defenceHomeRotationDegrees;
-		DefenceIcon.Scale = _defenceHomeScale;
+		ApplyTransformState(AttackIcon, _attackHomeState);
+		ApplyTransformState(DefenseIcon, _defenseHomeState);
+	}
+
+	private (IconTransformState attackTargetState, IconTransformState defenseTargetState) GetSwapTargetStates()
+	{
+		IconTransformState attackTargetState = _isHomeState ? _defenseHomeState : _attackHomeState;
+		IconTransformState defenseTargetState = _isHomeState ? _attackHomeState : _defenseHomeState;
+
+		attackTargetState.RotationDegrees += SwapRotationDeltaDegrees;
+		defenseTargetState.RotationDegrees += SwapRotationDeltaDegrees;
+		return (attackTargetState, defenseTargetState);
+	}
+
+	private Tween CreateSwapTween(IconTransformState attackTargetState, IconTransformState defenseTargetState)
+	{
+		StopSwapTween();
+		Tween tween = CreateTween();
+		_swapTween = tween;
+		tween.SetTrans(Tween.TransitionType.Sine);
+		tween.SetEase(Tween.EaseType.InOut);
+		TweenIconTo(AttackIcon, attackTargetState, tween);
+		TweenIconTo(DefenseIcon, defenseTargetState, tween.Parallel());
+		return tween;
+	}
+
+	private static IconTransformState ReadTransformState(Node3D node)
+	{
+		return new IconTransformState
+		{
+			Position = node.Position,
+			RotationDegrees = node.RotationDegrees,
+			Scale = node.Scale
+		};
+	}
+
+	private static void ApplyTransformState(Node3D node, IconTransformState state)
+	{
+		node.Position = state.Position;
+		node.RotationDegrees = state.RotationDegrees;
+		node.Scale = state.Scale;
+	}
+
+	private void TweenIconTo(Node3D icon, IconTransformState targetState, Tween tween)
+	{
+		tween.TweenProperty(icon, "position", targetState.Position, SwapDuration);
+		tween.Parallel().TweenProperty(icon, "rotation_degrees", targetState.RotationDegrees, SwapDuration);
+		tween.Parallel().TweenProperty(icon, "scale", targetState.Scale, SwapDuration);
+	}
+
+	private void StopSwapTween()
+	{
+		_swapTween?.Kill();
+		_swapTween = null;
 	}
 }
 

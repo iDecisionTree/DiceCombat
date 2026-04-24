@@ -1,4 +1,5 @@
 using Godot;
+using DiceCombat.scripts;
 using DiceCombat.scripts.rich_text_3d;
 
 #pragma warning disable IDE1006
@@ -10,15 +11,16 @@ public partial class DiceSelectUI : Control
 {
 	[Signal] public delegate void ConfirmClickedEventHandler();
 
-	[Export] public Control ContainerDiceSelect { get; set; }
 	[Export] public Button ButtonConfirm { get; set; }
 	[Export] public RichTextLabel RichTextInfo { get; set; }
 	[Export] public MeshInstance3D RichTextDiceSelect { get; set; }
-	
+
+	private Control _containerDiceSelect;
 	private bool _confirmPressed;
 	private int _selectedCount;
 	private int _requiredCount;
 	private int _selectedTotalPoints;
+	private int _selectionPreviewBonus;
 	private RichText3DWrapper _richTextDiceSelect;
 
 	public override void _Ready()
@@ -77,9 +79,9 @@ public partial class DiceSelectUI : Control
 	{
 		CacheNodes();
 
-		if (ContainerDiceSelect != null)
+		if (_containerDiceSelect != null)
 		{
-			ContainerDiceSelect.Visible = visible;
+			_containerDiceSelect.Visible = visible;
 		}
 		else
 		{
@@ -140,11 +142,18 @@ public partial class DiceSelectUI : Control
 		RefreshConfirmState();
 	}
 
+	public void SetSelectionDamagePreview(int previewBonus)
+	{
+		_selectionPreviewBonus = previewBonus;
+		RefreshSelectionText();
+	}
+
 	public void ResetSelectionProgress()
 	{
 		_selectedCount = 0;
 		_requiredCount = 0;
 		_selectedTotalPoints = 0;
+		_selectionPreviewBonus = 0;
 		RefreshSelectionText();
 		RefreshConfirmState();
 	}
@@ -156,9 +165,9 @@ public partial class DiceSelectUI : Control
 
 	private void CacheNodes()
 	{
-		ContainerDiceSelect ??= GetNodeOrNull<Control>("VBoxContainer") ?? FindDescendantByName<Control>(this, "VBoxContainer");
-		ButtonConfirm ??= GetNodeOrNull<Button>("VBoxContainer/Button_Confirm") ?? FindDescendantByName<Button>(this, "Button_Confirm") ?? FindFirstDescendant<Button>(this);
-		RichTextInfo ??= GetNodeOrNull<RichTextLabel>("VBoxContainer/Button_Confirm/RichTextLabel") ?? FindFirstDescendant<RichTextLabel>(ButtonConfirm);
+		_containerDiceSelect ??= GetNodeOrNull<Control>("VBoxContainer") ?? NodeSearch.FindDescendantByName<Control>(this, "VBoxContainer");
+		ButtonConfirm ??= GetNodeOrNull<Button>("VBoxContainer/Button_Confirm") ?? NodeSearch.FindDescendantByName<Button>(this, "Button_Confirm") ?? NodeSearch.FindFirstDescendant<Button>(this);
+		RichTextInfo ??= GetNodeOrNull<RichTextLabel>("VBoxContainer/Button_Confirm/RichTextLabel") ?? NodeSearch.FindFirstDescendant<RichTextLabel>(ButtonConfirm);
 		RichTextDiceSelect ??= FindSelectionMesh();
 
 		if (_richTextDiceSelect == null && RichTextDiceSelect != null)
@@ -179,7 +188,22 @@ public partial class DiceSelectUI : Control
 			RichTextInfo.Text = $"[b]{_selectedCount}/{_requiredCount}[/b]";
 		}
 
-		SetSelection3DText(_selectedTotalPoints.ToString());
+		SetSelection3DText(FormatSelectionValueText());
+	}
+
+	private string FormatSelectionValueText()
+	{
+		if (_selectionPreviewBonus > 0)
+		{
+			return $"{_selectedTotalPoints}+{_selectionPreviewBonus}";
+		}
+
+		if (_selectionPreviewBonus < 0)
+		{
+			return $"{_selectedTotalPoints}{_selectionPreviewBonus}";
+		}
+
+		return _selectedTotalPoints.ToString();
 	}
 
 	private void SetSelectionDisplayVisible(bool visible)
@@ -202,52 +226,5 @@ public partial class DiceSelectUI : Control
 			?? sceneRoot.FindChild("RichTextDiceSelect", true, false) as MeshInstance3D;
 	}
 
-	private static T FindDescendantByName<T>(Node root, string nodeName) where T : Node
-	{
-		if (root == null)
-		{
-			return null;
-		}
-
-		foreach (Node child in root.GetChildren())
-		{
-			if (child is T typed && child.Name == nodeName)
-			{
-				return typed;
-			}
-
-			T found = FindDescendantByName<T>(child, nodeName);
-			if (found != null)
-			{
-				return found;
-			}
-		}
-
-		return null;
-	}
-
-	private static T FindFirstDescendant<T>(Node root) where T : Node
-	{
-		if (root == null)
-		{
-			return null;
-		}
-
-		foreach (Node child in root.GetChildren())
-		{
-			if (child is T typed)
-			{
-				return typed;
-			}
-
-			T found = FindFirstDescendant<T>(child);
-			if (found != null)
-			{
-				return found;
-			}
-		}
-
-		return null;
-	}
 }
 #pragma warning restore IDE1006

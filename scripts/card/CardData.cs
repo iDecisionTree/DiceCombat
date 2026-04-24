@@ -1,5 +1,6 @@
 using Godot;
 using DiceCombat.scripts.dice;
+using DiceCombat.scripts.card_skill;
 
 namespace DiceCombat.scripts.card;
 
@@ -14,13 +15,16 @@ public partial class CardData : Resource
 	[Export] public Texture2D CardBackground { get; set; }
 	[Export] public Texture2D CardAvatar { get; set; }
 	[Export] public Texture2D InfoAvatar { get; set; }
-	
+
 	// 属性
 	[Export] public int Attack { get; set; }
 	[Export] public int Defense { get; set; }
 	[Export] public int MaxHealth { get; set; }
 	[Export] public int MaxReroll { get; set; }
-	
+
 	// 骰子池
-	[Export] public DiceSet[] DiceGroups { get; set; }
+	[Export] public DiceSet[] DiceGroups { get; set; } = System.Array.Empty<DiceSet>();
+
+	// 技能
+	[Export] public CardSkill[] Skills { get; set; } = System.Array.Empty<CardSkill>();
 }

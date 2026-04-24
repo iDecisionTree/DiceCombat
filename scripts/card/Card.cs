@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using DiceCombat.scripts.card_skill;
 using DiceCombat.scripts.dice;
 using DiceCombat.scripts.rich_text_3d;
 
@@ -36,6 +38,9 @@ public partial class Card : Node3D
 	private RichText3DWrapper _richTextDice12;
 
 	private ShaderMaterial _material;
+	private readonly CardSkillRuntimeState _skillRuntime = new();
+
+	public CardSkillRuntimeState SkillRuntime => _skillRuntime;
 
 	public override void _Ready()
 	{
@@ -45,31 +50,36 @@ public partial class Card : Node3D
 		RefreshView();
 	}
 
-	public override void _Process(double delta)
-	{
-	}
-
 	public void RefreshView()
 	{
-		string cardName = CardData?.CardName ?? Name;
-		string description = CardData?.Description ?? string.Empty;
-		int attack = CardData != null ? CardData.Attack : 0;
-		int defense = CardData != null ? CardData.Defense : 0;
-
-		_richTextName.Text = cardName;
-		_richTextDescription.Text = description;
-		_richTextHealth.Text = CurrentHealth.ToString();
-		_richTextAttack.Text = attack.ToString();
-		_richTextDefense.Text = defense.ToString();
-		_richTextDice4.Text = GetDiceCount(DiceType.Dice4).ToString();
-		_richTextDice6.Text = GetDiceCount(DiceType.Dice6).ToString();
-		_richTextDice8.Text = GetDiceCount(DiceType.Dice8).ToString();
-		_richTextDice12.Text = GetDiceCount(DiceType.Dice12).ToString();
+		RefreshCoreText();
+		RefreshDiceText();
 	}
 
 	public void UpdateText()
 	{
 		RefreshView();
+	}
+
+	public IReadOnlyList<CardSkill> GetSkills()
+	{
+		return CardData?.Skills?.Where(skill => skill != null).ToArray() ?? Array.Empty<CardSkill>();
+	}
+
+	public void ResetSkillRuntime()
+	{
+		_skillRuntime.Reset();
+	}
+
+	public int GetSelectionDamagePreviewBonus(DiceSelectionPreviewContext context)
+	{
+		int totalBonus = 0;
+		foreach (CardSkill skill in GetSkills())
+		{
+			totalBonus += skill.GetSelectionDamagePreviewBonus(context);
+		}
+
+		return totalBonus;
 	}
 
 	public List<DiceData> RollAllDice()
@@ -117,6 +127,38 @@ public partial class Card : Node3D
 		RefreshView();
 	}
 
+	public void Heal(int amount)
+	{
+		amount = Mathf.Max(amount, 0);
+		int maxHealth = Mathf.Max(CardData?.MaxHealth ?? CurrentHealth, CurrentHealth);
+		CurrentHealth = Mathf.Min(CurrentHealth + amount, maxHealth);
+		RefreshView();
+	}
+
+	public void ApplyAfterDiceSelected(DiceSelectionSkillContext context)
+	{
+		foreach (CardSkill skill in GetSkills())
+		{
+			skill.OnAfterDiceSelected(context);
+		}
+	}
+
+	public void ApplyBeforeDamageResolved(DamageResolutionSkillContext context)
+	{
+		foreach (CardSkill skill in GetSkills())
+		{
+			skill.OnBeforeDamageResolved(context);
+		}
+	}
+
+	public void ApplyAfterDamageResolved(DamageResolutionSkillContext context)
+	{
+		foreach (CardSkill skill in GetSkills())
+		{
+			skill.OnAfterDamageResolved(context);
+		}
+	}
+
 
 	public bool IsDead()
 	{
@@ -158,6 +200,27 @@ public partial class Card : Node3D
 	private void InitializeHealth()
 	{
 		CurrentHealth = CardData != null ? CardData.MaxHealth : 0;
+	}
+
+	private void RefreshCoreText()
+	{
+		CardData cardData = CardData;
+		int attack = cardData?.Attack ?? 0;
+		int defense = cardData?.Defense ?? 0;
+
+		_richTextName.Text = cardData?.CardName ?? Name;
+		_richTextDescription.Text = cardData?.Description ?? string.Empty;
+		_richTextHealth.Text = CurrentHealth.ToString();
+		_richTextAttack.Text = attack.ToString();
+		_richTextDefense.Text = defense.ToString();
+	}
+
+	private void RefreshDiceText()
+	{
+		_richTextDice4.Text = GetDiceCount(DiceType.Dice4).ToString();
+		_richTextDice6.Text = GetDiceCount(DiceType.Dice6).ToString();
+		_richTextDice8.Text = GetDiceCount(DiceType.Dice8).ToString();
+		_richTextDice12.Text = GetDiceCount(DiceType.Dice12).ToString();
 	}
 
 	private int GetDiceCount(DiceType diceType)

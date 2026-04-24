@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c84u6j30w58sl" path="res://textures/card/DiceItemFace6Level4.png" id="15_edpfv"]
 [ext_resource type="AnimationLibrary" uid="uid://bwcb2sxkeh02a" path="res://animations/card.res" id="16_su6t6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hmom"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rkd53"]
 render_priority = 0
 shader = ExtResource("3_rkd53")
 shader_parameter/card_avatar = ExtResource("4_us1va")
@@ -44,102 +44,102 @@ shader_parameter/highlight_color = Vector3(1, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_05hpe"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkd53"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iaj34"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_iaj34"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_14hoe"]
 size = Vector2(1.2, 0.4)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14hoe"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mq5xf"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_mq5xf"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_w6sdn"]
 size = Vector2(0.4, 0.185)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w6sdn"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bvx2"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_5bvx2"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_m6f8i"]
 size = Vector2(0.2, 0.2)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6f8i"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6o7y"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_y6o7y"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_hrfbq"]
 size = Vector2(0.2, 0.2)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hrfbq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kf30f"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_kf30f"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_ib62j"]
 size = Vector2(0.2, 0.2)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ib62j"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir6b4"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ir6b4"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_edpfv"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edpfv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_su6t6"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_su6t6"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_611mx"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_611mx"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_373mf"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_373mf"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_l0lf3"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0lf3"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krdih"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_krdih"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_8id68"]
 size = Vector2(0.1, 0.1)
 orientation = 2
 
@@ -169,6 +169,51 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:position:z")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("..:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.2, 1.2, 1.2)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1o7dq"]
 _data = {
@@ -176,31 +221,31 @@ _data = {
 }
 
 [node name="Card_0000" type="Node3D" unique_id=162877562 node_paths=PackedStringArray("CardMesh", "RichTextName", "RichTextDescription", "RichTextHealth", "RichTextAttack", "RichTextDefense", "RichTextDice4", "RichTextDice6", "RichTextDice8", "RichTextDice12")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 script = ExtResource("1_us1va")
 CardData = ExtResource("2_us1va")
-CurrentHealth = 24
-CardMesh = NodePath("MeshInstance3D_PlayerCard")
-RichTextName = NodePath("MeshInstance3D_PlayerCard/RichText3D_Name")
-RichTextDescription = NodePath("MeshInstance3D_PlayerCard/RichText3D_Description")
-RichTextHealth = NodePath("MeshInstance3D_PlayerCard/RichText3D_Health")
-RichTextAttack = NodePath("MeshInstance3D_PlayerCard/RichText3D_Attack")
-RichTextDefense = NodePath("MeshInstance3D_PlayerCard/RichText3D_Defense")
-RichTextDice4 = NodePath("MeshInstance3D_PlayerCard/RichText3D_Dice4")
-RichTextDice6 = NodePath("MeshInstance3D_PlayerCard/RichText3D_Dice6")
-RichTextDice8 = NodePath("MeshInstance3D_PlayerCard/RichText3D_Dice8")
-RichTextDice12 = NodePath("MeshInstance3D_PlayerCard/RichText3D_Dice12")
+CardMesh = NodePath("MeshInstance3D")
+RichTextName = NodePath("MeshInstance3D/RichText3D_Name")
+RichTextDescription = NodePath("MeshInstance3D/RichText3D_Description")
+RichTextHealth = NodePath("MeshInstance3D/RichText3D_Health")
+RichTextAttack = NodePath("MeshInstance3D/RichText3D_Attack")
+RichTextDefense = NodePath("MeshInstance3D/RichText3D_Defense")
+RichTextDice4 = NodePath("MeshInstance3D/RichText3D_Dice4")
+RichTextDice6 = NodePath("MeshInstance3D/RichText3D_Dice6")
+RichTextDice8 = NodePath("MeshInstance3D/RichText3D_Dice8")
+RichTextDice12 = NodePath("MeshInstance3D/RichText3D_Dice12")
 
-[node name="MeshInstance3D_PlayerCard" type="MeshInstance3D" parent="." unique_id=1382621987]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1382621987]
 transform = Transform3D(3.031089, -0.5, 0, 1.7500001, 0.8660254, 0, 0, 0, 5, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_7hmom")
+material_override = SubResource("ShaderMaterial_rkd53")
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_05hpe")
 
-[node name="RichText3D_Description" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=1181769385]
+[node name="RichText3D_Description" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1181769385]
 transform = Transform3D(1.35, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0, 0.010000229, 0.44999993)
-material_override = SubResource("StandardMaterial3D_rkd53")
+material_override = SubResource("StandardMaterial3D_iaj34")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_iaj34")
+mesh = SubResource("PlaneMesh_14hoe")
 script = ExtResource("7_w6sdn")
 text = "测试卡牌"
 vertical_alignment = 0
@@ -209,11 +254,11 @@ font_size = 24
 size = Vector2(1.2, 0.4)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Name" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=930130589]
+[node name="RichText3D_Name" type="MeshInstance3D" parent="MeshInstance3D" unique_id=930130589]
 transform = Transform3D(1.3, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0, 0.010000229, 0.8251947)
-material_override = SubResource("StandardMaterial3D_14hoe")
+material_override = SubResource("StandardMaterial3D_mq5xf")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_mq5xf")
+mesh = SubResource("PlaneMesh_w6sdn")
 script = ExtResource("7_w6sdn")
 text = "卡牌0000"
 font = ExtResource("8_5bvx2")
@@ -221,11 +266,11 @@ font_size = 80
 size = Vector2(0.4, 0.185)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Health" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=290197059]
+[node name="RichText3D_Health" type="MeshInstance3D" parent="MeshInstance3D" unique_id=290197059]
 transform = Transform3D(1.5000001, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, -0.73500013, 0.01999998, -0.8)
-material_override = SubResource("StandardMaterial3D_w6sdn")
+material_override = SubResource("StandardMaterial3D_5bvx2")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_5bvx2")
+mesh = SubResource("PlaneMesh_m6f8i")
 script = ExtResource("7_w6sdn")
 text = "24"
 font = ExtResource("8_5bvx2")
@@ -233,11 +278,11 @@ font_size = 200
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Attack" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=331154496]
+[node name="RichText3D_Attack" type="MeshInstance3D" parent="MeshInstance3D" unique_id=331154496]
 transform = Transform3D(1.5000001, 0, 0, 0, 0.0017452986, 0.99999845, 0, -0.9999985, 0.0017452987, -0.73500013, 0.01999998, 0.8400003)
-material_override = SubResource("StandardMaterial3D_m6f8i")
+material_override = SubResource("StandardMaterial3D_y6o7y")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_y6o7y")
+mesh = SubResource("PlaneMesh_hrfbq")
 script = ExtResource("7_w6sdn")
 text = "4"
 font = ExtResource("8_5bvx2")
@@ -245,11 +290,11 @@ font_size = 240
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Defense" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=350953217]
+[node name="RichText3D_Defense" type="MeshInstance3D" parent="MeshInstance3D" unique_id=350953217]
 transform = Transform3D(1.5000001, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.73500013, 0.01999998, 0.84000003)
-material_override = SubResource("StandardMaterial3D_hrfbq")
+material_override = SubResource("StandardMaterial3D_kf30f")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_kf30f")
+mesh = SubResource("PlaneMesh_ib62j")
 script = ExtResource("7_w6sdn")
 text = "2"
 font = ExtResource("8_5bvx2")
@@ -257,11 +302,11 @@ font_size = 240
 size = Vector2(0.2, 0.2)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice4" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=742673829]
+[node name="RichText3D_Dice4" type="MeshInstance3D" parent="MeshInstance3D" unique_id=742673829]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.86499995)
-material_override = SubResource("StandardMaterial3D_ib62j")
+material_override = SubResource("StandardMaterial3D_ir6b4")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_ir6b4")
+mesh = SubResource("PlaneMesh_edpfv")
 script = ExtResource("7_w6sdn")
 text = "2"
 font = ExtResource("8_5bvx2")
@@ -269,11 +314,11 @@ font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice6" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=1623057727]
+[node name="RichText3D_Dice6" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1623057727]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.7049999)
-material_override = SubResource("StandardMaterial3D_edpfv")
+material_override = SubResource("StandardMaterial3D_su6t6")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_su6t6")
+mesh = SubResource("PlaneMesh_611mx")
 script = ExtResource("7_w6sdn")
 text = "2"
 font = ExtResource("8_5bvx2")
@@ -281,11 +326,11 @@ font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice8" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=908221589]
+[node name="RichText3D_Dice8" type="MeshInstance3D" parent="MeshInstance3D" unique_id=908221589]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.5450001)
-material_override = SubResource("StandardMaterial3D_611mx")
+material_override = SubResource("StandardMaterial3D_373mf")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_373mf")
+mesh = SubResource("PlaneMesh_l0lf3")
 script = ExtResource("7_w6sdn")
 text = "1"
 font = ExtResource("8_5bvx2")
@@ -293,11 +338,11 @@ font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="RichText3D_Dice12" type="MeshInstance3D" parent="MeshInstance3D_PlayerCard" unique_id=1720122385]
+[node name="RichText3D_Dice12" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1720122385]
 transform = Transform3D(1.5000006, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.3711392e-08, 0.81999993, 0.01999998, -0.385)
-material_override = SubResource("StandardMaterial3D_l0lf3")
+material_override = SubResource("StandardMaterial3D_krdih")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_krdih")
+mesh = SubResource("PlaneMesh_8id68")
 script = ExtResource("7_w6sdn")
 text = "1"
 font = ExtResource("8_5bvx2")
@@ -305,34 +350,34 @@ font_size = 320
 size = Vector2(0.1, 0.1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="Sprite3D_Health" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=1561509776]
+[node name="Sprite3D_Health" type="Sprite3D" parent="MeshInstance3D" unique_id=1561509776]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 0.3, 0, -0.28, -1.3113417e-08, -0.73500013, 0.010000229, -0.835)
 texture = ExtResource("9_m6f8i")
 
-[node name="Sprite3D_Attack" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=692935911]
+[node name="Sprite3D_Attack" type="Sprite3D" parent="MeshInstance3D" unique_id=692935911]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, -0.73500013, 0.010000229, 0.82000005)
 texture = ExtResource("10_y6o7y")
 
-[node name="Sprite3D_Defense" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=934486813]
+[node name="Sprite3D_Defense" type="Sprite3D" parent="MeshInstance3D" unique_id=934486813]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.73500013, 0.010000229, 0.82000005)
 texture = ExtResource("11_hrfbq")
 
-[node name="Sprite3D_Dice1" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=372421702]
+[node name="Sprite3D_Dice1" type="Sprite3D" parent="MeshInstance3D" unique_id=372421702]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.875)
 texture = ExtResource("12_kf30f")
 
-[node name="Sprite3D_Dice2" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=259039542]
+[node name="Sprite3D_Dice2" type="Sprite3D" parent="MeshInstance3D" unique_id=259039542]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.715)
 texture = ExtResource("13_ib62j")
 
-[node name="Sprite3D_Dice3" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=1779265508]
+[node name="Sprite3D_Dice3" type="Sprite3D" parent="MeshInstance3D" unique_id=1779265508]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.55500007)
 texture = ExtResource("14_ir6b4")
 
-[node name="Sprite3D_Dice4" type="Sprite3D" parent="MeshInstance3D_PlayerCard" unique_id=1980721137]
+[node name="Sprite3D_Dice4" type="Sprite3D" parent="MeshInstance3D" unique_id=1980721137]
 transform = Transform3D(0.4, 0, 0, 0, -1.2239188e-08, 1, 0, -0.28, -4.3711392e-08, 0.81999993, 0.010000229, -0.39499998)
 texture = ExtResource("15_edpfv")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D_PlayerCard" unique_id=816004808]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D" unique_id=816004808]
 libraries/ = SubResource("AnimationLibrary_1o7dq")
 libraries/card = ExtResource("16_su6t6")

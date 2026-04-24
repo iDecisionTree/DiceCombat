@@ -1,4 +1,5 @@
 using Godot;
+using DiceCombat.scripts;
 
 namespace DiceCombat.scripts.dice;
 
@@ -8,7 +9,7 @@ public partial class Dice : RigidBody3D
 {
     [Signal] public delegate void RollFinishedEventHandler(int num);
     [Signal] public delegate void SelectedEventHandler(Dice dice);
-    
+
     [Export] public DiceType DiceType { get; set; }
 
     [ExportGroup("Face Marker")]
@@ -24,14 +25,14 @@ public partial class Dice : RigidBody3D
     [Export] public Node3D Face10 { get; set; }
     [Export] public Node3D Face11 { get; set; }
     [Export] public Node3D Face12 { get; set; }
-    
+
     [ExportGroup("Outline Setting")]
     [Export] public MeshInstance3D Outline { get; set; }
     [Export] public float OutlineWidth { get; set; }
     [Export] public Color OutlineColor { get; set; }
 
     public DiceData DiceData { get; set; }
-    
+
     public bool CanBeSelected { get; set; }
     public bool IsSelected { get; private set; }
 
@@ -85,7 +86,7 @@ public partial class Dice : RigidBody3D
         {
             return;
         }
-        
+
         if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
         {
             EmitSignal(SignalName.Selected, this);
@@ -298,7 +299,7 @@ public partial class Dice : RigidBody3D
 
     private void EnsureVisualMesh()
     {
-        MeshInstance3D mesh = FindAnyMeshInstance(this);
+        MeshInstance3D mesh = NodeSearch.FindFirstDescendant<MeshInstance3D>(this);
         if (mesh != null)
         {
             return;
@@ -317,12 +318,12 @@ public partial class Dice : RigidBody3D
 
     private void EnsureCollisionShape()
     {
-        if (FindAnyCollisionShape(this) != null)
+        if (NodeSearch.FindFirstDescendant<CollisionShape3D>(this) != null)
         {
             return;
         }
 
-        MeshInstance3D meshInstance = FindAnyMeshInstance(this);
+        MeshInstance3D meshInstance = NodeSearch.FindFirstDescendant<MeshInstance3D>(this);
         Shape3D shape = null;
 
         if (meshInstance?.Mesh != null)
@@ -344,44 +345,6 @@ public partial class Dice : RigidBody3D
             Shape = shape
         };
         AddChild(collisionShape);
-    }
-
-    private MeshInstance3D FindAnyMeshInstance(Node root)
-    {
-        foreach (Node child in root.GetChildren())
-        {
-            if (child is MeshInstance3D meshInstance)
-            {
-                return meshInstance;
-            }
-
-            MeshInstance3D nested = FindAnyMeshInstance(child);
-            if (nested != null)
-            {
-                return nested;
-            }
-        }
-
-        return null;
-    }
-
-    private CollisionShape3D FindAnyCollisionShape(Node root)
-    {
-        foreach (Node child in root.GetChildren())
-        {
-            if (child is CollisionShape3D collisionShape)
-            {
-                return collisionShape;
-            }
-
-            CollisionShape3D nested = FindAnyCollisionShape(child);
-            if (nested != null)
-            {
-                return nested;
-            }
-        }
-
-        return null;
     }
 }
 

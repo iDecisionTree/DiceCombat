@@ -1,4 +1,5 @@
 ﻿using Godot;
+using DiceCombat.scripts;
 using DiceCombat.scripts.card;
 
 namespace DiceCombat.scripts.state_machine;
@@ -19,6 +20,7 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 	[Export] public StringName PlayerRevealAnimationName { get; set; }
 	[Export] public StringName EnemyRevealAnimationName { get; set; }
 	[Export] public StringName DamageAnimationName { get; set; } = "damage";
+	[Export] public StringName ResetAnimationName { get; set; } = "reset";
 
 	private Tween _overlayTween;
 
@@ -38,9 +40,9 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 	{
 		KillTweens();
 		SetCardVisible(sourceCard, true);
-		SetCardVisible(targetCard, true);
+		SetCardVisible(targetCard, false);
 		SetOverlayAlpha(0f, true);
-		TweenOverlayTo(OverlayAlpha, OverlayFadeInDuration, 0f, true, Callable.From(() => PlayRevealAnimation(turn, sourceCard, targetCard)));
+		TweenOverlayTo(OverlayAlpha, OverlayFadeInDuration, 0f, true, Callable.From(() => PlayRevealAnimation(turn, sourceCard)));
 	}
 
 	public override void PlayDefenseEffect(CombatTurn turn, Card sourceCard, Card targetCard, int damage)
@@ -59,65 +61,93 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 		TryPlayCardAnimation(card, DamageAnimationName, "受击动画");
 	}
 
-	protected virtual void PlayRevealAnimation(CombatTurn turn, Card sourceCard, Card targetCard)
+	protected virtual void PlayRevealAnimation(CombatTurn turn, Card sourceCard)
 	{
-		StringName sourceAnimationName = ResolveRevealAnimationName(turn, true);
-		StringName targetAnimationName = ResolveRevealAnimationName(turn, false);
-
-		TryPlayCardAnimation(sourceCard, sourceAnimationName, "结算展示动画");
-		TryPlayCardAnimation(targetCard, targetAnimationName, "结算展示动画");
+		TryPlayCardAnimation(sourceCard, ResolveRevealAnimationName(turn), "结算展示动画");
 	}
 
-	private StringName ResolveRevealAnimationName(CombatTurn turn, bool isSourceCard)
+	private StringName ResolveRevealAnimationName(CombatTurn turn)
 	{
 		StringName playerAnimationName = PlayerRevealAnimationName.IsEmpty ? RevealAnimationName : PlayerRevealAnimationName;
 		StringName enemyAnimationName = EnemyRevealAnimationName.IsEmpty ? RevealAnimationName : EnemyRevealAnimationName;
-
-		if (turn == CombatTurn.Player)
-		{
-			return isSourceCard ? playerAnimationName : enemyAnimationName;
-		}
-
-		return isSourceCard ? enemyAnimationName : playerAnimationName;
+		return turn == CombatTurn.Player ? playerAnimationName : enemyAnimationName;
 	}
 
 	private void TryPlayCardAnimation(Card card, StringName animationName, string animationLabel)
 	{
-		if (card == null)
+		if (card == null || animationName.IsEmpty)
 		{
 			return;
 		}
 
-		if (animationName.IsEmpty)
+		if (!TryGetAnimationPlayer(card, animationLabel, out AnimationPlayer animationPlayer))
 		{
 			return;
 		}
 
-		SetCardVisible(card, true);
-
-		AnimationPlayer animationPlayer = FindAnimationPlayer(card);
-		if (animationPlayer == null)
+		if (!TryResolveAnimationName(animationPlayer, card, animationName, out StringName resolvedAnimationName))
 		{
-			GD.PushWarning($"CombatEffectDirector3D: 找不到{animationLabel}播放器, card={card.Name}");
 			return;
-		}
-
-		StringName resolvedAnimationName = animationName;
-		if (!animationPlayer.HasAnimation(resolvedAnimationName))
-		{
-			string[] availableAnimations = animationPlayer.GetAnimationList();
-			if (availableAnimations.Length == 0)
-			{
-				GD.PushWarning($"CombatEffectDirector3D: {card.Name} 没有可播放的动画，期望动画 '{animationName}'");
-				return;
-			}
-
-			GD.PushWarning($"CombatEffectDirector3D: {card.Name} 找不到动画 '{animationName}'，改为播放首个可用动画");
-			resolvedAnimationName = availableAnimations[0];
 		}
 
 		animationPlayer.Stop();
-		animationPlayer.Play(resolvedAnimationName);
+		PlayAnimationWithReset(animationPlayer, resolvedAnimationName);
+	}
+
+	private bool TryGetAnimationPlayer(Card card, string animationLabel, out AnimationPlayer animationPlayer)
+	{
+		animationPlayer = NodeSearch.FindFirstDescendant<AnimationPlayer>(card);
+		if (animationPlayer != null)
+		{
+			return true;
+		}
+
+		GD.PushWarning($"CombatEffectDirector3D: 找不到{animationLabel}播放器, card={card.Name}");
+		return false;
+	}
+
+	private static bool TryResolveAnimationName(AnimationPlayer animationPlayer, Card card, StringName requestedAnimationName, out StringName resolvedAnimationName)
+	{
+		resolvedAnimationName = requestedAnimationName;
+		if (animationPlayer.HasAnimation(resolvedAnimationName))
+		{
+			return true;
+		}
+
+		string[] availableAnimations = animationPlayer.GetAnimationList();
+		if (availableAnimations.Length == 0)
+		{
+			GD.PushWarning($"CombatEffectDirector3D: {card.Name} 没有可播放的动画，期望动画 '{requestedAnimationName}'");
+			return false;
+		}
+
+		GD.PushWarning($"CombatEffectDirector3D: {card.Name} 找不到动画 '{requestedAnimationName}'，改为播放首个可用动画");
+		resolvedAnimationName = availableAnimations[0];
+		return true;
+	}
+
+	private void PlayAnimationWithReset(AnimationPlayer animationPlayer, StringName playedAnimationName)
+	{
+		if (animationPlayer == null)
+		{
+			return;
+		}
+
+		if (ResetAnimationName.IsEmpty || playedAnimationName == ResetAnimationName)
+		{
+			animationPlayer.Play(playedAnimationName);
+			return;
+		}
+
+		if (!animationPlayer.HasAnimation(ResetAnimationName))
+		{
+			animationPlayer.Play(playedAnimationName);
+			return;
+		}
+
+		animationPlayer.Play(ResetAnimationName);
+		animationPlayer.Queue(playedAnimationName);
+		animationPlayer.Queue(ResetAnimationName);
 	}
 
 	private void SetOverlayAlpha(float alpha, bool visible)
@@ -128,7 +158,7 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 		}
 
 		DimOverlay.Visible = visible;
-		DimOverlay.Modulate = new Color(1f, 1f, 1f, Mathf.Clamp(alpha, 0f, 1f));
+		DimOverlay.Modulate = GetOverlayColor(alpha);
 	}
 
 	private void TweenOverlayTo(float alpha, float duration, float delay = 0f, bool hasOnComplete = false, Callable onComplete = default)
@@ -148,7 +178,7 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 			tween.TweenInterval(delay);
 		}
 
-		tween.TweenProperty(DimOverlay, "modulate", new Color(1f, 1f, 1f, Mathf.Clamp(alpha, 0f, 1f)), duration);
+		tween.TweenProperty(DimOverlay, "modulate", GetOverlayColor(alpha), duration);
 
 		if (alpha <= 0f)
 		{
@@ -166,6 +196,11 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 		}
 	}
 
+	private static Color GetOverlayColor(float alpha)
+	{
+		return new Color(1f, 1f, 1f, Mathf.Clamp(alpha, 0f, 1f));
+	}
+
 	private static void SetCardVisible(Card card, bool visible)
 	{
 		if (card == null)
@@ -176,29 +211,6 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 		card.Visible = visible;
 	}
 
-	private static AnimationPlayer FindAnimationPlayer(Node root)
-	{
-		if (root == null)
-		{
-			return null;
-		}
-
-		if (root is AnimationPlayer animationPlayer)
-		{
-			return animationPlayer;
-		}
-
-		foreach (Node child in root.GetChildren())
-		{
-			AnimationPlayer found = FindAnimationPlayer(child);
-			if (found != null)
-			{
-				return found;
-			}
-		}
-
-		return null;
-	}
 
 	private void KillTweens()
 	{

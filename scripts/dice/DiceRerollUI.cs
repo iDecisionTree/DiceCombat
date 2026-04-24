@@ -8,7 +8,6 @@ public partial class DiceRerollUI : Control
 {
 	[Signal] public delegate void RerollClickedEventHandler();
 
-	[Export] public Control ContainerDiceReroll { get; set; }
 	[Export] public Button ButtonReroll { get; set; }
 	[Export] public RichTextLabel RichTextRerollCount { get; set; }
 
@@ -44,7 +43,6 @@ public partial class DiceRerollUI : Control
 	public void SetPanelVisible(bool visible)
 	{
 		CacheNodes();
-
 		Visible = visible;
 	}
 
@@ -75,57 +73,8 @@ public partial class DiceRerollUI : Control
 
 	private void CacheNodes()
 	{
-		ContainerDiceReroll ??= GetNodeOrNull<Control>("VBoxContainer") ?? FindDescendantByName<Control>(this, "VBoxContainer");
-		ButtonReroll ??= GetNodeOrNull<Button>("VBoxContainer/Button_Reroll") ?? FindDescendantByName<Button>(this, "Button_Reroll") ?? FindFirstDescendant<Button>(this);
-		RichTextRerollCount ??= GetNodeOrNull<RichTextLabel>("Panel_Reroll/RichTextLabel") ?? FindDescendantByName<RichTextLabel>(this, "RichTextLabel");
-	}
-
-	private static T FindDescendantByName<T>(Node root, string nodeName) where T : Node
-	{
-		if (root == null)
-		{
-			return null;
-		}
-
-		foreach (Node child in root.GetChildren())
-		{
-			if (child is T typed && child.Name == nodeName)
-			{
-				return typed;
-			}
-
-			T found = FindDescendantByName<T>(child, nodeName);
-			if (found != null)
-			{
-				return found;
-			}
-		}
-
-		return null;
-	}
-
-	private static T FindFirstDescendant<T>(Node root) where T : Node
-	{
-		if (root == null)
-		{
-			return null;
-		}
-
-		foreach (Node child in root.GetChildren())
-		{
-			if (child is T typed)
-			{
-				return typed;
-			}
-
-			T found = FindFirstDescendant<T>(child);
-			if (found != null)
-			{
-				return found;
-			}
-		}
-
-		return null;
+		ButtonReroll ??= GetNodeOrNull<Button>("VBoxContainer/Button_Reroll") ?? NodeSearch.FindDescendantByName<Button>(this, "Button_Reroll") ?? NodeSearch.FindFirstDescendant<Button>(this);
+		RichTextRerollCount ??= GetNodeOrNull<RichTextLabel>("Panel_Reroll/RichTextLabel") ?? NodeSearch.FindDescendantByName<RichTextLabel>(this, "RichTextLabel");
 	}
 }
 
