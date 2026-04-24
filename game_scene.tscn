@@ -111,8 +111,8 @@ PresentationForwardOffset = 5.0
 
 [node name="TurnIconSwapAnimator" type="Node3D" parent="." unique_id=370150117 node_paths=PackedStringArray("AttackIcon", "DefenceIcon")]
 script = ExtResource("7_glbr4")
-AttackIcon = NodePath("../Env/Board/Sprite3D_Attack")
-DefenceIcon = NodePath("../Env/Board/Sprite3D_Defence")
+AttackIcon = NodePath("../Env/Board/UI/Sprite3D_Attack")
+DefenceIcon = NodePath("../Env/Board/UI/Sprite3D_Defence")
 
 [node name="PlayerCard" parent="." unique_id=2030214544 instance=ExtResource("10_magc2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 4)
@@ -134,7 +134,9 @@ mesh = ExtResource("15_opqoc")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/Board" unique_id=170911577]
 shape = SubResource("ConvexPolygonShape3D_bpcsf")
 
-[node name="RichText3D_DiceSelect" type="MeshInstance3D" parent="Env/Board" unique_id=1116248189]
+[node name="UI" type="Node3D" parent="Env/Board" unique_id=1118215180]
+
+[node name="RichText3D_DiceSelect" type="MeshInstance3D" parent="Env/Board/UI" unique_id=1116248189]
 transform = Transform3D(10, 0, 0, 0, -4.371139e-07, 10, 0, -10, -4.371139e-07, 0, 1.21, -4.3711387e-10)
 material_override = SubResource("StandardMaterial3D_0pvt5")
 cast_shadow = 0
@@ -146,15 +148,15 @@ font_size = 120
 size = Vector2(2, 1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
-[node name="Sprite3D_Attack" type="Sprite3D" parent="Env/Board" unique_id=1041200001]
+[node name="Sprite3D_Attack" type="Sprite3D" parent="Env/Board/UI" unique_id=1041200001]
 transform = Transform3D(-1, 1.8199258e-06, 7.9551484e-14, 0, -4.371139e-08, 1, 1.8199258e-06, 1, 4.371139e-08, 0, 1.2100003, 5)
 texture = ExtResource("12_f54l4")
 
-[node name="Sprite3D_Defence" type="Sprite3D" parent="Env/Board" unique_id=1085229363]
+[node name="Sprite3D_Defence" type="Sprite3D" parent="Env/Board/UI" unique_id=1085229363]
 transform = Transform3D(-1, 1.8199258e-06, 7.9551484e-14, 0, -4.371139e-08, 1, 1.8199258e-06, 1, 4.371139e-08, 0, 1.2099998, -5)
 texture = ExtResource("13_5smy7")
 
-[node name="Sprite3D_Split" type="Sprite3D" parent="Env/Board" unique_id=186129604]
+[node name="Sprite3D_Split" type="Sprite3D" parent="Env/Board/UI" unique_id=186129604]
 transform = Transform3D(-6.010316e-08, -3, 0, -6.010316e-08, 5.732056e-15, 1, -1.375, 1.3113416e-07, -4.371139e-08, 0, 1.2, 0)
 render_priority = -1
 texture = ExtResource("12_if5p2")
@@ -484,7 +486,7 @@ script = ExtResource("37_dcsui")
 ContainerDiceSelect = NodePath("VBoxContainer")
 ButtonConfirm = NodePath("VBoxContainer/Button_Confirm")
 RichTextInfo = NodePath("VBoxContainer/Button_Confirm/RichTextLabel")
-RichTextDiceSelect = NodePath("../../Env/Board/RichText3D_DiceSelect")
+RichTextDiceSelect = NodePath("../../Env/Board/UI/RichText3D_DiceSelect")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DiceSelect" unique_id=1413953285]
 layout_mode = 0
