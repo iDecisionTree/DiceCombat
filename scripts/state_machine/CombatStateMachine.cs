@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceCombat.scripts.card;
 using DiceCombat.scripts.card_skill;
+using DiceCombat.scripts.coin;
 using DiceCombat.scripts.dice;
 using DiceCombat.scripts.ui;
 
@@ -19,6 +20,7 @@ public partial class CombatStateMachine : Node
 	[Export] public DiceManager DiceManager { get; set; }
 	[Export] public DiceSelectUI DiceSelectUI { get; set; }
 	[Export] public DiceRerollUI DiceRerollUI { get; set; }
+	[Export] public Coin TurnOrderCoin { get; set; }
 	[Export] public TurnIconSwapAnimator TurnIconSwapAnimator { get; set; }
 
 	[ExportGroup("Presentation Hooks")]
@@ -64,7 +66,7 @@ public partial class CombatStateMachine : Node
 			DiceRerollUI.RerollClicked += OnDiceRerollClicked;
 		}
 
-		StartBattle();
+		CallDeferred(MethodName.StartBattle);
 	}
 
 	public override void _ExitTree()
@@ -90,8 +92,10 @@ public partial class CombatStateMachine : Node
 		_resolutionSequenceToken++;
 		_combatStarted = true;
 		_roundCount = 1;
-		_currentTurn = CombatTurn.Player;
-		_currentState = CombatState.PlayerRollAllDice;
+		_currentState = CombatState.Init;
+		_currentRequiredSelectionCount = 0;
+		_waitingForPlayerConfirm = false;
+		_isPlayerRerolling = false;
 		ResetPlayerChoiceState();
 		_playerRerollRemaining = GetPlayerMaxReroll();
 		ResetCardSkillRuntimes();
@@ -99,8 +103,8 @@ public partial class CombatStateMachine : Node
 		ResetBattlePresentation();
 		_cameraDirector.OnBattleStarted();
 
-		GD.Print($"初始化完成, round={_roundCount}, turn={_currentTurn}, state={_currentState}");
-		ProcessCurrentState();
+		GD.Print($"初始化完成, round={_roundCount}, state={_currentState}, 开始抛硬币决定先手");
+		BeginTurnOrderDecision();
 	}
 
 	private void BindPresentationDirectors()
@@ -123,13 +127,121 @@ public partial class CombatStateMachine : Node
 		_enemyRollDices.Clear();
 		_enemyChooseDices.Clear();
 
+		TurnOrderCoin?.ResetToIdle();
 		DiceManager?.ResetBattlefield();
 		CloseChoiceUi();
-		TurnIconSwapAnimator?.ResetToHome();
+		TurnIconSwapAnimator?.ResetToCenter();
 		_cameraDirector.ResetCamera();
 		_effectDirector.ResetEffects();
 		SetBattleCardsVisible(false);
 		RefreshBattleInfoPanels();
+		HideBattleInfoPanelsForCoinToss();
+	}
+
+	private void BeginTurnOrderDecision()
+	{
+		if (TurnOrderCoin != null)
+		{
+			TurnOrderCoin.PlayToss(OnTurnOrderCoinFinished);
+			return;
+		}
+
+		CombatTurn firstTurn = GD.Randf() < 0.5f ? CombatTurn.Player : CombatTurn.Enemy;
+		GD.PrintErr($"TurnOrderCoin 未绑定, 使用随机结果决定先手: {firstTurn}");
+		BeginFirstTurn(firstTurn);
+	}
+
+	private void OnTurnOrderCoinFinished(CoinSide side)
+	{
+		CombatTurn firstTurn = side == CoinSide.Front ? CombatTurn.Player : CombatTurn.Enemy;
+		GD.Print($"抛硬币完成, 结果={side}, firstTurn={firstTurn}");
+		BeginFirstTurn(firstTurn);
+	}
+
+	private void BeginFirstTurn(CombatTurn firstTurn)
+	{
+		_currentTurn = firstTurn;
+		_currentState = firstTurn == CombatTurn.Player ? CombatState.PlayerRollAllDice : CombatState.EnemyRollAllDice;
+		_currentRequiredSelectionCount = 0;
+		_waitingForPlayerConfirm = false;
+		_isPlayerRerolling = false;
+		_cameraDirector.OnTurnChanged(_currentTurn, _roundCount);
+
+		void StartFirstState()
+		{
+			GD.Print($"首回合确定, round={_roundCount}, turn={_currentTurn}, state={_currentState}");
+			ProcessCurrentState();
+		}
+
+		PlayOpeningPresentation(StartFirstState);
+	}
+
+	private void HideBattleInfoPanelsForCoinToss()
+	{
+		PlayerInfoPanel?.HideForIntro();
+		EnemyInfoPanel?.HideForIntro();
+	}
+
+	private void PlayOpeningPresentation(Action onFinished)
+	{
+		int pendingCount = 0;
+
+		void CompleteOne()
+		{
+			pendingCount--;
+			if (pendingCount <= 0)
+			{
+				onFinished?.Invoke();
+			}
+		}
+
+		if (TurnIconSwapAnimator != null)
+		{
+			pendingCount++;
+			TurnIconSwapAnimator.PlayIntroAnimation(_currentTurn == CombatTurn.Player, CompleteOne);
+		}
+
+		if (PlayerInfoPanel != null || EnemyInfoPanel != null)
+		{
+			pendingCount++;
+			PlayBattleInfoPanelIntro(CompleteOne);
+		}
+
+		if (pendingCount == 0)
+		{
+			onFinished?.Invoke();
+		}
+	}
+
+	private void PlayBattleInfoPanelIntro(Action onFinished)
+	{
+		int pendingCount = 0;
+
+		void CompleteOne()
+		{
+			pendingCount--;
+			if (pendingCount <= 0)
+			{
+				onFinished?.Invoke();
+			}
+		}
+
+		if (PlayerInfoPanel != null)
+		{
+			pendingCount++;
+			PlayerInfoPanel.PlayIntroReveal(CompleteOne);
+		}
+
+		if (EnemyInfoPanel != null)
+		{
+			pendingCount++;
+			EnemyInfoPanel.PlayIntroReveal(CompleteOne);
+		}
+
+		if (pendingCount == 0)
+		{
+			onFinished?.Invoke();
+		}
 	}
 
 	private void ProcessCurrentState()

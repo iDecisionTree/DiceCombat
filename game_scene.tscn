@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://dc4u6po3rr6lb" path="res://scripts/state_machine/CombatEffectDirector3D.cs" id="24_mqeff"]
 [ext_resource type="Texture2D" uid="uid://bkwq7s6ixfdm4" path="res://textures/card/AvatarCardFigureInfo_0003.png" id="29_magc2"]
 [ext_resource type="Texture2D" uid="uid://brnx4yunfyinb" path="res://textures/ui/ButtonRerollIcon.png" id="29_t06ws"]
+[ext_resource type="PackedScene" uid="uid://qhgnc2jtgv5b" path="res://resourses/coin.tscn" id="31_kyyqo"]
 [ext_resource type="Theme" uid="uid://5d0855e6v5ns" path="res://themes/theme.tres" id="31_magc2"]
 [ext_resource type="Texture2D" uid="uid://3jhnwi4srilt" path="res://textures/ui/BattleHpUnder.png" id="32_7nf4l"]
 [ext_resource type="Texture2D" uid="uid://doknfxpgghmmv" path="res://textures/card/AvatarCardFigureInfo_0005.png" id="32_dtvpm"]
@@ -47,14 +48,14 @@ glow_enabled = true
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bpcsf"]
 points = PackedVector3Array(-13.367048, -0.25115395, -9.040756, 11.9824095, 1.6622, 8.179616, 11.527457, 1.6622, 9.543361, 13.250061, -0.25115395, 9.040756, 10.235575, -0.25115395, -14.063049, -6.6446886, 1.6622, -14.087275, -9.372043, 1.6622, 12.723532, -7.338075, -0.25115395, 15.570366, 11.527457, 1.6622, -9.543361, 5.2122984, -0.25115395, 16.073854, -12.099397, 1.6622, -8.179616, -13.367048, -0.25115395, 9.040756, -5.3292856, -0.25115395, -16.073854, 4.710251, 1.6622, 14.542806, 4.710251, 1.6622, -14.542806, 13.250061, -0.25115395, -9.040756, -12.099397, 1.6622, 8.179616, 10.235575, -0.25115395, 14.063049, -10.352562, -0.25115395, -14.063049, -4.827238, 1.6622, 14.542806, 5.2122984, -0.25115395, -16.073854, -10.855411, -0.25115395, 13.559561, 9.255055, 1.6622, -12.723532, 9.255055, 1.6622, 12.723532, -9.826995, 1.6622, -12.268001, 11.9824095, 1.6622, -8.179616, -5.3292856, -0.25115395, 16.073854, -4.827238, 1.6622, -14.542806, -12.361351, -0.25115395, -11.551903, -11.189493, 1.6622, 10.451573, 12.244364, -0.25115395, -11.551903, 12.244364, -0.25115395, 11.551903)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0pvt5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyyqo"]
 resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 shading_mode = 0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_kyyqo"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_magc2"]
 size = Vector2(2, 1)
 orientation = 2
 
@@ -81,6 +82,7 @@ EnemyFocusTarget = NodePath("../EnemyCard")
 [node name="CombatEffectDirector3D" type="Node3D" parent="." unique_id=1416068348 node_paths=PackedStringArray("DimOverlay")]
 script = ExtResource("24_mqeff")
 DimOverlay = NodePath("../CanvasLayer/CombatDimOverlay")
+AdditionalIsolatedRootPaths = [NodePath("../Coin")]
 OverlayAlpha = 0.5
 OverlayFadeInDuration = 0.0
 RevealAnimationDuration = 1.0
@@ -89,13 +91,14 @@ PlayerRevealAnimationName = &"card/player_reveal"
 EnemyRevealAnimationName = &"card/enemy_reveal"
 DamageAnimationName = &""
 
-[node name="CombatManager" type="Node3D" parent="." unique_id=1210621923 node_paths=PackedStringArray("PlayerCard", "EnemyCard", "DiceManager", "DiceSelectUI", "DiceRerollUI", "TurnIconSwapAnimator", "CameraDirector", "EffectDirector", "PlayerInfoPanel", "EnemyInfoPanel")]
+[node name="CombatManager" type="Node3D" parent="." unique_id=1210621923 node_paths=PackedStringArray("PlayerCard", "EnemyCard", "DiceManager", "DiceSelectUI", "DiceRerollUI", "TurnOrderCoin", "TurnIconSwapAnimator", "CameraDirector", "EffectDirector", "PlayerInfoPanel", "EnemyInfoPanel")]
 script = ExtResource("2_v1wow")
 PlayerCard = NodePath("../PlayerCard")
 EnemyCard = NodePath("../EnemyCard")
 DiceManager = NodePath("../DiceManager")
 DiceSelectUI = NodePath("../CanvasLayer/DiceSelect")
 DiceRerollUI = NodePath("../CanvasLayer/DiceReroll")
+TurnOrderCoin = NodePath("../Coin")
 TurnIconSwapAnimator = NodePath("../TurnIconSwapAnimator")
 CameraDirector = NodePath("../CombatCameraDirector3D")
 EffectDirector = NodePath("../CombatEffectDirector3D")
@@ -125,6 +128,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -10)
 visible = false
 CurrentHealth = 18
 
+[node name="Coin" parent="." unique_id=1846822502 instance=ExtResource("31_kyyqo")]
+transform = Transform3D(-0.40801778, -0.8545171, -0.32143736, -0.80827105, 0.1743841, 0.562395, -0.42452255, 0.48927566, -0.76183325, -0.051200047, 2.25, 0.1933602)
+visible = false
+freeze = true
+
 [node name="Env" type="Node3D" parent="." unique_id=1669588455]
 
 [node name="Board" type="StaticBody3D" parent="Env" unique_id=999002941]
@@ -140,22 +148,22 @@ shape = SubResource("ConvexPolygonShape3D_bpcsf")
 
 [node name="RichText3D_DiceSelect" type="MeshInstance3D" parent="Env/Board/UI" unique_id=1116248189]
 transform = Transform3D(10, 0, 0, 0, -4.371139e-07, 10, 0, -10, -4.371139e-07, 0, 1.21, -4.3711387e-10)
-material_override = SubResource("StandardMaterial3D_0pvt5")
+material_override = SubResource("StandardMaterial3D_kyyqo")
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_kyyqo")
+mesh = SubResource("PlaneMesh_magc2")
 script = ExtResource("10_nuflt")
-text = "0"
+text = "0+5"
 font = ExtResource("11_nuflt")
 font_size = 112
 size = Vector2(2, 1)
 metadata/_custom_type_script = "uid://cofw7sywoopgu"
 
 [node name="Sprite3D_Attack" type="Sprite3D" parent="Env/Board/UI" unique_id=1041200001]
-transform = Transform3D(-1, 1.8199258e-06, 7.9551484e-14, 0, -4.371139e-08, 1, 1.8199258e-06, 1, 4.371139e-08, 0, 1.2100003, 5)
+transform = Transform3D(1, -1.9073485e-06, -8.337285e-14, 0, -4.371139e-08, 1, -1.9073485e-06, -1, -4.371139e-08, 0, 1.2099998, -5)
 texture = ExtResource("12_f54l4")
 
 [node name="Sprite3D_Defence" type="Sprite3D" parent="Env/Board/UI" unique_id=1085229363]
-transform = Transform3D(-1, 1.8199258e-06, 7.9551484e-14, 0, -4.371139e-08, 1, 1.8199258e-06, 1, 4.371139e-08, 0, 1.2099998, -5)
+transform = Transform3D(1, -1.9073485e-06, -8.337285e-14, 0, -4.371139e-08, 1, -1.9073485e-06, -1, -4.371139e-08, 0, 1.2100003, 5)
 texture = ExtResource("13_5smy7")
 
 [node name="Sprite3D_Split" type="Sprite3D" parent="Env/Board/UI" unique_id=186129604]
@@ -188,9 +196,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.0
+offset_left = -85.0
 offset_top = 335.0
-offset_right = 440.0
+offset_right = 514.99976
 offset_bottom = 455.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -332,9 +340,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -440.0
+offset_left = -515.0
 offset_top = -455.0
-offset_right = 160.0
+offset_right = 84.99963
 offset_bottom = -335.0
 grow_horizontal = 2
 grow_vertical = 2

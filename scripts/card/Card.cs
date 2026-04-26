@@ -228,5 +228,3 @@ public partial class Card : Node3D
 		return CardData?.DiceGroups?.FirstOrDefault(x => x != null && x.DiceType == diceType)?.Count ?? 0;
 	}
 }
-
-

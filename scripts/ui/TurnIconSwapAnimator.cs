@@ -14,8 +14,16 @@ public partial class TurnIconSwapAnimator : Node3D
 		get => DefenseIcon;
 		set => DefenseIcon = value;
 	}
+	[Export] public float IntroDuration { get; set; } = 0.8f;
 	[Export] public float SwapDuration { get; set; } = 0.35f;
 	[Export] public Vector3 SwapRotationDeltaDegrees { get; set; } = new Vector3(0f, 0f, 180f);
+
+	private enum IconLayoutState
+	{
+		Center,
+		Home,
+		Swapped,
+	}
 
 	private struct IconTransformState
 	{
@@ -26,7 +34,9 @@ public partial class TurnIconSwapAnimator : Node3D
 
 	private IconTransformState _attackHomeState;
 	private IconTransformState _defenseHomeState;
-	private bool _isHomeState = true;
+	private IconTransformState _attackCenterState;
+	private IconTransformState _defenseCenterState;
+	private IconLayoutState _layoutState = IconLayoutState.Home;
 	private bool _hasCachedHomeTransforms;
 	private bool _isAnimating;
 	private Tween _swapTween;
@@ -34,16 +44,66 @@ public partial class TurnIconSwapAnimator : Node3D
 	public override void _Ready()
 	{
 		CacheHomeTransforms();
-		ResetToHome();
+
+		if (Engine.IsEditorHint())
+		{
+			ResetToHome();
+			return;
+		}
+
+		ResetToCenter();
 	}
 
 	public void ResetToHome()
 	{
 		CacheHomeTransforms();
 		StopSwapTween();
-		_isHomeState = true;
+		_layoutState = IconLayoutState.Home;
 		_isAnimating = false;
+		SetIconsVisible(true);
 		ApplyHomeTransforms();
+	}
+
+	public void ResetToCenter()
+	{
+		CacheHomeTransforms();
+		StopSwapTween();
+		_layoutState = IconLayoutState.Center;
+		_isAnimating = false;
+		ApplyCenterTransforms();
+		SetIconsVisible(false);
+	}
+
+	public void PlayIntroAnimation(bool useSwappedTargets, Action onFinished = null)
+	{
+		if (!HasValidIcons())
+		{
+			onFinished?.Invoke();
+			return;
+		}
+
+		CacheHomeTransforms();
+		if (_isAnimating)
+		{
+			onFinished?.Invoke();
+			return;
+		}
+
+		SetIconsVisible(true);
+		ApplyCenterTransforms();
+		_layoutState = IconLayoutState.Center;
+		_isAnimating = true;
+
+		IconLayoutState targetLayoutState = useSwappedTargets ? IconLayoutState.Swapped : IconLayoutState.Home;
+		(IconTransformState attackTargetState, IconTransformState defenseTargetState) = GetTargetStates(targetLayoutState);
+		Tween tween = CreateTweenToStates(attackTargetState, defenseTargetState, IntroDuration);
+		tween.Finished += () =>
+		{
+			_swapTween = null;
+			_layoutState = targetLayoutState;
+			_isAnimating = false;
+			onFinished?.Invoke();
+		};
 	}
 
 	public void PlaySwapAnimation(Action onFinished = null)
@@ -61,14 +121,15 @@ public partial class TurnIconSwapAnimator : Node3D
 			return;
 		}
 
+		SetIconsVisible(true);
 		_isAnimating = true;
 
-		(IconTransformState attackTargetState, IconTransformState defenseTargetState) = GetSwapTargetStates();
-		Tween tween = CreateSwapTween(attackTargetState, defenseTargetState);
+		(IconTransformState attackTargetState, IconTransformState defenseTargetState, IconLayoutState targetLayoutState) = GetSwapTargetStates();
+		Tween tween = CreateTweenToStates(attackTargetState, defenseTargetState, SwapDuration);
 		tween.Finished += () =>
 		{
 			_swapTween = null;
-			_isHomeState = !_isHomeState;
+			_layoutState = targetLayoutState;
 			_isAnimating = false;
 			onFinished?.Invoke();
 		};
@@ -83,6 +144,12 @@ public partial class TurnIconSwapAnimator : Node3D
 
 		_attackHomeState = ReadTransformState(AttackIcon);
 		_defenseHomeState = ReadTransformState(DefenseIcon);
+
+		Vector3 centerPosition = (_attackHomeState.Position + _defenseHomeState.Position) * 0.5f;
+		_attackCenterState = _attackHomeState;
+		_attackCenterState.Position = centerPosition;
+		_defenseCenterState = _defenseHomeState;
+		_defenseCenterState.Position = centerPosition;
 		_hasCachedHomeTransforms = true;
 	}
 
@@ -102,25 +169,59 @@ public partial class TurnIconSwapAnimator : Node3D
 		ApplyTransformState(DefenseIcon, _defenseHomeState);
 	}
 
-	private (IconTransformState attackTargetState, IconTransformState defenseTargetState) GetSwapTargetStates()
+	private void ApplyCenterTransforms()
 	{
-		IconTransformState attackTargetState = _isHomeState ? _defenseHomeState : _attackHomeState;
-		IconTransformState defenseTargetState = _isHomeState ? _attackHomeState : _defenseHomeState;
+		if (!HasValidIcons())
+		{
+			return;
+		}
 
-		attackTargetState.RotationDegrees += SwapRotationDeltaDegrees;
-		defenseTargetState.RotationDegrees += SwapRotationDeltaDegrees;
+		ApplyTransformState(AttackIcon, _attackCenterState);
+		ApplyTransformState(DefenseIcon, _defenseCenterState);
+	}
+
+	private void SetIconsVisible(bool visible)
+	{
+		if (!HasValidIcons())
+		{
+			return;
+		}
+
+		AttackIcon.Visible = visible;
+		DefenseIcon.Visible = visible;
+	}
+
+	private (IconTransformState attackTargetState, IconTransformState defenseTargetState, IconLayoutState targetLayoutState) GetSwapTargetStates()
+	{
+		bool moveToSwappedState = _layoutState != IconLayoutState.Swapped;
+		IconLayoutState targetLayoutState = moveToSwappedState ? IconLayoutState.Swapped : IconLayoutState.Home;
+		(IconTransformState attackTargetState, IconTransformState defenseTargetState) = GetTargetStates(targetLayoutState);
+		return (attackTargetState, defenseTargetState, targetLayoutState);
+	}
+
+	private (IconTransformState attackTargetState, IconTransformState defenseTargetState) GetTargetStates(IconLayoutState targetLayoutState)
+	{
+		IconTransformState attackTargetState = targetLayoutState == IconLayoutState.Swapped ? _defenseHomeState : _attackHomeState;
+		IconTransformState defenseTargetState = targetLayoutState == IconLayoutState.Swapped ? _attackHomeState : _defenseHomeState;
+
+		if (targetLayoutState == IconLayoutState.Swapped)
+		{
+			attackTargetState.RotationDegrees += SwapRotationDeltaDegrees;
+			defenseTargetState.RotationDegrees += SwapRotationDeltaDegrees;
+		}
+
 		return (attackTargetState, defenseTargetState);
 	}
 
-	private Tween CreateSwapTween(IconTransformState attackTargetState, IconTransformState defenseTargetState)
+	private Tween CreateTweenToStates(IconTransformState attackTargetState, IconTransformState defenseTargetState, float duration)
 	{
 		StopSwapTween();
 		Tween tween = CreateTween();
 		_swapTween = tween;
 		tween.SetTrans(Tween.TransitionType.Sine);
 		tween.SetEase(Tween.EaseType.InOut);
-		TweenIconTo(AttackIcon, attackTargetState, tween);
-		TweenIconTo(DefenseIcon, defenseTargetState, tween.Parallel());
+		TweenIconTo(AttackIcon, attackTargetState, tween, duration);
+		TweenIconTo(DefenseIcon, defenseTargetState, tween.Parallel(), duration);
 		return tween;
 	}
 
@@ -141,11 +242,12 @@ public partial class TurnIconSwapAnimator : Node3D
 		node.Scale = state.Scale;
 	}
 
-	private void TweenIconTo(Node3D icon, IconTransformState targetState, Tween tween)
+	private void TweenIconTo(Node3D icon, IconTransformState targetState, Tween tween, float duration)
 	{
-		tween.TweenProperty(icon, "position", targetState.Position, SwapDuration);
-		tween.Parallel().TweenProperty(icon, "rotation_degrees", targetState.RotationDegrees, SwapDuration);
-		tween.Parallel().TweenProperty(icon, "scale", targetState.Scale, SwapDuration);
+		float tweenDuration = Mathf.Max(duration, 0f);
+		tween.TweenProperty(icon, "position", targetState.Position, tweenDuration);
+		tween.Parallel().TweenProperty(icon, "rotation_degrees", targetState.RotationDegrees, tweenDuration);
+		tween.Parallel().TweenProperty(icon, "scale", targetState.Scale, tweenDuration);
 	}
 
 	private void StopSwapTween()
