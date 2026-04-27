@@ -3,7 +3,6 @@
 namespace DiceCombat.scripts.dice;
 
 [GlobalClass]
-[Tool]
 public partial class DiceRerollUI : Control
 {
 	[Signal] public delegate void RerollClickedEventHandler();

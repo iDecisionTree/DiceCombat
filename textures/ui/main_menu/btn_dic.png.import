@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brx83wm6v4bl3"
-path.bptc="res://.godot/imported/Result_O2.png-0aa8987c3127c48fc2bef9a5c378ddf7.bptc.ctex"
+uid="uid://c13vmv1cln2ig"
+path.bptc="res://.godot/imported/btn_dic.png-749ec49a6913ca9ab02748c500ff5c40.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/eff/Result_O2.png"
-dest_files=["res://.godot/imported/Result_O2.png-0aa8987c3127c48fc2bef9a5c378ddf7.bptc.ctex"]
+source_file="res://textures/ui/main_menu/btn_dic.png"
+dest_files=["res://.godot/imported/btn_dic.png-749ec49a6913ca9ab02748c500ff5c40.bptc.ctex"]
 
 [params]
 
@@ -38,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

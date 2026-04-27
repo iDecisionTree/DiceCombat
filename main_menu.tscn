@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://drniqa3ongww3"]
+
+[ext_resource type="Theme" uid="uid://bsppw3x1q3gme" path="res://themes/main_menu_theme.tres" id="1_06t4h"]
+[ext_resource type="Texture2D" uid="uid://cwm6yf2ld7n43" path="res://textures/skybox/main_menu_skybox.jpg" id="1_jix8l"]
+[ext_resource type="Texture2D" uid="uid://behwqv6a3kx1u" path="res://textures/ui/main_menu/topbar.png" id="2_7vrkn"]
+[ext_resource type="Script" uid="uid://bewkswq8y6epn" path="res://scripts/ui/SkyboxRotator.cs" id="2_glbon"]
+[ext_resource type="Texture2D" uid="uid://cwxadf3pvopv4" path="res://textures/ui/main_menu/title.png" id="3_fu7sn"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7vrkn"]
+panorama = ExtResource("1_jix8l")
+energy_multiplier = 0.4
+
+[sub_resource type="Sky" id="Sky_06t4h"]
+sky_material = SubResource("PanoramaSkyMaterial_7vrkn")
+
+[sub_resource type="Environment" id="Environment_7vrkn"]
+background_mode = 2
+sky = SubResource("Sky_06t4h")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="MainMenu" type="Node3D" unique_id=1453822002]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=535463727]
+environment = SubResource("Environment_7vrkn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=7501764]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=862705759]
+script = ExtResource("2_glbon")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1426729601]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1313953690]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_06t4h")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control" unique_id=1936493800]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 150.0
+offset_right = 1800.0
+offset_bottom = 835.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PanelContainer" unique_id=1330787483]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Topbar" type="TextureRect" parent="CanvasLayer/Control/PanelContainer/VBoxContainer" unique_id=16261130]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+texture = ExtResource("2_7vrkn")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Spacer1" type="Control" parent="CanvasLayer/Control/PanelContainer/VBoxContainer" unique_id=955947737]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="GameModeContainer" type="HBoxContainer" parent="CanvasLayer/Control/PanelContainer/VBoxContainer" unique_id=1128706764]
+custom_minimum_size = Vector2(0, 375)
+layout_mode = 2
+theme_override_constants/separation = -20
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/GameModeContainer" unique_id=132522695]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Button_StoryGame" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/GameModeContainer" unique_id=2143370987]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_type_variation = &"StoryGameButton"
+
+[node name="Button_RandBattle" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/GameModeContainer" unique_id=1005254113]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_type_variation = &"StoryGameButton"
+
+[node name="Spacer2" type="Control" parent="CanvasLayer/Control/PanelContainer/VBoxContainer" unique_id=700496646]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="OtherContainer" type="HBoxContainer" parent="CanvasLayer/Control/PanelContainer/VBoxContainer" unique_id=2037705197]
+custom_minimum_size = Vector2(0, 175)
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/OtherContainer" unique_id=1432176348]
+layout_mode = 2
+
+[node name="Button_Level" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/OtherContainer" unique_id=2103144670]
+custom_minimum_size = Vector2(300, 175)
+layout_mode = 2
+theme_type_variation = &"LevelButton"
+
+[node name="Button_Dic" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/OtherContainer" unique_id=1998474651]
+custom_minimum_size = Vector2(200, 175)
+layout_mode = 2
+theme_type_variation = &"DicButton"
+
+[node name="Button_Shop" type="Button" parent="CanvasLayer/Control/PanelContainer/VBoxContainer/OtherContainer" unique_id=1895199149]
+custom_minimum_size = Vector2(200, 175)
+layout_mode = 2
+theme_type_variation = &"ShopButton"
+
+[node name="TextureRect_Title" type="TextureRect" parent="CanvasLayer/Control" unique_id=862514455]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -795.0
+offset_top = -265.0
+offset_right = 5.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_fu7sn")
+expand_mode = 3
+stretch_mode = 5

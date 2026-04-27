@@ -2,7 +2,6 @@
 
 namespace DiceCombat.scripts.card_skill;
 
-[Tool]
 public abstract partial class CardSkill : Resource
 {
 	public virtual int GetSelectionDamagePreviewBonus(DiceSelectionPreviewContext context)

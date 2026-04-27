@@ -18,6 +18,10 @@ public partial class TurnIconSwapAnimator : Node3D
 	[Export] public float SwapDuration { get; set; } = 0.35f;
 	[Export] public Vector3 SwapRotationDeltaDegrees { get; set; } = new Vector3(0f, 0f, 180f);
 
+	[ExportGroup("Swap Offsets")]
+	[Export] public Vector3 AttackSwapOffset { get; set; } = Vector3.Zero;
+	[Export] public Vector3 DefenseSwapOffset { get; set; } = Vector3.Zero;
+
 	private enum IconLayoutState
 	{
 		Center,
@@ -201,13 +205,23 @@ public partial class TurnIconSwapAnimator : Node3D
 
 	private (IconTransformState attackTargetState, IconTransformState defenseTargetState) GetTargetStates(IconLayoutState targetLayoutState)
 	{
-		IconTransformState attackTargetState = targetLayoutState == IconLayoutState.Swapped ? _defenseHomeState : _attackHomeState;
-		IconTransformState defenseTargetState = targetLayoutState == IconLayoutState.Swapped ? _attackHomeState : _defenseHomeState;
+		IconTransformState attackTargetState;
+		IconTransformState defenseTargetState;
 
 		if (targetLayoutState == IconLayoutState.Swapped)
 		{
+			attackTargetState = _attackHomeState;
+			attackTargetState.Position += AttackSwapOffset;
+			defenseTargetState = _defenseHomeState;
+			defenseTargetState.Position += DefenseSwapOffset;
+
 			attackTargetState.RotationDegrees += SwapRotationDeltaDegrees;
 			defenseTargetState.RotationDegrees += SwapRotationDeltaDegrees;
+		}
+		else
+		{
+			attackTargetState = _attackHomeState;
+			defenseTargetState = _defenseHomeState;
 		}
 
 		return (attackTargetState, defenseTargetState);

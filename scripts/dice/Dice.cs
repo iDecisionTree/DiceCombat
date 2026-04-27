@@ -4,7 +4,6 @@ using DiceCombat.scripts;
 namespace DiceCombat.scripts.dice;
 
 [GlobalClass]
-[Tool]
 public partial class Dice : RigidBody3D
 {
     [Signal] public delegate void RollFinishedEventHandler(int num);

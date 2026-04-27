@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="DiceCombat"
-run/main_scene="uid://bnekk23tuhuot"
+run/main_scene="uid://drniqa3ongww3"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
 

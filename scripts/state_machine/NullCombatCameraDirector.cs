@@ -1,4 +1,6 @@
-﻿using DiceCombat.scripts.card;
+﻿using System;
+using DiceCombat.scripts.card;
+using Godot;
 
 namespace DiceCombat.scripts.state_machine;
 
@@ -28,6 +30,11 @@ public sealed class NullCombatCameraDirector : ICombatCameraDirector
 
 	public void OnBattleEnded(CombatState finalState)
 	{
+	}
+
+	public void FocusOnNode(Node3D target, float duration, Vector3? customOffset = null, Action onFinished = null)
+	{
+		onFinished?.Invoke();
 	}
 }
 

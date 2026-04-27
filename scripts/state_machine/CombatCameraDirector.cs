@@ -1,4 +1,5 @@
-﻿using DiceCombat.scripts.card;
+﻿using System;
+using DiceCombat.scripts.card;
 using Godot;
 
 namespace DiceCombat.scripts.state_machine;
@@ -23,6 +24,11 @@ public abstract partial class CombatCameraDirector : Node, ICombatCameraDirector
 
 	public virtual void OnBattleEnded(CombatState finalState)
 	{
+	}
+
+	public virtual void FocusOnNode(Node3D target, float duration, Vector3? customOffset = null, Action onFinished = null)
+	{
+		onFinished?.Invoke();
 	}
 }
 

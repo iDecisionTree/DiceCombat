@@ -1,35 +1,35 @@
-[gd_scene format=3 uid="uid://c1k7ge0habvqr"]
+[gd_scene format=3 uid="uid://ctki0rbpvin1l"]
 
-[ext_resource type="Script" uid="uid://cdj46ptxx1ws0" path="res://scripts/eff/PlayerKOEffect.cs" id="1_x5y23"]
-[ext_resource type="Texture2D" uid="uid://brtvc8xc124nn" path="res://textures/eff/Result_K.png" id="2_a100a"]
-[ext_resource type="Texture2D" uid="uid://cnrst22gr41wc" path="res://textures/eff/Result_O.png" id="3_agnde"]
-[ext_resource type="ArrayMesh" uid="uid://ddr5mx4eppstg" path="res://models/eff/cube.obj" id="4_quxxn"]
+[ext_resource type="Texture2D" uid="uid://3vyfogxwv468" path="res://textures/eff/Result_K2.png" id="2_um23d"]
+[ext_resource type="ArrayMesh" uid="uid://ddr5mx4eppstg" path="res://models/eff/cube.obj" id="3_trltb"]
+[ext_resource type="Texture2D" uid="uid://brx83wm6v4bl3" path="res://textures/eff/Result_O2.png" id="3_url1g"]
+[ext_resource type="Script" uid="uid://cdj46ptxx1ws0" path="res://scripts/eff/PlayerKOEffect.cs" id="4_pkoeff"]
 
 [sub_resource type="Animation" id="Animation_thmc6"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("K:position")
+tracks/0/path = NodePath("O:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(2.5, 50, 6)]
+"values": [Vector3(-2.5, 50, -9)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("O:position")
+tracks/1/path = NodePath("K:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(5.5, 50, 9)]
+"values": [Vector3(-5.5, 50, -6)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -56,8 +56,8 @@ tracks/3/keys = {
 "values": [1.0]
 }
 
-[sub_resource type="Animation" id="Animation_trltb"]
-resource_name = "ko"
+[sub_resource type="Animation" id="Animation_x5y23"]
+resource_name = "new_animation"
 length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -69,7 +69,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.2),
 "transitions": PackedFloat32Array(1, 1, 100000),
 "update": 0,
-"values": [Vector3(2.5, 50, 6), Vector3(2.5, 20, 6), Vector3(2.5, 4, 6)]
+"values": [Vector3(-5.5, 50, -6), Vector3(-5.5, 20, -6), Vector3(-5.5, 4, -6)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -79,9 +79,9 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.35, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 100000),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(5.5, 50, 9), Vector3(5.5, 50, 9), Vector3(5.5, 20, 9), Vector3(5.5, 3.75, 9)]
+"values": [Vector3(-2.5, 50, -9), Vector3(-2.5, 50, -9), Vector3(-2.5, 20, -9), Vector3(-2.5, 3.75, -9)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -103,7 +103,7 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0.16, 2),
-"transitions": PackedFloat32Array(1, 100),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.2]
 }
@@ -125,7 +125,7 @@ tracks/4/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_um23d"]
 _data = {
 &"RESET": SubResource("Animation_thmc6"),
-&"ko": SubResource("Animation_trltb")
+&"ko": SubResource("Animation_x5y23")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trltb"]
@@ -136,7 +136,7 @@ metallic = 1.0
 metallic_specular = 1.0
 roughness = 0.2
 emission_enabled = true
-emission = Color(1, 0.59607846, 0, 1)
+emission = Color(0.25882354, 0.52156866, 0.95686275, 1)
 emission_energy_multiplier = 1.5
 rim_enabled = true
 
@@ -158,28 +158,29 @@ collision_friction = 0.2
 collision_bounce = 0.8
 collision_use_scale = true
 
-[node name="Player_KO" type="Node3D" unique_id=2006207804 node_paths=PackedStringArray("FocusTarget")]
-script = ExtResource("1_x5y23")
+[node name="Enemy_KO" type="Node3D" unique_id=2006207804 node_paths=PackedStringArray("FocusTarget", "BlurController")]
+script = ExtResource("4_pkoeff")
 FocusTarget = NodePath("FocusTarget")
+BlurController = NodePath("../../CanvasLayer/RadialBlur")
 
 [node name="FocusTarget" type="Node3D" parent="." unique_id=822053301]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 7.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, -7.5)
 
-[node name="K" type="Sprite3D" parent="." unique_id=623492415]
-transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 2.5, 50, 6)
+[node name="K" type="Sprite3D" parent="." unique_id=343414134]
+transform = Transform3D(0.7071067, 0, 0.7071067, -8.742277e-08, 1, 8.742277e-08, -0.7071067, -1.2363448e-07, 0.7071067, -5.5, 50, -6)
 render_priority = 1
-texture = ExtResource("2_a100a")
+texture = ExtResource("2_um23d")
 
-[node name="O" type="Sprite3D" parent="." unique_id=343414134]
-transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 5.5, 50, 9)
+[node name="O" type="Sprite3D" parent="." unique_id=623492415]
+transform = Transform3D(0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.7071067, -2.5, 50, -9)
 render_priority = 1
-texture = ExtResource("3_agnde")
+texture = ExtResource("3_url1g")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1239346314]
 libraries/ = SubResource("AnimationLibrary_um23d")
 
 [node name="Eff_Cube" type="GPUParticles3D" parent="." unique_id=1406316317]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 4, 1.5, 7.5)
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, -4, 1.5, -7.5)
 material_override = SubResource("StandardMaterial3D_trltb")
 emitting = false
 amount = 100
@@ -188,4 +189,4 @@ one_shot = true
 explosiveness = 0.9
 collision_base_size = 0.15
 process_material = SubResource("ParticleProcessMaterial_um23d")
-draw_pass_1 = ExtResource("4_quxxn")
+draw_pass_1 = ExtResource("3_trltb")

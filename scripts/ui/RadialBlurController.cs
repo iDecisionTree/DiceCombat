@@ -5,9 +5,9 @@ namespace DiceCombat.scripts.ui;
 [GlobalClass]
 public partial class RadialBlurController : ColorRect
 {
-	[Export] public float PeakStrength { get; set; } = 0.7f;
+	[Export] public float PeakStrength { get; set; } = 0.25f;
 	[Export] public float FadeInDuration { get; set; } = 0.1f;
-	[Export] public float HoldDuration { get; set; } = 0.3f;
+	[Export] public float HoldDuration { get; set; } = 0.2f;
 	[Export] public float FadeOutDuration { get; set; } = 0.4f;
 
 	private ShaderMaterial _material;

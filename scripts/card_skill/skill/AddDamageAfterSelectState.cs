@@ -4,7 +4,6 @@ using DiceCombat.scripts.card_skill;
 namespace DiceCombat.scripts.card_skill.skill;
 
 [GlobalClass]
-[Tool]
 public partial class AddDamageAfterSelectState : CardSkill
 {
 	[Export] public int DamageAddition { get; set; } = 5;

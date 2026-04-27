@@ -10,7 +10,6 @@ public enum CoinSide
 }
 
 [GlobalClass]
-[Tool]
 public partial class Coin : RigidBody3D
 {
 	[ExportGroup("Face Marker")]

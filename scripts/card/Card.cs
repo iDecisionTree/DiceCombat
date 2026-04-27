@@ -9,7 +9,6 @@ using DiceCombat.scripts.rich_text_3d;
 namespace DiceCombat.scripts.card;
 
 [GlobalClass]
-[Tool]
 public partial class Card : Node3D
 {
 	[Export] public CardData CardData { get; set; }

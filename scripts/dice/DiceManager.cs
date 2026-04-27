@@ -6,7 +6,6 @@ using System.Linq;
 namespace DiceCombat.scripts.dice;
 
 [GlobalClass]
-[Tool]
 public partial class DiceManager : Node3D
 {
 	[Signal] public delegate void SelectionChangedEventHandler(int selectedCount);

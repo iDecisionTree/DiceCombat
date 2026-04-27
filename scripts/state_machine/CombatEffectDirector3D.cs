@@ -5,7 +5,6 @@ using DiceCombat.scripts.card;
 namespace DiceCombat.scripts.state_machine;
 
 [GlobalClass]
-[Tool]
 public partial class CombatEffectDirector3D : CombatEffectDirector
 {
 	[Export] public CanvasItem DimOverlay { get; set; }
@@ -36,11 +35,6 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 
 	public override void _Ready()
 	{
-		if (Engine.IsEditorHint())
-		{
-			return;
-		}
-
 		EnsureIsolatedCaptureNodes();
 	}
 

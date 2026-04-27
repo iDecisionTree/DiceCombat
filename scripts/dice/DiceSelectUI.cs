@@ -6,7 +6,6 @@ using DiceCombat.scripts.rich_text_3d;
 namespace DiceCombat.scripts.dice;
 
 [GlobalClass]
-[Tool]
 public partial class DiceSelectUI : Control
 {
 	[Signal] public delegate void ConfirmClickedEventHandler();

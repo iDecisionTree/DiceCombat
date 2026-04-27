@@ -5,7 +5,6 @@ using DiceCombat.scripts.card_skill;
 namespace DiceCombat.scripts.card;
 
 [GlobalClass]
-[Tool]
 public partial class CardData : Resource
 {
 	// 基础信息

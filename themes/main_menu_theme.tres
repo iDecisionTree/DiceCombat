@@ -1,0 +1,77 @@
+[gd_resource type="Theme" format=3 uid="uid://bsppw3x1q3gme"]
+
+[ext_resource type="Texture2D" uid="uid://c13vmv1cln2ig" path="res://textures/ui/main_menu/btn_dic.png" id="1_75k1g"]
+[ext_resource type="Texture2D" uid="uid://dl7gubwhoqxhv" path="res://textures/ui/main_menu/btn_randbattle.png" id="1_cer0e"]
+[ext_resource type="Texture2D" uid="uid://ctly87dkloryt" path="res://textures/ui/main_menu/btn_level.png" id="1_hhw38"]
+[ext_resource type="Texture2D" uid="uid://1bdxpfmeq6vh" path="res://textures/ui/main_menu/btn_storygame.png" id="1_nccvq"]
+[ext_resource type="Texture2D" uid="uid://dtthh610ymu1n" path="res://textures/ui/main_menu/btn_shop.png" id="4_jcpr2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mfn8k"]
+texture = ExtResource("1_75k1g")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_655q8"]
+texture = ExtResource("1_75k1g")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_om4gw"]
+texture = ExtResource("1_75k1g")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrqxk"]
+texture = ExtResource("1_hhw38")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hrg5a"]
+texture = ExtResource("1_hhw38")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bpcb3"]
+texture = ExtResource("1_hhw38")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45xvp"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_75k1g"]
+texture = ExtResource("1_cer0e")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jcpr2"]
+texture = ExtResource("1_cer0e")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3v5n"]
+texture = ExtResource("1_cer0e")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nd2vj"]
+texture = ExtResource("4_jcpr2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a7s6w"]
+texture = ExtResource("4_jcpr2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ts75y"]
+texture = ExtResource("4_jcpr2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cer0e"]
+texture = ExtResource("1_nccvq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nccvq"]
+texture = ExtResource("1_nccvq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hhw38"]
+texture = ExtResource("1_nccvq")
+
+[resource]
+DicButton/base_type = &"Button"
+DicButton/styles/hover = SubResource("StyleBoxTexture_mfn8k")
+DicButton/styles/normal = SubResource("StyleBoxTexture_655q8")
+DicButton/styles/pressed = SubResource("StyleBoxTexture_om4gw")
+LevelButton/base_type = &"Button"
+LevelButton/styles/hover = SubResource("StyleBoxTexture_wrqxk")
+LevelButton/styles/normal = SubResource("StyleBoxTexture_hrg5a")
+LevelButton/styles/pressed = SubResource("StyleBoxTexture_bpcb3")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_45xvp")
+RandBattleButton/base_type = &"Button"
+RandBattleButton/styles/hover = SubResource("StyleBoxTexture_75k1g")
+RandBattleButton/styles/normal = SubResource("StyleBoxTexture_jcpr2")
+RandBattleButton/styles/pressed = SubResource("StyleBoxTexture_x3v5n")
+ShopButton/base_type = &"Button"
+ShopButton/styles/hover = SubResource("StyleBoxTexture_nd2vj")
+ShopButton/styles/normal = SubResource("StyleBoxTexture_a7s6w")
+ShopButton/styles/pressed = SubResource("StyleBoxTexture_ts75y")
+StoryGameButton/base_type = &"Button"
+StoryGameButton/styles/hover = SubResource("StyleBoxTexture_cer0e")
+StoryGameButton/styles/normal = SubResource("StyleBoxTexture_nccvq")
+StoryGameButton/styles/pressed = SubResource("StyleBoxTexture_hhw38")

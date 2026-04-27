@@ -6,12 +6,12 @@ using DiceCombat.scripts.card;
 using DiceCombat.scripts.card_skill;
 using DiceCombat.scripts.coin;
 using DiceCombat.scripts.dice;
+using DiceCombat.scripts.eff;
 using DiceCombat.scripts.ui;
 
 namespace DiceCombat.scripts.state_machine;
 
 [GlobalClass]
-[Tool]
 public partial class CombatStateMachine : Node
 {
 	[Export] public Card PlayerCard { get; set; }
@@ -28,6 +28,8 @@ public partial class CombatStateMachine : Node
 	[Export] public CombatEffectDirector EffectDirector { get; set; }
 	[Export] public CombatInfoPanel PlayerInfoPanel { get; set; }
 	[Export] public CombatInfoPanel EnemyInfoPanel { get; set; }
+	[Export] public Node3D PlayerKOEffect { get; set; }
+	[Export] public Node3D EnemyKOEffect { get; set; }
 
 	private readonly List<DiceData> _playerRollDices = new();
 	private readonly List<DiceData> _playerChooseDices = new();
@@ -198,7 +200,7 @@ public partial class CombatStateMachine : Node
 		if (TurnIconSwapAnimator != null)
 		{
 			pendingCount++;
-			TurnIconSwapAnimator.PlayIntroAnimation(_currentTurn == CombatTurn.Enemy, CompleteOne);
+			TurnIconSwapAnimator.PlayIntroAnimation(_currentTurn == CombatTurn.Player, CompleteOne);
 		}
 
 		if (PlayerInfoPanel != null || EnemyInfoPanel != null)
@@ -571,12 +573,113 @@ public partial class CombatStateMachine : Node
 
 	private void ExecuteVictory()
 	{
-		FinishBattle(CombatState.Victory, "游戏结束, 玩家胜利");
+		ResetPlayerChoiceState();
+		CloseChoiceUi();
+		SetBattleCardsVisible(false);
+
+		DiceManager?.ResetBattlefield();
+
+		PlayerInfoPanel?.HideForIntro();
+		EnemyInfoPanel?.HideForIntro();
+
+		void CompleteVictoryPresentation()
+		{
+			GD.Print("游戏结束, 玩家胜利");
+		}
+
+		if (EnemyKOEffect == null)
+		{
+			CompleteVictoryPresentation();
+			return;
+		}
+
+		EnemyKOEffect.Visible = true;
+		AnimationPlayer koAnimPlayer = EnemyKOEffect.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+		if (koAnimPlayer != null && koAnimPlayer.HasAnimation("ko"))
+		{
+			float koDuration = (float)koAnimPlayer.GetAnimation("ko").Length;
+			float cameraDuration = Mathf.Max(koDuration * 0.6f, 0.8f);
+
+			Node3D focusPoint = EnemyKOEffect.GetNodeOrNull<Node3D>("FocusTarget");
+
+			_cameraDirector.FocusOnNode(focusPoint ?? EnemyKOEffect, cameraDuration, new Vector3(0f, 8f, 8f), onFinished: () =>
+			{
+				koAnimPlayer.Play("ko");
+			});
+
+			SceneTree tree = GetTree();
+			if (tree != null)
+			{
+				SceneTreeTimer timer = tree.CreateTimer(cameraDuration + koDuration + 0.5f);
+				timer.Timeout += CompleteVictoryPresentation;
+			}
+			else
+			{
+				CompleteVictoryPresentation();
+			}
+		}
+		else
+		{
+			CompleteVictoryPresentation();
+		}
 	}
 
 	private void ExecuteDefeat()
 	{
-		FinishBattle(CombatState.Defeat, "游戏结束, 玩家失败");
+		ResetPlayerChoiceState();
+		CloseChoiceUi();
+		SetBattleCardsVisible(false);
+
+		// 隐藏骰子
+		DiceManager?.ResetBattlefield();
+
+		// 撤走 UI 面板
+		PlayerInfoPanel?.HideForIntro();
+		EnemyInfoPanel?.HideForIntro();
+
+		void CompleteDefeatPresentation()
+		{
+			GD.Print("游戏结束, 玩家失败");
+		}
+
+		if (PlayerKOEffect == null)
+		{
+			CompleteDefeatPresentation();
+			return;
+		}
+
+		// 播放 KO 动画（动画中会触发径向模糊特效）
+		PlayerKOEffect.Visible = true;
+		AnimationPlayer koAnimPlayer = PlayerKOEffect.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+		if (koAnimPlayer != null && koAnimPlayer.HasAnimation("ko"))
+		{
+			float koDuration = (float)koAnimPlayer.GetAnimation("ko").Length;
+			float cameraDuration = Mathf.Max(koDuration * 0.6f, 0.8f);
+
+			Node3D focusPoint = PlayerKOEffect.GetNodeOrNull<Node3D>("FocusTarget");
+
+			// 先移动相机到位，再播放 KO 动画
+			_cameraDirector.FocusOnNode(focusPoint ?? PlayerKOEffect, cameraDuration, onFinished: () =>
+			{
+				koAnimPlayer.Play("ko");
+			});
+
+			// 动画播放完毕后结束
+			SceneTree tree = GetTree();
+			if (tree != null)
+			{
+				SceneTreeTimer timer = tree.CreateTimer(cameraDuration + koDuration + 0.5f);
+				timer.Timeout += CompleteDefeatPresentation;
+			}
+			else
+			{
+				CompleteDefeatPresentation();
+			}
+		}
+		else
+		{
+			CompleteDefeatPresentation();
+		}
 	}
 
 	private void FinishResolveDamageAfterEffect()
