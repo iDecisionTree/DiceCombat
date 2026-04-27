@@ -29,7 +29,7 @@ public partial class DiceManager : Node3D
 	[Export] public float AngularSleepThreshold { get; set; } = 0.2f;
 	[Export] public float PresentationDuration { get; set; } = 0.45f;
 	[Export] public float PresentationDiceSpacing { get; set; } = 2f;
-	[Export] public float PresentationForwardOffset { get; set; } = 8f;
+	[Export] public float PresentationForwardOffset { get; set; } = 5f;
 	[Export] public float EnemySelectionStartDelay { get; set; } = 0.5f;
 	[Export] public float EnemySelectionRevealDelay { get; set; } = 0.4f;
 	[Export] public float EnemySelectionEndDelay { get; set; } = 0.5f;

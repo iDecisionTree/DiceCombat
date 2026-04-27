@@ -13,14 +13,14 @@ public partial class CombatEffectDirector3D : CombatEffectDirector
 	[Export] public NodePath[] AdditionalIsolatedRootPaths = [];
 
 	[ExportGroup("Resolution Effect")]
-	[Export] public float OverlayAlpha { get; set; } = 1.0f;
+	[Export] public float OverlayAlpha { get; set; } = 0.65f;
 	[Export] public float OverlayFadeInDuration { get; set; } = 0.24f;
 	[Export] public float RevealAnimationDuration { get; set; } = 0.40f;
 	[Export] public float OverlayHoldDuration { get; set; } = 0.12f;
 	[Export] public float OverlayFadeOutDuration { get; set; } = 0.20f;
 	[Export] public StringName RevealAnimationName { get; set; } = "reveal";
-	[Export] public StringName PlayerRevealAnimationName { get; set; }
-	[Export] public StringName EnemyRevealAnimationName { get; set; }
+	[Export] public StringName PlayerRevealAnimationName { get; set; } = "card/player_reveal";
+	[Export] public StringName EnemyRevealAnimationName { get; set; } = "card/enemy_reveal";
 	[Export] public StringName DamageAnimationName { get; set; } = "damage";
 	[Export] public StringName ResetAnimationName { get; set; } = "reset";
 

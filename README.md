@@ -198,6 +198,39 @@ res://game_scene.tscn
 - `TurnIconSwapAnimator`
 - `CameraDirector`
 - `EffectDirector`
+
+## 6. 全屏后处理：径向模糊
+
+KO 特效播放时，画面会叠加一层径向模糊后处理（从屏幕中心向四周扩散的模糊效果）。
+
+### 6.1 架构
+
+| 文件 | 职责 |
+|---|---|
+| `shaders/radial_blur.gdshader` | canvas_item 着色器，沿径向多采样实现模糊 |
+| `scripts/ui/RadialBlurController.cs` | 控制模糊强度 Tween 循环（淡入→保持→淡出） |
+| `scripts/eff/PlayerKOEffect.cs` | 监听 AnimationPlayer `ko` 动画启动，触发径向模糊 |
+
+### 6.2 场景布线
+
+- `CanvasLayer/BackBufferCopy`（`copy_mode = Viewport`）复制 3D 场景画面供后处理 Shader 采样。
+- `CanvasLayer/RadialBlur`（ColorRect）使用 `ShaderMaterial_rblur`，全屏覆盖，默认隐藏。
+- `Eff/Player_KO` 的 `BlurController` 导出变量指向 `CanvasLayer/RadialBlur`。
+
+### 6.3 参数
+
+`RadialBlurController` 导出参数：
+
+| 参数 | 默认值 | 说明 |
+|---|---|---|
+| PeakStrength | 0.7 | 模糊峰值强度 |
+| FadeInDuration | 0.1 | 淡入时长（秒） |
+| HoldDuration | 0.3 | 峰值保持时长（秒） |
+| FadeOutDuration | 0.4 | 淡出时长（秒） |
+
+### 6.4 在其他动画中复用
+
+获取 `RadialBlurController` 实例并调用 `PlayImpactBlur()` 即可在任何时机触发径向模糊。
 - `PlayerInfoPanel`
 - `EnemyInfoPanel`
 

@@ -33,7 +33,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/effekseer/plugin.cfg", "res://addons/rich_text_3d/plugin.cfg", "res://addons/rider-plugin/plugin.cfg")
+enabled=PackedStringArray("res://addons/effekseer/plugin.cfg", "res://addons/rich_text_3d/plugin.cfg")
 
 [physics]
 

@@ -198,7 +198,7 @@ public partial class CombatStateMachine : Node
 		if (TurnIconSwapAnimator != null)
 		{
 			pendingCount++;
-			TurnIconSwapAnimator.PlayIntroAnimation(_currentTurn == CombatTurn.Player, CompleteOne);
+			TurnIconSwapAnimator.PlayIntroAnimation(_currentTurn == CombatTurn.Enemy, CompleteOne);
 		}
 
 		if (PlayerInfoPanel != null || EnemyInfoPanel != null)
@@ -372,7 +372,7 @@ public partial class CombatStateMachine : Node
 
 	private void OnDiceRerollClicked()
 	{
-		if (!_waitingForPlayerConfirm || _currentState != CombatState.PlayerConfirm || _currentTurn != CombatTurn.Player || _isPlayerRerolling)
+		if (!_waitingForPlayerConfirm || _currentState != CombatState.PlayerConfirm || _isPlayerRerolling)
 		{
 			return;
 		}
@@ -639,7 +639,7 @@ public partial class CombatStateMachine : Node
 		if (DiceRerollUI != null)
 		{
 			DiceRerollUI.SetRerollCount(_playerRerollRemaining);
-			DiceRerollUI.SetEnabled(_waitingForPlayerConfirm && !_isPlayerRerolling && _currentState == CombatState.PlayerConfirm && _currentTurn == CombatTurn.Player && _playerRerollRemaining > 0 && selectedCount > 0);
+			DiceRerollUI.SetEnabled(_waitingForPlayerConfirm && !_isPlayerRerolling && _currentState == CombatState.PlayerConfirm && _playerRerollRemaining > 0 && selectedCount > 0);
 		}
 	}
 
